@@ -21,6 +21,10 @@
 /yarn-error.log
 
 /public/assets
+/public/product_output.csv
+/public/product_prep.csv
+/public/maytoni.csv
+
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
