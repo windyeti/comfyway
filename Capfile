@@ -4,6 +4,12 @@ require "capistrano/setup"
 # Include default deployment tasks
 require "capistrano/deploy"
 
+require "capistrano/rvm"
+require "capistrano/rails"
+require 'capistrano3/unicorn'
+require "whenever/capistrano"
+require 'capistrano/rails/console'
+require 'capistrano/delayed_job'
 # Load the SCM plugin appropriate to your project:
 #
 # require "capistrano/scm/hg"

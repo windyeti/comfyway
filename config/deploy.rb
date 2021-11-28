@@ -2,8 +2,8 @@
 lock "~> 3.16.0"
 
 set :application, "comfyway"
-set :repo_url, "git@github.com:windyeti/dropship.git"
-set :deploy_to, "/var/www/dropship"
+set :repo_url, "git@github.com:windyeti/comfyway.git"
+set :deploy_to, "/var/www/comfyway"
 append :linked_files, "config/database.yml", "config/master.key"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public", "storage"
 set :format, :pretty
