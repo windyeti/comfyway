@@ -1,0 +1,4 @@
+- if resource.errors.present?
+  .error_messages
+    - resource.errors.full_messages.each do |message|
+      p.error_message = message

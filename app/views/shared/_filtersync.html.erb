@@ -1,0 +1,17 @@
+<div class="dropdown">
+  <% attrs = [["product_id_null", "Unsync"], ["product_id_not_null", "Sync"]] %>
+  <% head = attrs.map {|attr| attr[1] if @search.send(attr[0].to_sym) }.reject(&:nil?) %>
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+    <%= head.present? ? head.join(', ') : "Все товары" %>
+  </button>
+  <ul class="dropdown-menu">
+    <% attrs.each do |attr| %>
+      <li class="dropdown-input dropdown-item">
+        <%= check_box_tag("q[#{attr[0]}]", 1, @search.send(attr[0].to_sym))%>
+        <%= attr[1] %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+

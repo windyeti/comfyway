@@ -1,0 +1,20 @@
+.error_messages {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid orangered;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  p.error_message {
+    background: orangered;
+    padding: 5px;
+    margin-bottom: 0;
+    color: #fff;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+  }
+}

@@ -1,0 +1,20 @@
+nav.header.d-flex.mb-4.pb-3.navbar.navbar-dark.navbar-expand-lg(class="#{current_user&.admin? ? 'admin_style' : ''}")
+  .logo.mr-4.pt-3.pl-3.navbar-brand
+    = link_to root_path do
+      = image_tag 'logo.svg', data: {src: 'logo.svg'}, class: 'logo'
+  button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation")
+    span.navbar-toggler-icon
+  .collapse.navbar-collapse#navbarColor02
+    ul.navbar-nav.mr-auto
+      = render 'shared/nav_link'
+    ul.navbar-nav
+      li.nav-item.dropdown
+        .sign_in.ml-auto.pt-3.pr-3
+          - if user_signed_in?
+            span.user_welcome
+              - if current_user.admin?
+                strong.user_as_admin => "admin"
+              span.user_email = current_user.name
+          = render 'shared/sign_in'
+
+

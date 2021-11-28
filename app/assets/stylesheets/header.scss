@@ -1,0 +1,11 @@
+.header {
+  color: #bbbbbb;
+  background-color: #4c5257;
+  &.admin_style {
+    border-bottom: 1px solid #08668b;
+  }
+  box-shadow: 0px 5px 20px #dddddd;
+  .logo {
+    width: 50px;
+  }
+}

@@ -1,0 +1,104 @@
+
+<div class="col-lg-12 col-md-12">
+	<div class="col-lg-2">
+		<h2>Listing Products</h2><small>Всего: <%=@products.count%></small>
+	</div>
+  <div>
+    <%= link_to "СЛУЖБА СОЗДАНИЯ CSV с параметрами", create_csv_with_params_products_path, class: "btn-primary btn" %>
+  </div>
+  <div>
+    <%= link_to "product_output", "/product_output.csv", class: "btn-secondary btn" %>
+  </div>
+	<div class="col-lg-3">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+			<i class="glyphicon glyphicon-list-alt"></i> <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+			<li><%= link_to 'Файл товары', products_path(format: :csv)%></li>
+<!--			<li><%#= link_to 'Файл товары', products_path(params.merge(format: "csv")), title: "Файл товары"%></li>-->
+			<li><%= link_to 'Файл редиректы', products_path(format: "xls", file_type: 'redir'), title: "Файл редиректы"%></li>
+			</ul>
+			<button  id="deleteAllitems" data-delete-url="/products/delete_selected" class="btn btn-default btn-sm" style="display: none;">Удалить <i class="glyphicon glyphicon-trash"></i></button>
+		</div>
+	</div>
+	<div class="col-lg-5">
+	<%= search_form_for @search, {class: 'form-inline'}  do |f|%>
+		<div class = "form-group">
+		<%= f.search_field :fid_eq , placeholder: 'fid', class: "form-control input-sm" %>  
+		<%= f.search_field :title_cont_all, placeholder: 'title', class: "form-control input-sm" %> 
+		</div> 
+		<%= f.submit t('search'), class: 'btn btn-default btn-sm' %>
+		<%= link_to "Сбросить", products_path, class: 'btn btn-default btn-sm' %>
+	<% end %>
+	</div>
+</div>
+
+<div class="col-md-12">
+	  <div class="table-responsive">
+		<table class="table table-hover table-condensed " >
+		  <thead>
+		    <tr>
+<!--			  <th><%#= check_box_tag 'selectAll', value = 'selectAll'%></th>-->
+<!--		      <th>Check</th>-->
+		      <th>Fid</th>
+		      <th>sku</th>
+		      <th>Title</th>
+		      <th>Url</th>
+		      <th>Price</th>
+		      <th>Quantity</th>
+		      <th>Images</th>
+		      <th>Поставщик</th>
+		      <th>Video</th>
+		      <th>Check</th>
+		      <th>Cat</th>
+		      <th>Cat1</th>
+		      <th>Cat2</th>
+		      <th>Cat3</th>
+		      <th>Cat4</th>
+		      <th>P1</th>
+		      <th>Desc</th>
+		      <th>InsId</th>
+		      <th>InsVarId</th>
+		      <th colspan="1"></th>
+		    </tr>
+		  </thead>
+		
+		  <tbody  id="items_table">
+		    <% @products.each do |product| %>
+		      <tr>
+<!--			      <td><%#=check_box_tag "product_ids[]", product.id%></td>-->
+		        <td><%= product.fid %></td>
+		        <td><%= product.sku %></td>
+		        <td><%= link_to product.title , edit_product_path(product)%></td>
+		        <td><%= link_to product.url,  product.url, :target => "_blank" %></td>
+		        <td><%= product.price %></td>
+		        <td><%= product.quantity %></td>
+		        <td><%= product.image %></td>
+		        <td><%= product.distributor %></td>
+		        <td><%= product.video %></td>
+		        <td><%= product.check %></td>
+		        <td><%= product.cat %></td>
+		        <td><%= product.cat1 %></td>
+		        <td><%= product.cat2 %></td>
+		        <td><%= product.cat3 %></td>
+		        <td><%= product.cat4 %></td>
+		        <td><%= product.p1.at(0..50) if product.p1 != nil %></td>
+		        <td><%= product.desc.at(0..25) if product.desc != nil%></td>
+		        <td><%= product.insales_id %></td>
+		        <td><%= product.insales_var_id %></td>
+		        <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe,
+														product,
+														class: 'btn btn-danger btn-sm',
+														method: :delete,
+														data: { confirm: 'Are you sure?' } %>
+						</td>
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+	</div>
+	<div class="apple_pagination">
+	<%= will_paginate @products %>
+	</div>
+</div>

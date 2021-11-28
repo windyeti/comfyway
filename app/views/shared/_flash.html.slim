@@ -1,0 +1,6 @@
+- if flash.present?
+  .flash
+    - flash.each do |key, message|
+      p(class="#{flash_style(key)} flash-message alert-dismissible")
+        = message
+        button(type="button" class="close" data-dismiss="alert") &times;

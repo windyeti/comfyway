@@ -1,0 +1,8 @@
+#container_for_table_with_data {
+  overflow: auto;
+}
+#container_for_table_with_data thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
