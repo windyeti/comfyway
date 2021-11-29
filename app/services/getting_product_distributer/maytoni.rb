@@ -30,25 +30,24 @@ class Services::GettingProductDistributer::Maytoni
       "Вес нетто, кг", "Вес брутто, кг"
     ]
     rows.each do |row|
-      params = []
-      row.each do |key, value|
+      hash_arr_params = hash_params(row, param_name)
 
-        if value.present? && !arr_exclude_key.include?(key)
-          name = param_name.compare(key)
+      params = hash_arr_params.map do |key, value|
+        next if arr_exclude_key.include?(key) || value.join("##") == ""
+        value = value.join("##")
 
-          if name == "Тип лампы"
-            if value == "Да"
-              value = "LED"
-            else
-              next
-            end
+        if key == "Тип лампы"
+          if value == "Да"
+            value = "LED"
+          else
+            next
           end
-          if !arr_exlude_one_value.include?(name)
-            value = value.gsub(",","##")
-          end
-          params << "#{name}: #{value}"
         end
-      end
+        if !arr_exlude_one_value.include?(key)
+          value = value.gsub(",","##")
+        end
+        "#{key}: #{value}"
+      end.reject(&:nil?).join(" --- ")
 
       photos = []
       (1..8).each do |num|
@@ -73,7 +72,7 @@ class Services::GettingProductDistributer::Maytoni
         price: row["price"].present? ? row["price"] : 0,
         quantity: row["Stock"],
         currency: row["currencyId"],
-        p1: params.join(" --- "),
+        p1: params,
         check: true
       }
 
@@ -92,5 +91,14 @@ class Services::GettingProductDistributer::Maytoni
       RestClient::Request.new(method: :get, url: url, block_response: block).execute
     }
     "http://164.92.252.76/aws/#{(filename)}"
+  end
+
+  def self.hash_params(row, param_name)
+    arr_arr_params = row.map {|hash| hash.to_a}
+    new_arr_arr_params = []
+    arr_arr_params.map do |arr|
+      new_arr_arr_params << [param_name.compare(arr[0]), arr[1]]
+    end
+    Hash[ new_arr_arr_params.group_by(&:first).map{ |k,a| [k,a.map(&:last)] } ]
   end
 end

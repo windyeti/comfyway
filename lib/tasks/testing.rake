@@ -5,6 +5,12 @@ namespace :p do
     func_compare.compare("ingress_protection_rating")
   end
 
+  task all: :environment do
+    Services::GettingProductDistributer::Maytoni.call
+    Services::GettingProductDistributer::Mantra.call
+    Services::GettingProductDistributer::Lightstar.call
+  end
+
   task maytoni: :environment do
     Services::GettingProductDistributer::Maytoni.call
   end
@@ -17,8 +23,25 @@ namespace :p do
     Services::GettingProductDistributer::Mantra.call
   end
 
+
   task lightstar: :environment do
     Services::GettingProductDistributer::Lightstar.call
+  end
+
+  task arr: :environment do
+    m = [{"1"=> "a"}, {"2"=> "b"}].map {|k| k.to_a}.flatten(1)
+    p m
+  end
+  task uniq: :environment do
+    names = CSV.read("#{Rails.public_path}/map_params.csv") do |row|
+      row
+    end
+    a = names.map {|row| row[1]}
+    p a.uniq.
+      map { | e | [a.count(e), e] }.
+      select { | c, _ | c > 1 }.
+      sort.reverse.
+      map { | c, e | "#{e}:#{c}" }
   end
 
   task s: :environment do

@@ -138,7 +138,7 @@ class Services::CreateCsvWithParams
           if vel.p1.present? # Вид записи должен быть типа - "Длина рамы: 20 --- Ширина рамы: 30"
             vel.p1.split('---').each do |vp|
               key = 'Параметр: '+vp.split(':')[0].strip
-              value = vp.split(':')[1].remove('.') if vp.split(':')[1] !=nil
+              value = vp.split(':')[1] if vp.split(':')[1] !=nil
               row[key] = value
             end
           end
