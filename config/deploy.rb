@@ -8,5 +8,9 @@ append :linked_files, "config/database.yml", "config/master.key"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public", "storage"
 set :format, :pretty
 set :log_level, :info
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :delayed_job_roles, [:app]
+set :delayed_job_pid_dir, '/tmp'
+set :unicorn_rack_env, -> { production }
 
 after 'deploy:publishing', 'unicorn:restart'
