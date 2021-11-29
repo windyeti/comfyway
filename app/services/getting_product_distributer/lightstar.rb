@@ -1,6 +1,6 @@
 class Services::GettingProductDistributer::Lightstar
   def self.call
-    puts '=====>>>> START Lightstar YML '+Time.now
+    puts "=====>>>> START Lightstar YML #{Time.now}"
 
     Product.where(distributor: "Lightstar").each {|tov| tov.update(quantity: 0, check: false)}
 
@@ -71,7 +71,7 @@ class Services::GettingProductDistributer::Lightstar
       product ? product.update(data) : Product.create(data)
     puts 'ok'
     end
-    puts '=====>>>> FINISH Lightstar YML '+Time.now
+    puts "=====>>>> FINISH Lightstar YML #{Time.now}"
   end
 
   def self.product_params(hash_arr_params, param_name)
