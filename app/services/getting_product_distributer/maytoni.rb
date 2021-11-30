@@ -78,6 +78,7 @@ class Services::GettingProductDistributer::Maytoni
 
       product = Product.find_by(fid: data[:fid])
       product ? product.update(data) : Product.create(data)
+      puts "ok"
     end
     puts '=====>>>> FINISH Maytoni CSV '+Time.now.to_s
   end

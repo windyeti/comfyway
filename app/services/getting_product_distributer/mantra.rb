@@ -25,7 +25,7 @@ class Services::GettingProductDistributer::Mantra
       catId = doc_offer.xpath("categoryId").text
       cats = get_cats(categories[catId])
 
-      data = {
+      pp data = {
         fid: doc_offer["id"] + "___mantra",
         title: doc_offer.xpath("model") ? doc_offer.xpath("model").text : nil,
         sku: hash_arr_params["Артикул"] ? hash_arr_params["Артикул"].join("") : nil,
@@ -54,7 +54,7 @@ class Services::GettingProductDistributer::Mantra
   end
 
   def self.product_params(hash_arr_params)
-    arr_exclude = ["Артикул", "Остаток"]
+    arr_exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток",]
     result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
       "#{key}: #{value.join("##")}"

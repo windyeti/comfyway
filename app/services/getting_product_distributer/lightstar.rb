@@ -43,9 +43,9 @@ class Services::GettingProductDistributer::Lightstar
       #   p doc_offer["id"]
       # end
 
-      data = {
+      pp data = {
         fid: doc_offer["id"] + "___lightstar",
-        title: hash_arr_params["Наименование для интернет-магазина"] ? hash_arr_params["Наименование для интернет-магазина"].join("") : nil,
+        title: hash_arr_params["Наименование"] ? hash_arr_params["Наименование"].join("") : nil,
         sku: hash_arr_params["Артикул"] ? hash_arr_params["Артикул"].join("").gsub(/\s$/, "") : nil,
         url: doc_offer.xpath("url") ? doc_offer.xpath("url").text : nil,
         distributor: "Lightstar",
@@ -80,7 +80,7 @@ class Services::GettingProductDistributer::Lightstar
   end
 
   def self.product_params(hash_arr_params)
-    arr_exclude = ["Артикул", "Наименование для интернет-магазина", "Инструкция", "Инструкции", "3D preview", "Фото", "Чертёж", "3D-модель"]
+    arr_exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток", "Инструкция", "Инструкции", "3D preview", "Фото", "Чертёж", "3D-модель"]
     result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
       "#{key}: #{value.join("##")}"
@@ -91,7 +91,7 @@ class Services::GettingProductDistributer::Lightstar
   def self.hash_params(doc_params, param_name)
     arr_arr_params = doc_params.map do |doc_param|
       [
-        doc_param["name"], doc_param.text
+        doc_param["name"].gsub(/ \/ /, "/"), doc_param.text
       ]
     end
     new_arr_arr_params = []
