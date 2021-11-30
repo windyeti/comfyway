@@ -23,7 +23,7 @@ class Services::GettingProductDistributer::Maytoni
 
     param_name = Services::CompareParams.new("Maytoni")
     arr_exclude_key = [
-      "﻿id", "available", "name", "Stock", "barcode", "vendorCode", "price", "Категория", "url", "currencyId",
+      "Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток", "﻿id", "available", "name", "Stock", "barcode", "vendorCode", "price", "Категория", "url", "currencyId",
       "Фото1", "Фото2", "Фото3", "Фото4", "Фото5", "Фото6", "Фото7", "Фото8"
     ]
     arr_exlude_one_value = [
