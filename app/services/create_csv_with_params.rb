@@ -7,6 +7,8 @@ class Services::CreateCsvWithParams
     title: 'Название товара',
     desc: 'Полное описание',
     price: 'Цена продажи',
+    purchase_price: 'Цена закупки',
+    oldprice: 'Старая цена',
     quantity: 'Остаток',
     image: 'Изображения',
     distributor: 'Дополнительное поле: Поставщик',
@@ -87,7 +89,7 @@ class Services::CreateCsvWithParams
     p = @tovs.select(:p1)
     p.each do |p|
       if p.p1 != nil
-        p.p1.split('---').each do |pa|
+        p.p1.split(' --- ').each do |pa|
           result << pa.split(':')[0].strip if pa != nil
         end
       end

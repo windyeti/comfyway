@@ -25,7 +25,7 @@ class Services::GettingProductDistributer::Mantra
       catId = doc_offer.xpath("categoryId").text
       cats = get_cats(categories[catId])
 
-      pp data = {
+      data = {
         fid: doc_offer["id"] + "___mantra",
         title: doc_offer.xpath("model") ? doc_offer.xpath("model").text : nil,
         sku: hash_arr_params["Артикул"] ? hash_arr_params["Артикул"].join("") : nil,
@@ -36,7 +36,7 @@ class Services::GettingProductDistributer::Mantra
         cat: "Mantra",
         cat1: cats[0],
         cat2: cats[1],
-        price: doc_offer.xpath("price") ? doc_offer.xpath("price").text : nil,
+        price: doc_offer.xpath("price") ? doc_offer.xpath("price").text : 0,
         quantity: hash_arr_params["Остаток"] ? hash_arr_params["Остаток"].join("") : 0,
         barcode: doc_offer.xpath("barcode") ? doc_offer.xpath("barcode").text : nil,
         desc: doc_offer.xpath("description") ? doc_offer.xpath("description").text.gsub("\n", " ") : nil,

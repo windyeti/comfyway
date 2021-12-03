@@ -15,5 +15,25 @@
 //= require activestorage
 //= require popper
 //= require bootstrap
-//= require turbolinks
+
+//= require jquery_ujs
+//= require best_in_place
+//= require jquery-ui
+//= require best_in_place.jquery-ui
+
+//= require_self
 //= require_tree .
+
+$(document).ready(function() {
+  /* Activating Best In Place */
+  jQuery(".best_in_place").best_in_place();
+});
+
+$(document).ready(function () {
+  $("#file").on('change',function(_event){
+    var filename=$(this).val();
+    if(filename!=='') {
+      $("form.form_import input[type='submit']").attr('disabled', false);
+    }
+  })
+});

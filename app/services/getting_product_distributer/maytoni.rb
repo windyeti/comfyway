@@ -18,7 +18,7 @@ class Services::GettingProductDistributer::Maytoni
     }
 
     rows = CSV.read("#{Rails.root.join('public', 'maytoni.csv')}", headers: true, col_sep: ';').map do |row|
-      row.to_hash
+      row.to_a
     end
 
     param_name = Services::CompareParams.new("Maytoni")
@@ -70,7 +70,7 @@ class Services::GettingProductDistributer::Maytoni
         cat1: row["Категория"],
         barcode: row["barcode"],
         price: row["price"].present? ? row["price"] : 0,
-        quantity: row["Stock"],
+        quantity: row["Stock"].present? ? row["Stock"] : 0,
         currency: row["currencyId"],
         p1: params,
         check: true
@@ -94,10 +94,10 @@ class Services::GettingProductDistributer::Maytoni
     "http://164.92.252.76/aws/#{(filename)}"
   end
 
+  # [[k1, v1], [k2, v2], [k1, v3]] ==> {k1: [v1, v3], k2: [v2]}
   def self.hash_params(row, param_name)
-    arr_arr_params = row.map {|hash| hash.to_a}
     new_arr_arr_params = []
-    arr_arr_params.map do |arr|
+    row.map do |arr|
       new_arr_arr_params << [param_name.compare(arr[0]), arr[1]]
     end
     Hash[ new_arr_arr_params.group_by(&:first).map{ |k,a| [k,a.map(&:last)] } ]

@@ -23,9 +23,12 @@ namespace :p do
     Services::GettingProductDistributer::Mantra.call
   end
 
-
   task lightstar: :environment do
     Services::GettingProductDistributer::Lightstar.call
+  end
+
+  task led: :environment do
+    Services::GettingProductDistributer::Ledron.call
   end
 
   task arr: :environment do
@@ -33,10 +36,11 @@ namespace :p do
     p m
   end
   task uniq: :environment do
-    names = CSV.read("#{Rails.public_path}/map_params.csv") do |row|
-      row
-    end
-    a = names.map {|row| row[1]}
+    # names = CSV.read("#{Rails.public_path}/map_params.csv") do |row|
+    #   row
+    # end
+    # a = names.map {|row| row[1]}
+    a = Product.all.map(&:title)
     p a.uniq.
       map { | e | [a.count(e), e] }.
       select { | c, _ | c > 1 }.

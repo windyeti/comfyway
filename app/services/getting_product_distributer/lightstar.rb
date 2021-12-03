@@ -38,12 +38,7 @@ class Services::GettingProductDistributer::Lightstar
       catId = doc_offer.xpath("categoryId").text
       cats = get_cats(categories[catId])
 
-
-      # if hash_arr_params["Суммарная мощность ЛОН, Вт"].present? && hash_arr_params["Суммарная мощность LED, Вт"].present?
-      #   p doc_offer["id"]
-      # end
-
-      pp data = {
+      data = {
         fid: doc_offer["id"] + "___lightstar",
         title: hash_arr_params["Наименование"] ? hash_arr_params["Наименование"].join("") : nil,
         sku: hash_arr_params["Артикул"] ? hash_arr_params["Артикул"].join("").gsub(/\s$/, "") : nil,
@@ -55,7 +50,7 @@ class Services::GettingProductDistributer::Lightstar
         cat1: cats[0],
         cat2: cats[1],
         cat3: cats[2],
-        price: doc_offer.xpath("price") ? doc_offer.xpath("price").text : nil,
+        price: doc_offer.xpath("price") ? doc_offer.xpath("price").text : 0,
         quantity: sku_quantity[hash_arr_params["Артикул"].join("").gsub(/\s$/, "")] ? sku_quantity[hash_arr_params["Артикул"].join("").gsub(/\s$/, "")][:quantity] : 0,
         barcode: doc_offer.xpath("barcode") ? doc_offer.xpath("barcode").text : nil,
         desc: nil,

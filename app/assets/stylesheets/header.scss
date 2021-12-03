@@ -6,6 +6,16 @@
   }
   box-shadow: 0px 5px 20px #dddddd;
   .logo {
-    width: 50px;
+    width: 150px;
   }
+}
+.navbar {
+  padding: 0;
+}
+.header .navbar {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.navbar-brand {
+  padding: 0;
 }

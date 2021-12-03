@@ -1,3 +1,47 @@
+form {
+  .editable {
+    background-color: #9fffb8;
+  }
+  span {
+    padding: 7px;
+    display: inline-block;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-left: 3px;
+  }
+  .sync_unsync {
+    background: #3e9926;
+    color: #ffffff;
+  }
+}
+
+#products_table {
+  .sync {
+    background-color: #e5ffdc;
+  }
+}
+.form-group.ml-2.button_group {
+  span.oi {
+    padding: 0;
+  }
+}
+.product__count_product_var {
+  display: inline-block;
+  height: 37px;
+  padding: 2px 5px;
+  text-align: center;
+  font-size: 80%;
+  line-height: 104%;
+  color: #fff3cd;
+  background: #105a0a;
+  border: 1px solid white;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+
 #container_for_table_with_data {
   overflow: auto;
 }
@@ -5,4 +49,14 @@
   position: sticky;
   top: 0;
   z-index: 1;
+}
+.message {
+  position: absolute;
+  right: 0;
+  z-index: 1000;
+  background: #99d098;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 40px;
 }

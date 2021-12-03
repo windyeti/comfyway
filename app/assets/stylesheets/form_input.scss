@@ -1,0 +1,17 @@
+.form-control-xs {
+  height: calc(1em + .375rem + 2px) !important;
+  padding: 0 .25rem !important;
+  //padding: .125rem .25rem !important;
+  font-size: .75rem !important;
+  line-height: 1.5;
+  border-radius: .2rem;
+}
+.form_import .form-control-xs {
+  height: calc(1em + .375rem + 7px) !important;
+}
+.btn-outline-secondary {
+  border-color: #ced4da;
+}
+#filter_menu .dropdown {
+  line-height: 1.2;
+}

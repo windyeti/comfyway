@@ -4,7 +4,7 @@
 		p = Product.all.select(:p1)
 		p.each do |p|
 			if p.p1 != nil
-				p.p1.split('---').each do |pa|
+				p.p1.split(' --- ').each do |pa|
 					vparamHeader << pa.split(':')[0].strip if pa != nil
 				end
 			end
