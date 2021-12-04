@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post :import_ledron
       post :price_edit
       post :price_update
+      get :update_distributor
     end
   end
 end

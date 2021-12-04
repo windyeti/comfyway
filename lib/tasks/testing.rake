@@ -27,7 +27,7 @@ namespace :p do
     Services::GettingProductDistributer::Lightstar.call
   end
 
-  task led: :environment do
+  task ledron: :environment do
     Services::GettingProductDistributer::Ledron.call
   end
 

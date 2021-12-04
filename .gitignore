@@ -25,6 +25,7 @@
 /public/product_prep.csv
 /public/maytoni.csv
 /public/aws/*.*
+/public/ledron/*.*
 
 .byebug_history
 

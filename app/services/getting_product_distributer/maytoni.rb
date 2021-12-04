@@ -51,27 +51,28 @@ class Services::GettingProductDistributer::Maytoni
 
       photos = []
       (1..8).each do |num|
-        photo = row["Фото#{num}"]
-        if photo&.match(/onec-dev.s3/)
-          p photo = get_image_aws(photo)
+        row.each do |item|
+          if item[0] == "Фото#{num}" && item[1].present?
+            p photo = get_image_aws(item[1]) if item[1].match(/onec-dev.s3/)
+            photos << photo unless photo.nil?
+          end
         end
-        photos << photo unless photo.nil?
       end
 
-      data = {
-        fid: row["vendorCode"] + "___maytoni",
-        title: row["name"],
-        url: row["url"],
-        sku: row["vendorCode"],
+      pp data = {
+        fid: hash_arr_params["Артикул"].join("") + "___maytoni",
+        title: hash_arr_params["Наименование"].join(""),
+        url: hash_arr_params["url"].join(", "),
+        sku: hash_arr_params["Артикул"].join(""),
         distributor: "Maytoni",
-        vendor: row["vendor"],
+        vendor: hash_arr_params["Бренд"].join(""),
         image: photos.join(" "),
         cat: "Maytoni",
-        cat1: row["Категория"],
-        barcode: row["barcode"],
-        price: row["price"].present? ? row["price"] : 0,
-        quantity: row["Stock"].present? ? row["Stock"] : 0,
-        currency: row["currencyId"],
+        cat1: hash_arr_params["Категория"].join(""),
+        barcode: hash_arr_params["Штрихкод"].join(""),
+        price: hash_arr_params["Цена"].join("").present? ? hash_arr_params["Цена"].join("") : 0,
+        quantity: hash_arr_params["Остаток"].join("").present? ? hash_arr_params["Остаток"].join("") : 0,
+        currency: hash_arr_params["Валюта"].join(""),
         p1: params,
         check: true
       }
