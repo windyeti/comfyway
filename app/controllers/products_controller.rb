@@ -68,6 +68,8 @@ class ProductsController < ApplicationController
   end
 
   def import_ledron
+    ActionCable.server.broadcast 'state_process', {distributor: "Ledron", state: "start", message: "Запущен процесс импорта товаров Ledron"}
+
     FileUtils.rm_rf(Dir.glob('public/ledron/*.*'))
     uploaded_io = params[:file]
 
@@ -80,7 +82,7 @@ class ProductsController < ApplicationController
     # Services::GettingProductDistributer::Ledron.call(path_file, extend_file)
     LedronImportJob.perform_later(path_file, extend_file)
     # flash[:notice] = 'Задача импорта Товаров Ledron запущена'
-    redirect_to products_path
+    # redirect_to products_path
   end
 
   def update_distributor
