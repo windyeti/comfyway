@@ -1,0 +1,17 @@
+.state_process {
+  font-size: 60%;
+  color: #fff;
+  text-align: center;
+  .close {
+    float: right;
+  }
+  .notification_message {
+    padding: 5px;
+  }
+  &.start {
+    background: red;
+  }
+  &.finish {
+    background: green;
+  }
+}

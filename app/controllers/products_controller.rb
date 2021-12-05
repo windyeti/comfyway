@@ -79,7 +79,7 @@ class ProductsController < ApplicationController
     extend_file = uploaded_io.original_filename.to_s
     # Services::GettingProductDistributer::Ledron.call(path_file, extend_file)
     LedronImportJob.perform_later(path_file, extend_file)
-    flash[:notice] = 'Задача импорта Товаров Ledron запущена'
+    # flash[:notice] = 'Задача импорта Товаров Ledron запущена'
     redirect_to products_path
   end
 

@@ -11,4 +11,6 @@ Rails.application.routes.draw do
       get :update_distributor
     end
   end
+
+  mount ActionCable.server => '/cable'
 end
