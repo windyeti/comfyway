@@ -65,9 +65,19 @@ class Services::GettingProductDistributer::Swg
         end
       end.reject {|src| src == "https://swgshop.ru\"\""}
 
+      # if row["﻿\"Внешний код\""] == "\"00-00007421\""
+      #   p row["\"Длинное наименование [OLD_NAME]\""].gsub(/"/, "")
+      # end
+
+      long = row["\"Длинное наименование [OLD_NAME]\""] ? row["\"Длинное наименование [OLD_NAME]\""].gsub(/"/, "") : nil
+      short = row["\"Наименование элемента\""] ? row["\"Наименование элемента\""].gsub(/"/, "") : nil
+      fid = row["﻿\"Внешний код\""].gsub(/"/, "") + "___swg"
+
+      title = long.present? ? long : (short.present? ? short : fid)
+
       data = {
-        fid: row["﻿\"Внешний код\""].gsub(/"/, "") + "___swg",
-        title: row["\"Уникальное наименование в детальной карточке товара [H1_DETAIL]\""] ? row["\"Уникальное наименование в детальной карточке товара [H1_DETAIL]\""].gsub(/"/, "") : nil,
+        fid: fid,
+        title: title,
         sku: row["﻿\"Внешний код\""].gsub(/"/, ""),
         url: row["\"URL страницы детального просмотра\""] ? "https://swgshop.ru" + row["\"URL страницы детального просмотра\""].gsub(/"/, "") : nil,
         distributor: "Swg",
