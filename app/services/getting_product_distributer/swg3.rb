@@ -1,4 +1,4 @@
-class Services::GettingProductDistributer::Swg
+class Services::GettingProductDistributer::Swg3
 
   def self.call
     puts '=====>>>> СТАРТ SWG SCV '+Time.now.to_s

@@ -86,9 +86,9 @@ class ProductsController < ApplicationController
   end
 
   def update_distributor
-    # MaytoniImportJob.perform_later
-    # MantraImportJob.perform_later
-    # LightstarImportJob.perform_later
+    MaytoniImportJob.perform_later
+    MantraImportJob.perform_later
+    LightstarImportJob.perform_later
     SwgJob.perform_later
     redirect_to products_path
   end
