@@ -24,6 +24,10 @@
 /public/product_output.csv
 /public/product_prep.csv
 /public/maytoni.csv
+/public/mantra.csv
+/public/lightstar.csv
+/public/ledron.csv
+/public/swg.csv
 /public/aws/*.*
 /public/ledron/*.*
 

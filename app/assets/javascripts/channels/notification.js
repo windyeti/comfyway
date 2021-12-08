@@ -13,7 +13,8 @@ $(document).ready(function() {
             "<div class='notification_message'>" + data.message + "</div>"
             + "</div>");
 
-          $(".form_import #file").val('')
+          $(".form_import #file").val('');
+          $(".form_import input[type='submit']").attr('disabled', false);
         }
 
         if(data.state == "finish") {

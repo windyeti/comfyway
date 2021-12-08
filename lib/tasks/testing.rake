@@ -1,8 +1,56 @@
 namespace :p do
   task t: :environment do
-    func_compare = Services::CompareParams.new("Maytoni")
-    func_compare.compare("ТипПотолочногоКрепления")
-    func_compare.compare("ingress_protection_rating")
+    auth = 'Basic ' + Base64.strict_encode64("#{Rails.application.credentials.krokus[:user]}:#{Rails.application.credentials.krokus[:password]}").chomp
+    url = 'http://swop.krokus.ru/ExchangeBase/hs/catalog/getidbyarticles'
+    request_payload = {
+      "articles": [
+        "Светильник подвесной"
+      ],
+      "typeOfSearch": "Категория"
+    }
+
+    @resource = RestClient::Resource.new( url )
+    @response = @resource.post( request_payload.to_json, :Authorization => auth )
+    p @response.code
+    p JSON.parse(@response.body)
+    p JSON.parse(@response.body)["result"].count
+  end
+
+  task tt: :environment do
+    auth = 'Basic ' + Base64.strict_encode64("#{Rails.application.credentials.krokus[:user]}:#{Rails.application.credentials.krokus[:password]}").chomp
+    url = 'http://swop.krokus.ru/ExchangeBase/hs/catalog/allcategory'
+    request_payload = {
+
+    }
+    @resource = RestClient::Resource.new( url )
+    @response = @resource.post( request_payload, :Authorization => auth )
+    p @response.code
+    m = JSON.parse(@response.body).map {|c| c["name"]}
+    p m
+  end
+
+  task swg: :environment do
+    uri = "https://swgshop.ru/upload/swgshop_export_full_price_qty.csv"
+
+    File.open("#{Rails.root.join('public', 'swg.csv')}", 'w') {|f|
+      block = proc { |response|
+
+        body = response.body.gsub!("\r", '').force_encoding('UTF-8')
+#         body = response.body.gsub!("\r", '').force_encoding('UTF-8').gsub(/\b;/, "##").gsub(/\);/, ")##").gsub(/$
+# /,"\n")
+        f.write body
+      }
+      RestClient::Request.new(method: :get, url: uri, block_response: block).execute
+    }
+
+
+  end
+
+  task p1: :environment do
+    v = Product.all.map do |product|
+      product if product.p1.match(/Защита от КЗ/)
+    end
+    pp v.first
   end
 
   task all: :environment do
@@ -29,6 +77,10 @@ namespace :p do
 
   task ledron: :environment do
     Services::GettingProductDistributer::Ledron.call
+  end
+
+  task elevel: :environment do
+    Services::GettingProductDistributer::Elevel.call
   end
 
   task arr: :environment do
