@@ -9,7 +9,8 @@ class Services::GettingProductDistributer::Swg
 
     File.open("#{Rails.root.join('public', 'swg.csv')}", 'w') {|f|
       block = proc { |response|
-        body = response.body.force_encoding('UTF-8').gsub!(/\r\n?/, "\n").gsub(/\b;/, "##").gsub(/\);/, ")##")
+        body = response.body.force_encoding('UTF-8').gsub!(/\r\n?/, "\n").gsub!(/(?!")[\w|\W]\n/, ' ').gsub(/\b;/, "##").gsub(/\);/, ")##")
+        # body = response.body.force_encoding('UTF-8').gsub!(/\r\n?|\n\n?/, "\n").gsub(/\b;/, "##").gsub(/\);/, ")##")
         # body = response.body.gsub!("\r", '').force_encoding('UTF-8').gsub(/\b;/, "##").gsub(/\);/, ")##")
         f.write body
       }
@@ -75,7 +76,8 @@ class Services::GettingProductDistributer::Swg
 
       title = long.present? ? long : (short.present? ? short : fid)
 
-      data = {
+# if row["﻿\"Внешний код\""] == "\"00-00007116\""
+      pp data = {
         fid: fid,
         title: title,
         sku: row["﻿\"Внешний код\""].gsub(/"/, ""),
@@ -96,7 +98,7 @@ class Services::GettingProductDistributer::Swg
         mkeywords: nil,
         check: true
       }
-
+# end
       product = Product.find_by(fid: data[:fid])
       product ? product.update(data) : Product.create(data)
     end

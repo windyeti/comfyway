@@ -47,10 +47,9 @@ namespace :p do
   end
 
   task p1: :environment do
-    v = Product.all.map do |product|
-      product if product.p1.match(/Защита от КЗ/)
-    end
-    pp v.first
+    p "Кейс с образцами:
+SY-601221-BL-10-WW, SY-601211-BL-12-WW, SY-601231-BL-2-WW, SY-601201-BL-7-WW, SY-601201-0.4-BL".match(/
+/)
   end
 
   task all: :environment do
