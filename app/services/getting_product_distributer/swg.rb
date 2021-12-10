@@ -78,6 +78,9 @@ class Services::GettingProductDistributer::Swg
       cell_price = row["\"Цена \"\"Розничная цена\"\"\""]
       price = cell_price.present? ? ( cell_price.gsub(/"/, "").empty? ? 0 : cell_price.gsub(/"/, "")) : 0
 
+      cell_quantity = row["\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\""]
+      quantity = cell_quantity.present? ? ( cell_quantity.gsub(/"/, "").empty? ? 0 : cell_quantity.gsub(/"/, "")) : 0
+
 # if row["﻿\"Внешний код\""] == "\"00-00010540\""
 
       pp data = {
@@ -92,7 +95,7 @@ class Services::GettingProductDistributer::Swg
         cat2: categories[row["﻿\"Внешний код\""]][:cat2] ? categories[row["﻿\"Внешний код\""]][:cat2].gsub(/"/, "") : nil,
         cat3: categories[row["﻿\"Внешний код\""]][:cat3] ? categories[row["﻿\"Внешний код\""]][:cat3].gsub(/"/, "") : nil,
         price: price,
-        quantity: row["\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\""] ? row["\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\""].gsub(/"/, "") : 0,
+        quantity: quantity,
         p1: params.join(" --- "),
         video: row["\"Видео обзор (ссылка на YouTube)\""] ? row["\"Видео обзор (ссылка на YouTube)\""].gsub(/"/, "") : nil,
         currency: row["\"Валюта для цены \"\"Розничная цена\"\"\""] ? row["\"Валюта для цены \"\"Розничная цена\"\"\""].gsub(/"/, "") : nil,
