@@ -73,10 +73,13 @@ class Services::GettingProductDistributer::Swg
       long = row["\"Длинное наименование [OLD_NAME]\""] ? row["\"Длинное наименование [OLD_NAME]\""].gsub(/"/, "") : nil
       short = row["\"Наименование элемента\""] ? row["\"Наименование элемента\""].gsub(/"/, "") : nil
       fid = row["﻿\"Внешний код\""].gsub(/"/, "") + "___swg"
-
       title = long.present? ? long : (short.present? ? short : fid)
 
-# if row["﻿\"Внешний код\""] == "\"00-00007116\""
+      cell_price = row["\"Цена \"\"Розничная цена\"\"\""]
+      price = cell_price.present? ? ( cell_price.gsub(/"/, "").empty? ? 0 : cell_price.gsub(/"/, "")) : 0
+
+# if row["﻿\"Внешний код\""] == "\"00-00010540\""
+
       pp data = {
         fid: fid,
         title: title,
@@ -88,7 +91,7 @@ class Services::GettingProductDistributer::Swg
         cat1: categories[row["﻿\"Внешний код\""]][:cat1] ? categories[row["﻿\"Внешний код\""]][:cat1].gsub(/"/, "") : nil,
         cat2: categories[row["﻿\"Внешний код\""]][:cat2] ? categories[row["﻿\"Внешний код\""]][:cat2].gsub(/"/, "") : nil,
         cat3: categories[row["﻿\"Внешний код\""]][:cat3] ? categories[row["﻿\"Внешний код\""]][:cat3].gsub(/"/, "") : nil,
-        price: row["\"Цена \"\"Розничная цена\"\"\""].present? ? row["\"Цена \"\"Розничная цена\"\"\""].gsub(/"/, "") : 0,
+        price: price,
         quantity: row["\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\""] ? row["\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\""].gsub(/"/, "") : 0,
         p1: params.join(" --- "),
         video: row["\"Видео обзор (ссылка на YouTube)\""] ? row["\"Видео обзор (ссылка на YouTube)\""].gsub(/"/, "") : nil,
