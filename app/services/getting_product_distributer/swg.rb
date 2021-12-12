@@ -38,7 +38,23 @@ class Services::GettingProductDistributer::Swg
                    "\"Видео обзор (ссылка на YouTube)\""
     ]
     rows.each do |row|
-      next if row["﻿\"Внешний код\""] == "\""
+
+      cell_sku = row["﻿\"Внешний код\""]
+      cell_price = row["\"Цена \"\"Розничная цена\"\"\""]
+      cell_quantity = row["\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\""]
+
+      next if cell_sku == "\"\"" ||  cell_sku == "" ||  cell_price == "\"\"" ||  cell_quantity == "\"\"" ||  cell_price == "" ||  cell_quantity == ""
+
+      # if row["﻿\"Внешний код\""] == "\"00-00007050\""
+      #   p cell_sku
+      #   p cell_price
+      #   p cell_quantity
+      # end
+
+      sku = cell_sku.gsub(/"/, "")
+      price = cell_price.gsub(/"/, "")
+      quantity = cell_quantity.gsub(/"/, "")
+
       params = []
       hash_arr_params = hash_params(row, param_name)
       hash_arr_params.each do |key, value|
@@ -60,36 +76,28 @@ class Services::GettingProductDistributer::Swg
       photos += row["\"Фотографии галереи [MORE_PHOTO]\""].split("##") if row["\"Фотографии галереи [MORE_PHOTO]\""].present?
       photos = photos.map do |src|
         if src.match(/https:\/\/swgshop\.ru/)
-          src
+          src.gsub(/"/, "")
         else
-          "https://swgshop.ru#{src}"
+          "https://swgshop.ru#{src.gsub(/"/, "")}"
         end
-      end.reject {|src| src == "https://swgshop.ru\"\""}
+      end.reject {|src| src == "https://swgshop.ru"}
 
-      # if row["﻿\"Внешний код\""] == "\"00-00007421\""
-      #   p row["\"Длинное наименование [OLD_NAME]\""].gsub(/"/, "")
-      # end
+      photos = photos.select {|photo| RestClient.get(photo) rescue nil }
 
       long = row["\"Длинное наименование [OLD_NAME]\""] ? row["\"Длинное наименование [OLD_NAME]\""].gsub(/"/, "") : nil
       short = row["\"Наименование элемента\""] ? row["\"Наименование элемента\""].gsub(/"/, "") : nil
-      fid = row["﻿\"Внешний код\""].gsub(/"/, "") + "___swg"
+      fid = sku + "___swg"
       title = long.present? ? long : (short.present? ? short : fid)
-
-      cell_price = row["\"Цена \"\"Розничная цена\"\"\""]
-      price = cell_price.present? ? ( cell_price.gsub(/"/, "").empty? ? 0 : cell_price.gsub(/"/, "")) : 0
-
-      cell_quantity = row["\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\""]
-      quantity = cell_quantity.present? ? ( cell_quantity.gsub(/"/, "").empty? ? 0 : cell_quantity.gsub(/"/, "")) : 0
 
 # if row["﻿\"Внешний код\""] == "\"00-00010540\""
 
-      pp data = {
+      data = {
         fid: fid,
         title: title,
-        sku: row["﻿\"Внешний код\""].gsub(/"/, ""),
+        sku: sku,
         url: row["\"URL страницы детального просмотра\""] ? "https://swgshop.ru" + row["\"URL страницы детального просмотра\""].gsub(/"/, "") : nil,
         distributor: "Swg",
-        image: photos.join(" ").gsub(/"/, ""),
+        image: photos.join(" "),
         cat: "SWG",
         cat1: categories[row["﻿\"Внешний код\""]][:cat1] ? categories[row["﻿\"Внешний код\""]][:cat1].gsub(/"/, "") : nil,
         cat2: categories[row["﻿\"Внешний код\""]][:cat2] ? categories[row["﻿\"Внешний код\""]][:cat2].gsub(/"/, "") : nil,

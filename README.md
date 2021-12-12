@@ -1,24 +1,5 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Все товары поставщиков импорт в магазин через Название, кроме Swg - по Артикул
+* Ledron - Остаток nil, во входящем файле нет Остатка. В магазине через доп поле "Поставщик"
+* Swg - Пустое поле Остаток или Цена -- товара не берем в приложение

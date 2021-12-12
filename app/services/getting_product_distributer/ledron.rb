@@ -2,7 +2,7 @@ class Services::GettingProductDistributer::Ledron
   def self.call(path_file, _extend_file)
     puts '=====>>>> СТАРТ Ledron SCV '+Time.now.to_s
 
-    Product.where(distributor: "Ledron").each {|tov| tov.update(quantity: 0, check: false)}
+    Product.where(distributor: "Ledron").each {|tov| tov.update(quantity: nil, check: false)}
 
     rows = CSV.read(path_file, headers: true, col_sep: ';', encoding: 'windows-1251:utf-8').map do |row|
       row.to_a
@@ -21,8 +21,11 @@ class Services::GettingProductDistributer::Ledron
       hash_arr_params.map do |key, value|
         value = value.reject(&:nil?).join("##")
         next if arr_exclude_key.include?(key) || value == ""
-        params << "#{key}: #{value.gsub(/:/, "&#58;").gsub(/-{3}/, "&#8722;&#8722;&#8722;")}"
+        params << "#{key}: #{value.gsub(",", "##").gsub(/:/, "&#58;").gsub(/-{3}/, "&#8722;&#8722;&#8722;")}"
       end
+
+      images = hash_arr_params["Изображения товаров"].reject(&:nil?)
+      images = images.select {|photo| RestClient.get(photo) rescue nil }
 
       data = {
         fid: hash_arr_params["ID товара"].join(", ") + "___ledron",
@@ -31,7 +34,8 @@ class Services::GettingProductDistributer::Ledron
         sku: hash_arr_params["Артикул"].join(", "),
         desc: hash_arr_params["Краткое описание"].join("<br>"),
         distributor: "Ledron",
-        image: hash_arr_params["Изображения товаров"].reject(&:nil?).join(" "),
+        quantity: nil,
+        image: images.join(" "),
         video: hash_arr_params["Адрес видео на YouTube или Vimeo"].join(", "),
         cat: "Ledron",
         cat1: hash_arr_params["Категория"].join(", "),
