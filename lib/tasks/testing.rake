@@ -25,8 +25,9 @@ namespace :p do
     @resource = RestClient::Resource.new( url )
     @response = @resource.post( request_payload, :Authorization => auth )
     p @response.code
-    m = JSON.parse(@response.body).map {|c| c["name"]}
-    p m
+    # m = JSON.parse(@response.body).map {|c| c["name"]}
+    f = JSON.parse(@response.body).find {|c| c["name"] == "Шнуровой выключатель / светорегулятор (диммер)"}
+    p f
   end
 
   task swg: :environment do
@@ -79,13 +80,9 @@ SY-601221-BL-10-WW, SY-601211-BL-12-WW, SY-601231-BL-2-WW, SY-601201-BL-7-WW, SY
   end
 
   task elevel: :environment do
-    Services::GettingProductDistributer::Elevel.call
+    Services::GettingProductDistributer::Elevel.new.call
   end
 
-  task arr: :environment do
-    m = [{"1"=> "a"}, {"2"=> "b"}].map {|k| k.to_a}.flatten(1)
-    p m
-  end
   task uniq: :environment do
     # names = CSV.read("#{Rails.public_path}/map_params.csv") do |row|
     #   row
@@ -109,7 +106,6 @@ SY-601221-BL-10-WW, SY-601211-BL-12-WW, SY-601231-BL-2-WW, SY-601201-BL-7-WW, SY
     end
     p result.join(" --- ")
   end
-
 
   task a: :environment do
     FileUtils.rm_rf(Dir.glob('public/swg.csv'))

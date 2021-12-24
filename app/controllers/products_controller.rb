@@ -90,6 +90,7 @@ class ProductsController < ApplicationController
     MantraImportJob.perform_later
     LightstarImportJob.perform_later
     SwgJob.perform_later
+    ElevelImportJob.perform_later
     redirect_to products_path
   end
 

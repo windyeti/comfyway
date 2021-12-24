@@ -4,6 +4,8 @@ class Services::GettingProductDistributer::Ledron
 
     Product.where(distributor: "Ledron").each {|tov| tov.update(quantity: nil, check: false)}
 
+    # TODO создать новый csv с row по правилам товаров инсайлс со свойствами
+
     rows = CSV.read(path_file, headers: true, col_sep: ';', encoding: 'windows-1251:utf-8').map do |row|
       row.to_a
     end
@@ -21,7 +23,11 @@ class Services::GettingProductDistributer::Ledron
       hash_arr_params.map do |key, value|
         value = value.reject(&:nil?).join("##")
         next if arr_exclude_key.include?(key) || value == ""
-        params << "#{key}: #{value.gsub(",", "##").gsub(/:/, "&#58;").gsub(/-{3}/, "&#8722;&#8722;&#8722;")}"
+        params << "#{key}: #{value.gsub(",", "##")
+                               .gsub(/:/, "&#58;")
+                               .gsub(/-{3}/, "&#8722;&#8722;&#8722;")}"
+                               .gsub(/\s{2,}/, " ")
+                               .gsub(/<br \/>/, "")
       end
 
       images = hash_arr_params["Изображения товаров"].reject(&:nil?)

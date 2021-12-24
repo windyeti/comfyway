@@ -1,9 +1,10 @@
 class Services::ApiElevel
   def self.call(url, auth, payload)
-    RestClient.post( url, payload.to_json, :accept => :json, :content_type => "application/json", :Authorization => auth) do |response, request, result, &block|
+    RestClient.post( url, payload.to_json, timeout: 120, :accept => :json, :content_type => "application/json", :Authorization => auth) do |response, request, result, &block|
       case response.code
       when 200
         puts 'Okey'
+        # pp response.body
         JSON.parse(response.body)
       when 422
         puts "error 422 - не добавили категорию"
