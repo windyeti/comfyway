@@ -172,10 +172,19 @@ class Services::GettingProductDistributer::Elevel
   end
 
   def get_p1(product)
-    # /
-    # в product["features"] должны быть характеристики, но здесь пусто у всех товаров
-    # /
     result = []
+    product["attributes"].each do |attribute|
+      name = attribute["name"]
+      value = attribute["value"] || attribute["valueId"]["value"]
+      result << "#{name}: #{value}"
+    end
+    if product["metaproperties"].present?
+      product["metaproperties"].each do |attribute|
+        name = attribute["name"]
+        value = attribute["valueText"]
+        result << "#{name}: #{value}"
+      end
+    end
     result << "Вес, кг: #{product["weight"]["unitCount"]}" if product["weight"]
     result << "Бренд: #{product["brandName"]}"
     result

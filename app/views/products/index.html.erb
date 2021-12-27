@@ -22,10 +22,13 @@
           Действия
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <%= link_to "СЛУЖБА СОЗДАНИЯ CSV с параметрами", create_csv_with_params_products_path(distributor: "all"), class: "btn-primary btn form-control-xs" %>
-          <%= link_to "CSV Ledron", create_csv_with_params_products_path(distributor: "Ledron"), class: "btn-primary btn form-control-xs" %>
-          <%= link_to "Скачать CSV", "/product_output.csv", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Maytoni Mantra Lightstar Swg Эlevel", update_distributor_products_path, class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Создать CSV All", create_csv_with_params_products_path(distributor: "all"), class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Скачать CSV All", "/product_output.csv", class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Создать CSV Ledron", create_csv_with_params_products_path(distributor: "Ledron"), class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Скачать CSV Ledron", "/product_Ledron_output.csv", class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Создать CSV Elevel", create_csv_with_params_products_path(distributor: "Elevel"), class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Скачать CSV Elevel", "/product_Elevel_output.csv", class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Update: Maytoni Mantra Lightstar Swg Эlevel", update_distributor_products_path, class: "btn-secondary btn form-control-xs" %>
           <%= link_to "Редактировать цены",
                       price_edit_products_path,
                       remote: true,

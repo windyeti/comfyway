@@ -41,8 +41,8 @@ class Services::CreateCsvWithParams
   end
 
   def call
-    @file_path_prep = "#{Rails.public_path}"+'/product_prep.csv'
-    @file_name_output = "#{Rails.public_path}"+'/product_output.csv'
+    @file_path_prep = "#{Rails.public_path}/product_#{@distributor}_prep.csv"
+    @file_name_output = "#{Rails.public_path}/product_#{@distributor}_output.csv"
 
     if @distributer == 'all'
       @tovs = Product.order(:id)
