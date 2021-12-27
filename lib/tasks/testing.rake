@@ -47,10 +47,9 @@ namespace :p do
 
   end
 
-  task p1: :environment do
-    p "Кейс с образцами:
-SY-601221-BL-10-WW, SY-601211-BL-12-WW, SY-601231-BL-2-WW, SY-601201-BL-7-WW, SY-601201-0.4-BL".match(/
-/)
+  task sss: :environment do
+    d = Services::CompareParams.new("Ledron")
+    p d.compare("asd")
   end
 
   task all: :environment do
@@ -88,12 +87,12 @@ SY-601221-BL-10-WW, SY-601211-BL-12-WW, SY-601231-BL-2-WW, SY-601201-BL-7-WW, SY
     #   row
     # end
     # a = names.map {|row| row[1]}
-    a = Product.where(distributor: "Swg").map(&:sku)
+    a = Product.where(distributor: "Ledron").map(&:sku)
     p a.uniq.
       map { | e | [a.count(e), e] }.
       select { | c, _ | c > 1 }.
       sort.reverse.
-      map { | c, e | "#{e}:#{c}" }.count
+      map { | c, e | "#{e}:#{c}" }
   end
 
   task s: :environment do

@@ -62,7 +62,7 @@ class Services::GettingProductDistributer::Elevel
         },
       ]
 
-    # Product.where(distributor: "Elevel").each {|tov| tov.update(quantity: 0, quantity_add: 0, check: false)}
+    Product.where(distributor: "Elevel").each {|tov| tov.update(quantity: 0, quantity_add: 0, check: false)}
 
     arr_brands_categories.each do |brands_categories|
       brands_categories[:brands].each do |brand|
@@ -173,7 +173,7 @@ class Services::GettingProductDistributer::Elevel
 
   def get_p1(product)
     # /
-    # в product["feature"] должны быть характеристики, но здесь пусто у всех товаров
+    # в product["features"] должны быть характеристики, но здесь пусто у всех товаров
     # /
     result = []
     result << "Вес, кг: #{product["weight"]["unitCount"]}" if product["weight"]

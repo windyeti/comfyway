@@ -42,7 +42,7 @@ class Services::GettingProductDistributer::Swg
       cell_sku = row["﻿\"Внешний код\""]
       cell_price = row["\"Цена \"\"Розничная цена\"\"\""]
       cell_quantity = row["\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\""]
-
+      # пустое поле Цена или Остаток - не берем товар
       next if cell_sku == "\"\"" ||  cell_sku == "" ||  cell_price == "\"\"" ||  cell_quantity == "\"\"" ||  cell_price == "" ||  cell_quantity == ""
 
       # if row["﻿\"Внешний код\""] == "\"00-00007050\""

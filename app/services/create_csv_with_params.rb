@@ -36,32 +36,40 @@ class Services::CreateCsvWithParams
     mkeywords: 'Мета-тег keywords',
   }.freeze
 
-    def self.call
-      @file_path_prep = "#{Rails.public_path}"+'/product_prep.csv'
-      @file_name_output = "#{Rails.public_path}"+'/product_output.csv'
+  def initialize(distributor = 'all')
+    @distributor = distributor
+  end
 
+  def call
+    @file_path_prep = "#{Rails.public_path}"+'/product_prep.csv'
+    @file_name_output = "#{Rails.public_path}"+'/product_output.csv'
+
+    if @distributer == 'all'
       @tovs = Product.order(:id)
+    else
+      @tovs = Product.where(distributor: @distributor).order(:id)
+    end
 
-      check_previous_files_csv
+    check_previous_files_csv
 
-      create_csv_prep(PRODUCT_STRUCTURE)
+    create_csv_prep(PRODUCT_STRUCTURE)
 
-      additions_headers = get_additions_headers
+    additions_headers = get_additions_headers
 
-      product_hashs = get_product_hashs
+    product_hashs = get_product_hashs
 
-      all_column_names = add_column_names(product_hashs, additions_headers)
+    all_column_names = add_column_names(product_hashs, additions_headers)
 
-      csv_with_full_headers(product_hashs, all_column_names)
+    csv_with_full_headers(product_hashs, all_column_names)
 
-      create_csv_output
+    create_csv_output
   end
 
 
 
   private
 
-  def self.check_previous_files_csv
+  def check_previous_files_csv
     check = File.file?("#{@file_path_prep}")
     if check.present?
       File.delete("#{@file_path_prep}")
@@ -72,7 +80,7 @@ class Services::CreateCsvWithParams
     end
   end
 
-  def self.create_csv_prep(product_hash_structure)
+  def create_csv_prep(product_hash_structure)
     CSV.open(@file_path_prep, 'w') do |writer|
       writer << product_hash_structure.values
 
@@ -86,7 +94,7 @@ class Services::CreateCsvWithParams
     end
   end
 
-  def self.get_additions_headers
+  def get_additions_headers
     result = []
     p = @tovs.select(:p1)
     p.each do |p|
@@ -99,13 +107,13 @@ class Services::CreateCsvWithParams
     result.uniq
   end
 
-  def self.get_product_hashs
+  def get_product_hashs
     CSV.read(@file_path_prep, headers: true).map do |product|
       product.to_hash
     end
   end
 
-  def self.add_column_names(product_hashs, addHeaders)
+  def add_column_names(product_hashs, addHeaders)
     result = []
     column_names = product_hashs.first.keys
     result += column_names
@@ -116,7 +124,7 @@ class Services::CreateCsvWithParams
     result
   end
 
-  def self.csv_with_full_headers(product_hashs, all_column_names)
+  def csv_with_full_headers(product_hashs, all_column_names)
     csv_file_with_addition_headers = CSV.generate do |csv|
       csv << all_column_names
       product_hashs.each do |product_hash|
@@ -127,7 +135,7 @@ class Services::CreateCsvWithParams
     File.write(@file_path_prep, csv_file_with_addition_headers)
   end
 
-  def self.create_csv_output
+  def create_csv_output
     CSV.open(@file_name_output, "w") do |csv_out|
       rows = CSV.read(@file_path_prep, headers: true).collect do |row|
         row.to_hash

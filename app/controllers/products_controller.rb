@@ -62,7 +62,8 @@ class ProductsController < ApplicationController
   end
 
   def create_csv_with_params
-    CreateCsvJob.perform_later
+    distributor = params[:distributor]
+    CreateCsvJob.perform_later(distributor)
     redirect_to products_path, notice: "CREATE CSV WITH PARAMS OK"
     # redirect_to products_path, notice: "CREATE CSV WITH PARAMS OK"
   end

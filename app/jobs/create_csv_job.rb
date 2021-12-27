@@ -1,7 +1,7 @@
 class CreateCsvJob < ApplicationJob
   queue_as :default
 
-  def perform
-    Services::CreateCsvWithParams.call
+  def perform(distributor)
+    Services::CreateCsvWithParams.new(distributor).call
   end
 end
