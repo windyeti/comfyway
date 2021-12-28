@@ -24,7 +24,6 @@
 					puts response.code
 								case response.code
 								when 201
-									sleep 0.2
 									puts 'sleep 0.2-201 - сохранили'
 # 									puts response
 								when 422
@@ -33,6 +32,7 @@
 									response.return!(&block)
 								end
 								}
+								sleep 1
 		end
 		puts 'finish'
 	end

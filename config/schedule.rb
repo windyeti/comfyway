@@ -13,8 +13,9 @@
 #   rake "some:great:rake:task"
 # end
 #
-# every 4.days do
-#   runner "AnotherModel.prune_old_records"
+# run after update Products distributor
+# every 1.day, :at => '23:00' do
+#   runner "CreateInsalesParamsJob.perform_later"
 # end
 
 # Learn more: http://github.com/javan/whenever

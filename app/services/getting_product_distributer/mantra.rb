@@ -20,6 +20,8 @@ class Services::GettingProductDistributer::Mantra
     doc_offers.each do |doc_offer|
       doc_params = doc_offer.xpath("param")
       hash_arr_params = hash_params(doc_params, param_name)
+      next if guard_exclude(hash_arr_params, ["Ambiente", "Brizzi"])
+
       params = product_params(hash_arr_params)
 
       catId = doc_offer.xpath("categoryId").text
@@ -100,4 +102,9 @@ class Services::GettingProductDistributer::Mantra
     arr_cats.reverse
   end
 
+  def self.guard_exclude(hash_arr_params, list_exclude)
+    find_from = hash_arr_params["Бренд"]
+    intersection = find_from & list_exclude
+    intersection.present?
+  end
 end
