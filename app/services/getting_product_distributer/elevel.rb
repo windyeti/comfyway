@@ -58,7 +58,7 @@ class Services::GettingProductDistributer::Elevel
             "Терморегулятор комнатный (термостат)",
             "Термостат с таймером",
             "Комнатный термостат с таймером (хронотермостат)"
-    ])
+            ])
         },
       ]
 
@@ -144,28 +144,29 @@ class Services::GettingProductDistributer::Elevel
       p1 = get_p1(product)
       id_cat = product["categoryId"]
 
-        data = {
-          fid:  "#{product["id"]}___elevel",
-          title: product["name"],
-          sku: product["articulElevel"],
-          desc: product["description"],
-          vendor: product["manufacturerName"],
-          distributor: "Elevel",
-          image: product["images"].map {|image| image["link"]}.join(" "),
-          video: product["youtube"]["link"],
-          barcode: product["barcodes"].join(", "),
-          cat: "Elevel",
-          cat1: hash_id_category[id_cat][0],
-          cat2: hash_id_category[id_cat][1],
-          cat3: hash_id_category[id_cat][2],
-          cat4: hash_id_category[id_cat][3],
-          price: hash_id_price[id][:price_basic],
-          purchase_price: hash_id_price[id][:price],
-          quantity: hash_id_quantity[id][:stockamount],
-          quantity_add: hash_id_quantity[id][:stockamount_add],
-          p1: p1.join(" --- "),
-          check: true
-        }
+      data = {
+        fid:  "#{product["id"]}___elevel",
+        title: product["name"],
+        sku: product["articulElevel"],
+        desc: product["description"],
+        vendor: product["manufacturerName"],
+        distributor: "Elevel",
+        image: product["images"].map {|image| image["link"]}.join(" "),
+        video: product["youtube"]["link"],
+        barcode: product["barcodes"].join(", "),
+        cat: "Elevel",
+        cat1: hash_id_category[id_cat][0],
+        cat2: hash_id_category[id_cat][1],
+        cat3: hash_id_category[id_cat][2],
+        cat4: hash_id_category[id_cat][3],
+        price: hash_id_price[id][:price_basic],
+        purchase_price: hash_id_price[id][:price],
+        quantity: hash_id_quantity[id][:stockamount],
+        quantity_add: hash_id_quantity[id][:stockamount_add],
+        p1: p1.join(" --- "),
+        weight: product["weight"] ? product["weight"]["unitCount"] : nil,
+        check: true
+      }
       Product.create(data)
     end
     p '---------'
@@ -176,18 +177,18 @@ class Services::GettingProductDistributer::Elevel
     product["attributes"].each do |attribute|
       name = attribute["name"]
       value = attribute["value"] || attribute["valueId"]["value"]
-      result << "#{name}: #{value}"
+      result << "#{name}: #{value}" if value.present?
     end
     if product["metaproperties"].present?
       product["metaproperties"].each do |attribute|
         name = attribute["name"]
-        value = attribute["valueText"]
-        result << "#{name}: #{value}"
+        value = attribute["valueText"] || attribute["valueId"]["value"]
+        result << "#{name}: #{value}" if value.present?
       end
     end
     result << "Вес, кг: #{product["weight"]["unitCount"]}" if product["weight"]
     result << "Бренд: #{product["brandName"]}"
-    result
+    result.uniq
   end
 
   def get_id_price(prices)

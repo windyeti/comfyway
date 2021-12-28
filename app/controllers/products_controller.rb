@@ -38,6 +38,7 @@ class ProductsController < ApplicationController
     end
   end
 
+  def show; end
   def edit; end
 
   def update
@@ -58,6 +59,37 @@ class ProductsController < ApplicationController
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.json { render json: { title: @product.title }, status: :ok }
       format.js
+    end
+  end
+
+  def delete_selected
+    @products = Product.find(params[:ids])
+    @products.each do |product|
+      insales_product_id = product.insales_id
+
+      if insales_product_id.present?
+        response = Services::DeleteProductInsales.new(insales_product_id).call
+        if response["status"] == 'ok'
+          product.update(deactivated: true)
+        end
+      else
+        product.update(deactivated: true)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to products_url, notice: 'Товары удалёны' }
+      format.json { render json: {status: "okey", message: "Товары удалёны", ids: params[:ids]} }
+    end
+  end
+
+  def show_selected
+    @products = Product.find(params[:ids])
+    @products.each do |product|
+      product.update(deactivated: false)
+    end
+    respond_to do |format|
+      format.html { redirect_to products_url, notice: 'Товары восстановлены' }
+      format.json { render json: {status: "okey", message: "Товары восстановлены", ids: params[:ids]} }
     end
   end
 

@@ -25,6 +25,7 @@ class Services::CreateCsvWithParams
     video: 'Ссылка на видео',
     url: 'Параметр: OLDLINK',
     barcode: 'Штрих-код',
+    weight: 'Вес',
     currency: 'Валюта склада',
     cat: 'Корневая',
     cat1: 'Подкатегория 1',
@@ -44,7 +45,7 @@ class Services::CreateCsvWithParams
     @file_path_prep = "#{Rails.public_path}/product_#{@distributor}_prep.csv"
     @file_name_output = "#{Rails.public_path}/product_#{@distributor}_output.csv"
 
-    if @distributer == 'all'
+    if @distributor == 'all'
       @tovs = Product.order(:id)
     else
       @tovs = Product.where(distributor: @distributor).order(:id)

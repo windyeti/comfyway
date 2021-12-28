@@ -1,0 +1,2 @@
+class Insale < ApplicationRecord
+end

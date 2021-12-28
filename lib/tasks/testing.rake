@@ -87,12 +87,12 @@ namespace :p do
     #   row
     # end
     # a = names.map {|row| row[1]}
-    a = Product.where(distributor: "Ledron").map(&:sku)
+    a = Product.where(distributor: "Elevel").map(&:sku)
     p a.uniq.
       map { | e | [a.count(e), e] }.
       select { | c, _ | c > 1 }.
       sort.reverse.
-      map { | c, e | "#{e}:#{c}" }
+      map { | c, e | "#{e}:#{c}" }.count
   end
 
   task s: :environment do
