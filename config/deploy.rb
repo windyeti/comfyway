@@ -8,5 +8,6 @@ append :linked_files, "config/database.yml", "config/master.key"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public", "storage"
 set :format, :pretty
 set :log_level, :info
+set :delayed_job_workers, 2
 
 after 'deploy:publishing', 'unicorn:restart'

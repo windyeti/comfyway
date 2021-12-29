@@ -175,13 +175,13 @@ class Services::GettingProductDistributer::Elevel
   def get_p1(product)
     result = []
     product["attributes"].each do |attribute|
-      name = attribute["name"]
+      name = attribute["name"].gsub(" / ","/")
       value = attribute["value"] || attribute["valueId"]["value"]
       result << "#{name}: #{value}" if value.present?
     end
     if product["metaproperties"].present?
       product["metaproperties"].each do |attribute|
-        name = attribute["name"]
+        name = attribute["name"].gsub(" / ","/")
         value = attribute["valueText"] || attribute["valueId"]["value"]
         result << "#{name}: #{value}" if value.present?
       end

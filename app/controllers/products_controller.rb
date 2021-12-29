@@ -124,6 +124,8 @@ class ProductsController < ApplicationController
     LightstarImportJob.perform_later
     SwgJob.perform_later
     ElevelImportJob.perform_later
+
+    CreateInsalesParamsJob.perform_later
     redirect_to products_path
   end
 

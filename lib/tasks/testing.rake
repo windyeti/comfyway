@@ -48,8 +48,23 @@ namespace :p do
   end
 
   task sss: :environment do
-    d = Services::CompareParams.new("Ledron")
-    p d.compare("asd")
+    vparamHeader = []
+    p = Product.all.select(:p1)
+    p.each do |p|
+      if p.p1 != nil
+        p.p1.split(' --- ').each do |pa|
+          vparamHeader << pa.split(':')[0].strip if pa != nil
+        end
+      end
+    end
+    p values = vparamHeader.uniq.size
+
+    # headers = CSV.open("#{Rails.public_path}/product_Elevel_output.csv", &:readline)
+    # p headers.size
+
+    # Product.where(distributor: "Elevel").each do |product|
+    #   pp product if product.p1.include?("Класс температурного контроля")
+    # end
   end
 
   task all: :environment do
