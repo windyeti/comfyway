@@ -51,6 +51,7 @@ gem 'best_in_place'
 gem 'rest-client'
 gem 'roo'
 gem 'roo-xls'
+gem 'spreadsheet'
 
 gem 'unicorn'
 

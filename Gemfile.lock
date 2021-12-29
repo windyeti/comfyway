@@ -352,6 +352,7 @@ DEPENDENCIES
   selenium-webdriver
   skim (= 0.10.0)
   slim
+  spreadsheet
   spring
   spring-watcher-listen (~> 2.0.0)
   terser

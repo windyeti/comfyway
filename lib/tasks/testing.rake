@@ -48,23 +48,23 @@ namespace :p do
   end
 
   task sss: :environment do
-    vparamHeader = []
-    p = Product.all.select(:p1)
-    p.each do |p|
-      if p.p1 != nil
-        p.p1.split(' --- ').each do |pa|
-          vparamHeader << pa.split(':')[0].strip if pa != nil
-        end
-      end
-    end
-    p values = vparamHeader.uniq.size
+        # vparamHeader = []
+    # p = Product.all.select(:p1)
+    # p.each do |p|
+    #   if p.p1 != nil
+    #     p.p1.split(' --- ').each do |pa|
+    #       vparamHeader << pa.split(':')[0].strip if pa != nil
+    #     end
+    #   end
+    # end
+    # p values = vparamHeader.uniq.size
 
     # headers = CSV.open("#{Rails.public_path}/product_Elevel_output.csv", &:readline)
     # p headers.size
 
-    # Product.where(distributor: "Elevel").each do |product|
-    #   pp product if product.p1.include?("Класс температурного контроля")
-    # end
+    Product.where(distributor: "Elevel").each do |product|
+      pp product if product.p1.include?("Тип датчика / щупа")
+    end
   end
 
   task all: :environment do
