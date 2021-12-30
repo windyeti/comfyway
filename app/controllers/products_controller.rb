@@ -70,10 +70,18 @@ class ProductsController < ApplicationController
       if insales_product_id.present?
         response = Services::DeleteProductInsales.new(insales_product_id).call
         if response["status"] == 'ok'
-          product.update(deactivated: true)
+          product.update(
+            deactivated: true,
+            insales_id: nil,
+            insales_var_id: nil
+            )
         end
       else
-        product.update(deactivated: true)
+        product.update(
+          deactivated: true,
+          insales_id: nil,
+          insales_var_id: nil
+        )
       end
     end
     respond_to do |format|
