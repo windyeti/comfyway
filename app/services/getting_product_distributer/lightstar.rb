@@ -28,6 +28,7 @@ class Services::GettingProductDistributer::Lightstar
     doc_categories = doc_data.xpath("//category")
     categories = hash_categories(doc_categories)
 
+
     param_name = Services::CompareParams.new("LIGHTSTAR")
 
     doc_offers.each do |doc_offer|
@@ -37,6 +38,8 @@ class Services::GettingProductDistributer::Lightstar
 
       catId = doc_offer.xpath("categoryId").text
       cats = get_cats(categories[catId])
+
+      next if guard_exclude(hash_arr_params, cats)
 
       data = {
         fid: doc_offer["id"] + "___lightstar",
@@ -64,6 +67,7 @@ class Services::GettingProductDistributer::Lightstar
         draft: hash_arr_params["Чертёж"] ? hash_arr_params["Чертёж"].join("") : nil,
         model_3d: hash_arr_params["3D-модель"] ? hash_arr_params["3D-модель"].join("") : nil,
         date_arrival: sku_quantity[hash_arr_params["Артикул"].join("").gsub(/\s$/, "")] ? sku_quantity[hash_arr_params["Артикул"].join("").gsub(/\s$/, "")][:date] : nil,
+        weight: hash_arr_params["Вес брутто, кг"] ? hash_arr_params["Вес брутто, кг"].join("") : nil,
         check: true
       }
 
@@ -78,7 +82,7 @@ class Services::GettingProductDistributer::Lightstar
     arr_exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток", "Инструкция", "Инструкции", "3D preview", "Фото", "Чертёж", "3D-модель"]
     result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
-      "#{key}: #{value.join("##")}"
+      "#{key.gsub("/","&#47;")}: #{value.join("##")}"
     end.reject(&:nil?)
     result.join(" --- ")
   end
@@ -119,5 +123,10 @@ class Services::GettingProductDistributer::Lightstar
       get_cats(category[:parentId], arr_cats)
     end
     arr_cats.reverse
+  end
+
+  def self.guard_exclude(hash_arr_params, cats)
+    intersection = cats & ["Лента светодиодная на 220В и аксессуары", "Гибкий неон 220В и аксессуары"]
+    intersection.present? || hash_arr_params["Стиль"] == "Классический"
   end
 end

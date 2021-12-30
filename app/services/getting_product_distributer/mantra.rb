@@ -20,6 +20,7 @@ class Services::GettingProductDistributer::Mantra
     doc_offers.each do |doc_offer|
       doc_params = doc_offer.xpath("param")
       hash_arr_params = hash_params(doc_params, param_name)
+
       next if guard_exclude(hash_arr_params, ["Ambiente", "Brizzi"])
 
       params = product_params(hash_arr_params)
@@ -45,6 +46,7 @@ class Services::GettingProductDistributer::Mantra
         p1: params,
         video: nil,
         currency: doc_offer.xpath("currencyId") ? doc_offer.xpath("currencyId").text : nil,
+        weight: hash_arr_params["Вес брутто, кг"] ? hash_arr_params["Вес брутто, кг"].join("") : nil,
         check: true
       }
 
@@ -59,7 +61,7 @@ class Services::GettingProductDistributer::Mantra
     arr_exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток",]
     result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
-      "#{key}: #{value.join("##")}"
+      "#{key.gsub("/","&#47;")}: #{value.join("##")}"
     end.reject(&:nil?)
     result.join(" --- ")
   end

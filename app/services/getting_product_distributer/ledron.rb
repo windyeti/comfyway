@@ -47,7 +47,7 @@ class Services::GettingProductDistributer::Ledron
       hash_arr_params.map do |key, value|
         value = value.reject(&:nil?).join("##")
         next if arr_exclude_key.include?(key) || value == ""
-        params << "#{key}: #{value.gsub(",", "##")
+        params << "#{key.gsub("/","&#47;")}: #{value.gsub(",", "##")
                                .gsub(/:/, "&#58;")
                                .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
                                .gsub(/\s{2,}/, " ")
@@ -76,6 +76,7 @@ class Services::GettingProductDistributer::Ledron
         mkeywords: hash_arr_params["META Keywords"].join(", "),
         mdesc: hash_arr_params["META Description"].join(", "),
         p1: params.reject(&:nil?).join(" --- "),
+        weight: hash_arr_params["Вес"] ? hash_arr_params["Вес"].join("") : nil,
         check: true
       }
 

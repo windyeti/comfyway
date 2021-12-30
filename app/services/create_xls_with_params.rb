@@ -45,9 +45,9 @@ class Services::CreateXlsWithParams
     @file_name_output = "#{Rails.public_path}/product_#{@distributor}_output.xls"
 
     if @distributor == 'all'
-      @tovs = Product.order(:id)
+      @tovs = Product.where(deactivated: false).order(:id)
     else
-      @tovs = Product.where(distributor: @distributor).order(:id)
+      @tovs = Product.where(distributor: @distributor, deactivated: false).order(:id)
     end
 
     check_previous_files_csv
@@ -60,9 +60,9 @@ class Services::CreateXlsWithParams
 
     all_column_names = add_column_names(product_hashs, additions_headers)
 
-    csv_with_full_headers(product_hashs, all_column_names)
+    xls_with_full_headers(product_hashs, all_column_names)
 
-    # create_xls_output
+    create_xls_output
   end
 
 
@@ -70,14 +70,9 @@ class Services::CreateXlsWithParams
   private
 
   def check_previous_files_csv
-    check = File.file?("#{@file_path_prep}")
-    if check.present?
-      File.delete("#{@file_path_prep}")
-    end
-    check = File.file?("#{@file_path_output}")
-    if check.present?
-      File.delete("#{@file_path_output}")
-    end
+    FileUtils.rm_rf(Dir.glob(@file_path_prep))
+    FileUtils.rm_rf(Dir.glob(@file_path_prep_xls))
+    FileUtils.rm_rf(Dir.glob(@file_name_output))
   end
 
   def create_csv_prep(product_hash_structure)
@@ -124,77 +119,46 @@ class Services::CreateXlsWithParams
     result
   end
 
-  def csv_with_full_headers(product_hashs, all_column_names)
+  def xls_with_full_headers(product_hashs, all_column_names)
     book = Spreadsheet::Workbook.new
 
-    sheet = book.create_worksheet
-    sheet.row(0).push(all_column_names)
+    sheet = book.create_worksheet(name: "Prep")
+    sheet.row(0).push(*all_column_names)
 
     product_hashs.each.with_index(1) do |product_hash, index|
-      sheet.row(index).push(product_hash)
+      sheet.row(index).push(*product_hash.values)
     end
-
     book.write @file_path_prep_xls
-
   end
 
   def create_xls_output
-    book = Spreadsheet::Workbook.new
+    book_prep = Spreadsheet.open(@file_path_prep_xls)
+    sheet_prep = book_prep.worksheet("Prep")
+    headers = sheet_prep.row(0)
 
-    rows = CSV.read(@file_path_prep, headers: true).collect do |row|
-      row.to_hash
-    end
-    sheet = book.create_worksheet
-    headers = rows.first.keys
-    sheet.row(0).push(headers)
-
-    rows.each_with_index do |row, index|
-      row_hash = Hash[headers.zip(row.value)]
+    rows_hash = []
+    sheet_prep.each_with_index do |row, index|
+      next if index == 0
+      rows_hash << Hash[headers.zip(row)]
     end
 
-    CSV.open(@file_name_output, "w") do |csv_out|
-      column_names = rows.first.keys
-      csv_out << column_names
-      CSV.foreach(@file_path_prep, headers: true ) do |row|
-        fid = row[0]
-        vel = Product.find_by_fid(fid)
-        if vel != nil
-# 				puts vel.id
-          if vel.p1.present? # Вид записи должен быть типа - "Длина рамы: 20 --- Ширина рамы: 30"
-            vel.p1.split('---').each do |vp|
-              key = 'Параметр: '+vp.split(':')[0].strip
-              value = vp.split(':')[1] if vp.split(':')[1] !=nil
-              row[key] = value
-            end
-          end
+    book_output = Spreadsheet::Workbook.new
+
+    sheet_output = book_output.create_worksheet(name: "Output")
+    sheet_output.row(0).push(*headers)
+
+    rows_hash.each.with_index(1) do |hash, index|
+      fid = hash["Параметр: fid"]
+      product = Product.find_by_fid(fid)
+      if product.p1.present?
+        product.p1.split('---').each do |param|
+          key = 'Параметр: '+param.split(':')[0].strip
+          value = param.split(':')[1] if param.split(':')[1] != nil
+          hash[key] = value
         end
-        csv_out << row
       end
+      sheet_output.row(index).push(*hash.values)
     end
-  end
-
-  def create_csv_output
-    CSV.open(@file_name_output, "w") do |csv_out|
-      rows = CSV.read(@file_path_prep, headers: true).collect do |row|
-        row.to_hash
-      end
-      column_names = rows.first.keys
-      csv_out << column_names
-      CSV.foreach(@file_path_prep, headers: true ) do |row|
-        fid = row[0]
-        vel = Product.find_by_fid(fid)
-        if vel != nil
-# 				puts vel.id
-          if vel.p1.present? # Вид записи должен быть типа - "Длина рамы: 20 --- Ширина рамы: 30"
-            vel.p1.split('---').each do |vp|
-              key = 'Параметр: '+vp.split(':')[0].strip
-              value = vp.split(':')[1] if vp.split(':')[1] !=nil
-              row[key] = value
-            end
-          end
-        end
-        csv_out << row
-      end
-    end
+    book_output.write @file_name_output
   end
 end

@@ -93,6 +93,13 @@ class ProductsController < ApplicationController
     end
   end
 
+  def create_xls_with_params
+    distributor = params[:distributor]
+    CreateXlsJob.perform_later(distributor)
+    redirect_to products_path, notice: "CREATE XLS WITH PARAMS OK"
+    # redirect_to products_path, notice: "CREATE CSV WITH PARAMS OK"
+  end
+
   def create_csv_with_params
     distributor = params[:distributor]
     CreateCsvJob.perform_later(distributor)

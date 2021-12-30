@@ -97,6 +97,10 @@ namespace :p do
     Services::GettingProductDistributer::Elevel.new.call
   end
 
+  task xls: :environment do
+    Services::CreateXlsWithParams.new("Elevel").call
+  end
+
   task uniq: :environment do
     # names = CSV.read("#{Rails.public_path}/map_params.csv") do |row|
     #   row
@@ -111,14 +115,15 @@ namespace :p do
   end
 
   task s: :environment do
-    arr_arr_params = [['a', 'b'], ['c', 'd'], ['a', 'e'], ['q', 'w'], ['a', 'r'], ['c','f']]
-    param_name = Services::CompareParams.new("LIGHTSTAR")
-    hash_arr_params = Hash[ arr_arr_params.group_by(&:first).map{ |k,a| [k,a.map(&:last)] } ]
-    result = hash_arr_params.map do |key, value|
-      name = param_name.compare(key)
-      "#{name}: #{value.join("##")}"
+    book = Spreadsheet::Workbook.new
+
+    sheet = book.create_worksheet(name: "TEST")
+
+    (0..670).each.with_index do |product_hash, index|
+      sheet.row(0).push(index)
     end
-    p result.join(" --- ")
+
+    book.write "#{Rails.public_path}/test.xls"
   end
 
   task a: :environment do

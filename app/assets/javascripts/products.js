@@ -53,9 +53,22 @@ $(document).ready(function() {
           $(data.ids).each(function() {
             $(".product_id_" + this).addClass('deactivated')
           });
-          $('#products_table :checked').each(function() {
+          $('#products_table :checked, #selectAll').each(function() {
             $(this).prop('checked', false);
           });
+          var $active_products_count = $("#active_products_count");
+          $active_products_count.text(
+            $active_products_count.text() - data.ids.length
+          );
+
+          var $active_products_span = $active_products_count.closest('span');
+          if (+$active_products_count.text() > 40000) {
+            $active_products_span.addClass('product_count_over_limit')
+          }
+          else {
+            $active_products_span.removeClass('product_count_over_limit')
+          }
+
           // alert(data.message);
           // location.reload();
         }
@@ -64,6 +77,16 @@ $(document).ready(function() {
         console.log(jqXHR);
       }
     })
+  });
+
+  $("#active_products_count").on("change", function(){
+    var $this = $(this).closest('span');
+    if (+$this.text() > 40000) {
+      $this.addClass('product_count_over_limit')
+    }
+    else {
+      $this.removeClass('product_count_over_limit')
+    }
   });
 
   $('#showAll').click(function(event) {
@@ -85,9 +108,21 @@ $(document).ready(function() {
           $(data.ids).each(function() {
             $(".product_id_" + this).removeClass('deactivated')
           });
-          $('#products_table :checked').each(function() {
+          $('#products_table :checked, #selectAll').each(function() {
             $(this).prop('checked', false);
           });
+          var $active_products_count = $("#active_products_count");
+          $active_products_count.text(
+            +$active_products_count.text() + data.ids.length
+          );
+
+          var $active_products_span = $active_products_count.closest('span');
+          if (+$active_products_count.text() > 40000) {
+            $active_products_span.addClass('product_count_over_limit')
+          }
+          else {
+            $active_products_span.removeClass('product_count_over_limit')
+          }
           // alert(data.message);
           // location.reload();
         }

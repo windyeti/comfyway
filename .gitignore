@@ -30,6 +30,7 @@
 /public/swg.csv
 /public/aws/*.*
 /public/ledron/*.*
+/public/product_*
 
 .byebug_history
 

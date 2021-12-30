@@ -67,7 +67,7 @@ class Services::GettingProductDistributer::Swg
           if name == "Вес нетто, кг" && value.present?
             value = (value.to_f / 1000).to_s
           end
-          params << "#{name}: #{value}" if name.present? && value.present?
+          params << "#{name.gsub("/","&#47;")}: #{value}" if name.present? && value.present?
         end
       end
 
@@ -89,7 +89,12 @@ class Services::GettingProductDistributer::Swg
       fid = sku + "___swg"
       title = long.present? ? long : (short.present? ? short : fid)
 
+      cat1 =  categories[row["﻿\"Внешний код\""]][:cat1] ? categories[row["﻿\"Внешний код\""]][:cat1].gsub(/"/, "") : nil
+      cat2 =  categories[row["﻿\"Внешний код\""]][:cat2] ? categories[row["﻿\"Внешний код\""]][:cat2].gsub(/"/, "") : nil
+      cat3 =  categories[row["﻿\"Внешний код\""]][:cat3] ? categories[row["﻿\"Внешний код\""]][:cat3].gsub(/"/, "") : nil
+
 # if row["﻿\"Внешний код\""] == "\"00-00010540\""
+      next if guard_exclude(hash_arr_params, [cat1, cat2, cat3])
 
       data = {
         fid: fid,
@@ -99,9 +104,9 @@ class Services::GettingProductDistributer::Swg
         distributor: "Swg",
         image: photos.join(" "),
         cat: "SWG",
-        cat1: categories[row["﻿\"Внешний код\""]][:cat1] ? categories[row["﻿\"Внешний код\""]][:cat1].gsub(/"/, "") : nil,
-        cat2: categories[row["﻿\"Внешний код\""]][:cat2] ? categories[row["﻿\"Внешний код\""]][:cat2].gsub(/"/, "") : nil,
-        cat3: categories[row["﻿\"Внешний код\""]][:cat3] ? categories[row["﻿\"Внешний код\""]][:cat3].gsub(/"/, "") : nil,
+        cat1: cat1,
+        cat2: cat2,
+        cat3: cat3,
         price: price,
         quantity: quantity,
         p1: params.join(" --- "),
@@ -109,6 +114,7 @@ class Services::GettingProductDistributer::Swg
         currency: row["\"Валюта для цены \"\"Розничная цена\"\"\""] ? row["\"Валюта для цены \"\"Розничная цена\"\"\""].gsub(/"/, "") : nil,
         mtitle: row["\"Заголовок окна браузера [TITLE]\""] ? row["\"Заголовок окна браузера [TITLE]\""].gsub(/"/, "") : nil,
         mdesc: row["\"Мета-описание [META_DESCRIPTION]\""] ? row["\"Мета-описание [META_DESCRIPTION]\""].gsub(/"/, "") : nil,
+        weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join("") : nil,
         mkeywords: nil,
         check: true
       }
@@ -126,4 +132,12 @@ class Services::GettingProductDistributer::Swg
     end
     Hash[ new_arr_arr_params.group_by(&:first).map{ |k,a| [k,a.map(&:last)] } ]
   end
+
+    def self.guard_exclude(hash_arr_params, categories)
+      intersection_cat = categories & ["Серия LT360 (3528)", "Серия LT4240 (3014)", "Серия LT560 (5050)", "Демо-кейсы NK", "Демо-кейсы", "Неоновая лента", "Лента 220", "Офисные светильники", "УФ Лампы"]
+      intersection_cat.present? ||
+      hash_arr_params["Активность"] == "N" ||
+      ["более 5000", "6000-6500", "6000", "RGB+6000", "10000", "5100-6100",
+       "6500-7000", "10000-13000", "7500", "6500", "5000"].include?(hash_arr_params["Цветовая температура, K [LOW_EMISSION]"])
+    end
 end

@@ -11,7 +11,13 @@
   <div class="col-md-4 mr-1">
     <span class="align-middle"><small>Всего: <%= Product.product_all_size %></small></span>
     <span class="align-middle"><small>Отфильтровано: <%=@products.count%></small></span><br>
-    <span class="align-middle"><small>Активных: <%= Product.where(deactivated: false).size %></small></span>
+    <span class="align-middle">
+      <small>
+        Активных:
+        <% count_active = Product.where(deactivated: false).size %>
+        <span id="active_products_count" class=<%= "product_count_over_limit" if count_active > 40000 %> > <%= count_active %> </span>
+      </small>
+    </span>
     <!--    <span class="align-middle"><small>Синхронизируется: <%#= Product.where.not(abc: nil).size %></small></span>-->
 
   </div>
@@ -24,18 +30,18 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <%#= link_to "Создать CSV All", create_csv_with_params_products_path(distributor: "all"), class: "btn-primary btn form-control-xs" %>
           <%#= link_to "Скачать CSV All", "/product_output.csv", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать CSV Maytoni", create_csv_with_params_products_path(distributor: "Maytoni"), class: "btn-primary btn form-control-xs" %>
-          <%= link_to "Скачать CSV Maytoni", "/product_Maytoni_output.csv", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать CSV Mantra", create_csv_with_params_products_path(distributor: "Mantra"), class: "btn-primary btn form-control-xs" %>
-          <%= link_to "Скачать CSV Mantra", "/product_Mantra_output.csv", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать CSV Lightstar", create_csv_with_params_products_path(distributor: "Lightstar"), class: "btn-primary btn form-control-xs" %>
-          <%= link_to "Скачать CSV Lightstar", "/product_Lightstar_output.csv", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать CSV Swg", create_csv_with_params_products_path(distributor: "Swg"), class: "btn-primary btn form-control-xs" %>
-          <%= link_to "Скачать CSV Swg", "/product_Swg_output.csv", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать CSV Ledron", create_csv_with_params_products_path(distributor: "Ledron"), class: "btn-primary btn form-control-xs" %>
-          <%= link_to "Скачать CSV Ledron", "/product_Ledron_output.csv", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать CSV Elevel", create_csv_with_params_products_path(distributor: "Elevel"), class: "btn-primary btn form-control-xs" %>
-          <%= link_to "Скачать CSV Elevel", "/product_Elevel_output.csv", class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Создать XLS Maytoni", create_csv_with_params_products_path(distributor: "Maytoni"), class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Скачать XLS Maytoni", "/product_Maytoni_output.csv", class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Создать XLS Mantra", create_csv_with_params_products_path(distributor: "Mantra"), class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Скачать XLS Mantra", "/product_Mantra_output.csv", class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Создать XLS Lightstar", create_csv_with_params_products_path(distributor: "Lightstar"), class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Скачать XLS Lightstar", "/product_Lightstar_output.csv", class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Создать XLS Swg", create_csv_with_params_products_path(distributor: "Swg"), class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Скачать XLS Swg", "/product_Swg_output.csv", class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Создать XLS Ledron", create_csv_with_params_products_path(distributor: "Ledron"), class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Скачать XLS Ledron", "/product_Ledron_output.csv", class: "btn-secondary btn form-control-xs" %>
+          <%= link_to "Создать XLS Elevel", create_csv_with_params_products_path(distributor: "Elevel"), class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Скачать XLS Elevel", "/product_Elevel_output.csv", class: "btn-secondary btn form-control-xs" %>
           <%= link_to "Update: Maytoni Mantra Lightstar Swg Эlevel", update_distributor_products_path, class: "btn-secondary btn form-control-xs" %>
           <%= link_to "Редактировать цены",
                       price_edit_products_path,

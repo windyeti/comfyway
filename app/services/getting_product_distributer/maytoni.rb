@@ -46,7 +46,7 @@ class Services::GettingProductDistributer::Maytoni
         if !arr_exlude_one_value.include?(key)
           value = value.gsub(",","##")
         end
-        "#{key}: #{value}"
+        "#{key.gsub("/","&#47;")}: #{value}"
       end.reject(&:nil?).join(" --- ")
 
       photos = []
@@ -73,6 +73,7 @@ class Services::GettingProductDistributer::Maytoni
         price: hash_arr_params["Цена"].join("").present? ? hash_arr_params["Цена"].join("") : 0,
         quantity: hash_arr_params["Остаток"].join("").present? ? hash_arr_params["Остаток"].join("") : 0,
         currency: hash_arr_params["Валюта"].join(""),
+        weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join("") : nil,
         p1: params,
         check: true
       }
