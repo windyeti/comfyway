@@ -35,8 +35,9 @@ class Services::CreateXlsWithParams
     mkeywords: 'Мета-тег keywords',
   }.freeze
 
-  def initialize(distributor = 'all')
-    @distributor = distributor
+  def initialize(data)
+    @distributor = data[:distributor] || 'all'
+    @deacivated = data[:deacivated] || false
   end
 
   def call
@@ -45,9 +46,9 @@ class Services::CreateXlsWithParams
     @file_name_output = "#{Rails.public_path}/product_#{@distributor}_output.xls"
 
     if @distributor == 'all'
-      @tovs = Product.where(deactivated: false).order(:id)
+      @tovs = Product.where(deactivated: @deacivated, insales_var_id: nil).order(:id)
     else
-      @tovs = Product.where(distributor: @distributor, deactivated: false).order(:id)
+      @tovs = Product.where(distributor: @distributor, deactivated: @deacivated, insales_var_id: nil).order(:id)
     end
 
     check_previous_files_csv

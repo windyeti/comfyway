@@ -48,22 +48,8 @@ namespace :p do
   end
 
   task sss: :environment do
-        # vparamHeader = []
-    # p = Product.all.select(:p1)
-    # p.each do |p|
-    #   if p.p1 != nil
-    #     p.p1.split(' --- ').each do |pa|
-    #       vparamHeader << pa.split(':')[0].strip if pa != nil
-    #     end
-    #   end
-    # end
-    # p values = vparamHeader.uniq.size
-
-    # headers = CSV.open("#{Rails.public_path}/product_Elevel_output.csv", &:readline)
-    # p headers.size
-
-    Product.where(distributor: "Elevel").each do |product|
-      pp product if product.p1.include?("Тип датчика / щупа")
+    Product.all.each do |product|
+      product.update(deactivated: true)
     end
   end
 
@@ -98,7 +84,7 @@ namespace :p do
   end
 
   task xls: :environment do
-    Services::CreateXlsWithParams.new("Elevel").call
+    Services::CreateXlsWithParams.new(distributor: "Elevel").call
   end
 
   task uniq: :environment do

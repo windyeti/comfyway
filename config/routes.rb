@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   resources :products do
     collection do
       get :create_xls_with_params
-      get :create_csv_with_params
+      get :create_csv_update
+      get :import_insales_xml
       post :import_ledron
       post :price_edit
       post :price_update

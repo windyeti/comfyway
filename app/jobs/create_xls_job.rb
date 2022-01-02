@@ -1,7 +1,7 @@
 class CreateXlsJob < ApplicationJob
   queue_as :default
 
-  def perform(distributor)
-    Services::CreateXlsWithParams.new(distributor).call
+  def perform(data)
+    Services::CreateXlsWithParams.new(data).call
   end
 end
