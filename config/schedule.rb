@@ -40,10 +40,10 @@ end
 # every 1.day, :at => '02:00' do
 #   runner "CreateXlsJob.perform_later(distributor: 'Ledron')"
 # end
-#
-# every 1.day, :at => '04:00' do
-#   runner "CreateXlsJob.perform_later(distributor: 'Swg')"
-# end
+
+every 1.day, :at => '12:00' do
+  runner "CreateXlsJob.perform_later(distributor: 'Swg')"
+end
 #
 # every 1.day, :at => '06:00' do
 #   runner "CreateXlsJob.perform_later(distributor: 'Elevel')"
@@ -56,6 +56,6 @@ end
 
 # присвоение новым товарам "ID варианта" из инсайлс
 # + (хотя это можно не делать, так как все уже есть у товаров) получение в приложение остаков по складам из инсайсл
-every 1.day, :at => '07:00' do
+every 1.day, :at => '12:10' do
   runner "ImportInsalesXmlJob.perform_later"
 end
