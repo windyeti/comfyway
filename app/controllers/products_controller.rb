@@ -54,11 +54,24 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { render json: { title: @product.title }, status: :ok }
-      format.js
+    insales_product_id = @product.insales_id
+    if insales_product_id.present?
+      response = Services::DeleteProductInsales.new(insales_product_id).call
+      if response["status"] == 'ok'
+        product.update(
+          deactivated: true,
+          insales_id: nil,
+          insales_var_id: nil,
+          insales_link: nil
+        )
+        @product.destroy
+        respond_to do |format|
+          format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+          format.json { render json: { title: @product.title }, status: :ok }
+          format.js
+        end
+      else
+      end
     end
   end
 
@@ -73,14 +86,16 @@ class ProductsController < ApplicationController
           product.update(
             deactivated: true,
             insales_id: nil,
-            insales_var_id: nil
-            )
+            insales_var_id: nil,
+            insales_link: nil
+          )
         end
       else
         product.update(
           deactivated: true,
           insales_id: nil,
-          insales_var_id: nil
+          insales_var_id: nil,
+          insales_link: nil
         )
       end
     end
@@ -103,7 +118,7 @@ class ProductsController < ApplicationController
 
   def create_xls_with_params
     distributor = params[:distributor]
-    CreateXlsJob.perform_later(distributor)
+    CreateXlsJob.perform_later(distributor: distributor)
     redirect_to products_path, notice: "CREATE XLS WITH PARAMS OK"
     # redirect_to products_path, notice: "CREATE CSV WITH PARAMS OK"
   end

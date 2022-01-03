@@ -109,7 +109,7 @@
 
     <tbody id="products_table">
     <% @products.each do |product| %>
-      <tr class="product_id_<%= product.id %> <%= "deactivated" if product.deactivated %> <%= "exist_in_insales" if product.insales_var_id.present? %>">
+      <tr class="product_id_<%= product.id %> <%="deactivated" if product.deactivated %> <%="exist_in_insales" if product.insales_var_id.present? %>">
 <!--      <tr class="<%#= 'sync' if product.products.present? %>">-->
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= product.id %></td>

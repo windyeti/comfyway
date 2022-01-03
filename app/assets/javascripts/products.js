@@ -51,8 +51,8 @@ $(document).ready(function() {
       success: function(data, textStatus, jqXHR) {
         if (data.status === 'okey') {
           $(data.ids).each(function() {
-            $(".product_id_" + this).addClass('deactivated')
-          }).removeClass('exist_in_insales');
+            $(".product_id_" + this).addClass('deactivated').removeClass('exist_in_insales')
+          });
           $('#products_table :checked, #selectAll').each(function() {
             $(this).prop('checked', false);
           });

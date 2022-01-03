@@ -84,7 +84,7 @@ namespace :p do
   end
 
   task xls: :environment do
-    Services::CreateXlsWithParams.new(distributor: "Elevel").call
+    Services::CreateXlsWithParams.new(distributor: "Swg").call
   end
 
   task uniq: :environment do

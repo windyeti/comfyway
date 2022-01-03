@@ -49,6 +49,8 @@ class Services::CreateXlsWithParams
       @tovs = Product.where(deactivated: @deacivated, insales_var_id: nil).order(:id)
     else
       @tovs = Product.where(distributor: @distributor, deactivated: @deacivated, insales_var_id: nil).order(:id)
+      p "=================="
+      p @tovs.size
     end
 
     check_previous_files_csv
