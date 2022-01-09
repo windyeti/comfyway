@@ -120,13 +120,11 @@ class ProductsController < ApplicationController
     distributor = params[:distributor]
     CreateXlsJob.perform_later(distributor: distributor)
     redirect_to products_path, notice: "CREATE XLS WITH PARAMS OK"
-    # redirect_to products_path, notice: "CREATE CSV WITH PARAMS OK"
   end
 
   def create_csv_update
     CreateCsvUpdateJob.perform_later
     redirect_to products_path, notice: "CREATE CSV Update OK"
-    # redirect_to products_path, notice: "CREATE CSV WITH PARAMS OK"
   end
 
   def import_ledron
@@ -159,8 +157,8 @@ class ProductsController < ApplicationController
   end
 
   def import_insales_xml
-    ImportInsalesXmlJob.perform_later
     redirect_to products_path, notice: 'Запущен процесс Обновление Товаров InSales'
+    ImportInsalesXmlJob.perform_later
   end
   #
   # def syncronaize
