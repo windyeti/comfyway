@@ -8,7 +8,7 @@ class Services::GettingProductDistributer::Elevel
     arr_brands_categories =
       [
         {
-          brands: ["Arlight", "Arte Lamp", "Evoluce", "Favourite", "F-PROMO", "Kink Light", "Lumion", "Markslojd", "Novotech", "Odeon Light"],
+          brands: ["Arlight", "Arte Lamp", "Evoluce", "Favourite", "F-PROMO", "Kink Light", "Lumion", "Novotech", "Odeon Light"],
           categories: nil
         },
         {
@@ -139,10 +139,15 @@ class Services::GettingProductDistributer::Elevel
     hash_id_quantity = get_id_quantity(quantities)
     hash_id_category = get_id_category(categories)
 
+
+
     products.each do |product|
       id = product["id"]
       p1 = get_p1(product)
       id_cat = product["categoryId"]
+
+      # товара не берем, условия для исключения товара
+      next if exclude_product?(id_cat, hash_id_category, p1)
 
       data = {
         fid:  "#{product["id"]}___elevel",
@@ -170,6 +175,22 @@ class Services::GettingProductDistributer::Elevel
       Product.create(data)
     end
     p '---------'
+  end
+
+  def exclude_product?(id_cat, hash_id_category, p1)
+    arr_exclude_props = [
+                          '(более 5000)', '5000', '5300', '5400', '5500', '5600', '5700', '5750', '5800', '6000', '6250',
+                          '6500', '7000', '7300', '7500', '7700', '8000', '9000', '10000', '11000', '15000'
+                        ].map {|value| "Цветовая температура: #{value}"}
+
+    arr_exclude_cattgories =  [
+                                'Кабель для связи и передачи данных', 'Клемма безвинтовая (розеточная)',
+                                'Модуль светодиодный (LED)', 'Одно- и многополюсная клемма/ клеммная колодка',
+                                'Светильник для освещения высоких пролетов (хайбей)',
+                                'Светильник переносной (ручной)', 'Светодиод одиночный (LED)',
+                                'Фонарь ручной', 'Фонарь-прожектор переносной (ручной)'
+                              ]
+    (p1 & arr_exclude_props).present? || (hash_id_category[id_cat] & arr_exclude_cattgories).present?
   end
 
   def get_p1(product)

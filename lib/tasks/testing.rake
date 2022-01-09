@@ -1,4 +1,21 @@
 namespace :p do
+  task arli: :environment do
+    response = RestClient.get("https://assets.transistor.ru")
+    p response.code
+    # p response.body
+    p response.cookies
+    p response.cookie_jar
+    payload = {
+      loginUser: "svet.online.store@yandex.ru",
+      loginPass: "QAZwsx123&",
+      cookies: {:PHPSESSID => response.cookies["PHPSESSID"]}
+    }
+    response2 = RestClient.post("https://assets.transistor.ru?t=1597644003", payload.to_json)
+    p response2.code
+    p response2.body
+    p response2.cookies
+  end
+
   task t: :environment do
     auth = 'Basic ' + Base64.strict_encode64("#{Rails.application.credentials.krokus[:user]}:#{Rails.application.credentials.krokus[:password]}").chomp
     url = 'http://swop.krokus.ru/ExchangeBase/hs/catalog/getidbyarticles'
@@ -45,6 +62,13 @@ namespace :p do
     }
 
 
+  end
+
+  task qqq: :environment do
+    download_link = "https://assets.transistor.ru/catalog/v3/sites/products.json?brandID=4&categoryID=668"
+    p download_path = "#{Rails.public_path}/test.json"
+    download_response = open(download_link).read()
+    IO.copy_stream(download_response, download_path)
   end
 
   task sss: :environment do
