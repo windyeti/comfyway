@@ -25,32 +25,32 @@ every 1.day, :at => '21:30' do
 end
 
 # создание файлов импорта с новыми товарами поставщиков для инсайлс
-every 1.day, :at => '20:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Maytoni')"
-end
+# every 1.day, :at => '18:00' do
+#   runner "CreateXlsJob.perform_later(distributor: 'Maytoni')"
+# end
 
-every 1.day, :at => '22:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Mantra')"
-end
+# every 1.day, :at => '20:00' do
+#   runner "CreateXlsJob.perform_later(distributor: 'Mantra')"
+# end
 
-every 1.day, :at => '00:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Lightstar')"
-end
+# every 1.day, :at => '22:00' do
+#   runner "CreateXlsJob.perform_later(distributor: 'Lightstar')"
+# end
+
+# every 1.day, :at => '00:00' do
+#   runner "CreateXlsJob.perform_later(distributor: 'Ledron')"
+# end
 
 every 1.day, :at => '02:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Ledron')"
-end
-
-every 1.day, :at => '04:00' do
   runner "CreateXlsJob.perform_later(distributor: 'Swg')"
 end
 
-every 1.day, :at => '06:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Elevel')"
-end
+# every 1.day, :at => '04:00' do
+#   runner "CreateXlsJob.perform_later(distributor: 'Elevel')"
+# end
 
 # создание файла апдейта остатков и цен в инсайлс
-every 1.day, :at => '06:00' do
+every 1.day, :at => '07:30' do
   runner "CreateCsvUpdateJob.perform_later"
 end
 

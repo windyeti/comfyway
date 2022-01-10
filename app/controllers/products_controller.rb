@@ -75,7 +75,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def delete_selected
+  def deactivated_selected
     @products = Product.find(params[:ids])
     @products.each do |product|
       insales_product_id = product.insales_id

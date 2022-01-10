@@ -1,4 +1,26 @@
 namespace :p do
+  task get: :environment do
+    @agent = Mechanize.new
+    @agent.post('https://assets.transistor.ru/', {:loginUser => 'svet.online.store@yandex.ru', :loginPass => 'QAZwsx123&', :multipart => true}) #вошли
+
+    url = 'https://assets.transistor.ru/price/v3/sites/price.json'
+    response = @agent.get(url)
+    File.open("#{Rails.public_path}/argliht_json.txt", "a+") do |f|
+      f.write JSON.parse(response.body)
+    end
+    # p JSON.parse(response.body)
+
+    puts 'finish'
+  end
+  task get: :environment do
+    @agent = Mechanize.new
+    @agent.post('https://assets.transistor.ru/', {:loginUser => 'svet.online.store@yandex.ru', :loginPass => 'QAZwsx123&', :multipart => true}) #вошли
+
+    url = 'https://assets.transistor.ru/price/v3/sites/price.json'
+    response = @agent.get(url)
+    p JSON.parse(response.body)
+  end
+
   task arli: :environment do
     response = RestClient.get("https://assets.transistor.ru")
     p response.code
@@ -8,9 +30,8 @@ namespace :p do
     payload = {
       loginUser: "svet.online.store@yandex.ru",
       loginPass: "QAZwsx123&",
-      cookies: {:PHPSESSID => response.cookies["PHPSESSID"]}
     }
-    response2 = RestClient.post("https://assets.transistor.ru?t=1597644003", payload.to_json)
+    response2 = RestClient.post("https://assets.transistor.ru", payload.to_json, {cookies: {:PHPSESSID => response.cookies["PHPSESSID"]}})
     p response2.code
     p response2.body
     p response2.cookies

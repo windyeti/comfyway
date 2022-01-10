@@ -31,7 +31,7 @@ $(document).ready(function() {
   });
 
 
-  $('#deleteAll').click(function(event) {
+  $('#deactivatedAll').click(function(event) {
     // event.preventDefault();
     var array = [];
     $('#products_table :checked').each(function() {
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: '/products/delete_selected' + '.json',
+      url: '/products/deactivated_selected' + '.json',
       // url: $(this).attr('href') + '.json',
       data: {
         ids: array

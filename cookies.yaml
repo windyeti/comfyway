@@ -1,0 +1,15 @@
+---
+assets.transistor.ru:
+  "/":
+    PHPSESSID: !ruby/object:Mechanize::Cookie
+      name: PHPSESSID
+      value: brjedsdf7im7neldckjh2f8fp7
+      domain: assets.transistor.ru
+      for_domain: false
+      path: "/"
+      secure: false
+      httponly: false
+      expires: 
+      max_age: 
+      created_at: &1 2022-01-10 15:16:26.212158000 +03:00
+      accessed_at: *1

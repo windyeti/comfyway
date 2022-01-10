@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       post :price_edit
       post :price_update
       get :update_distributor
-      post :delete_selected
+      post :deactivated_selected
       post :show_selected
     end
   end
