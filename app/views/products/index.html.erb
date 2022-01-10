@@ -52,7 +52,10 @@
                       method: :post %>
           <%= link_to "Создать CSV Update", create_csv_update_products_path, class: "btn-primary btn form-control-xs" %>
           <%= link_to "Скачать CSV Update", "/product_update_output.csv", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Import InSales Product", import_insales_xml_products_path, class: "btn-primary btn form-control-xs" %>
+          <%= link_to "Import InSales Product", import_insales_xml_products_path,
+                      remote: true,
+                      data: {type: :js},
+                      class: "btn-primary btn form-control-xs" %>
         </div>
       </div>
     </div>

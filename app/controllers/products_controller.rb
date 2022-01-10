@@ -157,8 +157,11 @@ class ProductsController < ApplicationController
   end
 
   def import_insales_xml
-    redirect_to products_path, notice: 'Запущен процесс Обновление Товаров InSales'
     ImportInsalesXmlJob.perform_later
+    respond_to do |format|
+      format.js
+    end
+    # redirect_to products_path, notice: 'Запущен процесс Обновление Товаров InSales'
   end
   #
   # def syncronaize

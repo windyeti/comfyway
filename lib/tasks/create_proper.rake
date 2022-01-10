@@ -25,7 +25,9 @@
 								case response.code
 								when 201
 									puts 'sleep 0.2-201 - сохранили'
-# 									puts response
+									File.open("#{Rails.public_path}/new_props.txt", "a+") do |f|
+										f.write "Название нового параметра: #{value} --- #{Time.now}"
+									end
 								when 422
 									puts '422'
 								else
