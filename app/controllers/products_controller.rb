@@ -4,21 +4,20 @@ class ProductsController < ApplicationController
   def index
     if params[:q]
       @params = params[:q]
-      # @params[:combinator] = 'or'
 
-      @params.delete(:abc_id_not_null) if @params[:abc_id_not_null] == '0'
-      @params.delete(:abc_id_null) if @params[:abc_id_null] == '0'
+      @params.delete(:deactivated_true) if @params[:deactivated_true] == '0'
+      @params.delete(:deactivated_false) if @params[:deactivated_false] == '0'
 
       # делаем доступные параметры фильтров, чтобы их поместить их в параметр q «кнопки создать csv по фильтру»
       @params_q_to_csv = @params.permit(:sku_or_title_cont,
                                         :distributor_eq,
                                         :quantity_eq,
+                                        :quantity_not_eq,
+                                        :quantity_add_not_eq,
                                         :price_gteq,
                                         :price_lteq,
-                                        :abc_id_eq,
-                                        :faro_id_eq,
-                                        :abc_id_or_faro_id_not_null,
-                                        :abc_id_and_faro_id__null,
+                                        :deactivated_true,
+                                        :deactivated_false
                                         )
     else
       @params = []
