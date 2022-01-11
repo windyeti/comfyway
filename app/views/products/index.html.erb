@@ -66,10 +66,10 @@
     <%= f.search_field :title_or_sku_cont, placeholder: 'Название, Артикул', class: "form-control form-control-xs"%>
     <%= f.search_field :quantity_eq, placeholder: 'остаток', class: "form-control form-control-xs"%>
     <%= f.search_field :quantity_not_eq, placeholder: 'остаток не равен', class: "form-control form-control-xs"%>
-    <%= f.search_field :quantity_add_not_eq, placeholder: 'остаток доп. склад не равен', class: "form-control form-control-xs"%>
+    <%= f.search_field :quantity_add_not_eq, placeholder: 'доп. склад не равен', class: "form-control form-control-xs"%>
     <%#= f.collection_select :quantity_eq, [[0, 0], [10, 10]], :first, :last, {include_blank: "Остаток"}, class: "form-control form-control-xs", style: "width: 120px;" %>
-    <div class="form-group ml-2 button_group">
-      <%= f.search_field :price_gteq, placeholder: 'Цена от', class: "form-control form-control-xs mr-2"%>
+    <div class="form-group button_group">
+      <%= f.search_field :price_gteq, placeholder: 'Цена от', class: "form-control form-control-xs"%>
       <%= f.search_field :price_lteq, placeholder: 'Цена до', class: "form-control form-control-xs"%>
     </div>
 
@@ -119,8 +119,9 @@
       <th>Название</th>
       <th>Актуальность InSales</th>
       <th>Актуальность Поставщик</th>
-      <th><%= sort_link(@search, :quantity) %></th>
-      <th><%= sort_link(@search, :price) %></th>
+      <th><%= sort_link(@search, :quantity, "Остаток") %></th>
+      <th><%= sort_link(@search, :quantity_add, "Доп. склад") %></th>
+      <th><%= sort_link(@search, :price, "Цена") %></th>
       <th>Поставщик</th>
       <th></th>
     </tr>
@@ -142,6 +143,7 @@
         <td><%= product.insales_check %></td>
         <td><%= product.check %></td>
         <td><%= best_in_place product, :quantity, :as => :input %></td>
+        <td><%= best_in_place product, :quantity_add, :as => :input %></td>
         <td><%= best_in_place product, :price, :as => :input %></td>
         <td><%= product.distributor %></td>
         <td><%= link_to '<span class="oi oi-x"></span>'.html_safe, product, method: :delete, data: { type: :json, confirm: "Удалить? #{product.title}" }, remote: true, class: "btn btn-danger form-control-xs" %></td>
