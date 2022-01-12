@@ -32,8 +32,12 @@ class ProductsController < ApplicationController
     @products = @search.result.paginate(page: params[:page], per_page: 100)
 
     if params['otchet_type'] == 'selected'
-      Services::CsvSelected.call(@search_id_by_q)
-      redirect_to '/product_selected.csv'
+      CreateCsvSelectedJob.perform_later(@search_id_by_q)
+      # Services::CsvSelected.call(@search_id_by_q)
+      respond_to do |format|
+        format.js
+      end
+      # redirect_to '/product_selected.csv'
     end
   end
 

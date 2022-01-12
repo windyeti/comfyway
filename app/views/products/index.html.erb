@@ -93,7 +93,12 @@
       <% f.submit 'Поиск', class: 'btn btn-info' %>
       <%= button_tag(type: 'submit', :class => "btn btn-info form-control-xs") do %><span class="oi oi-magnifying-glass"></span><% end %>
       <%= link_to '<span class="oi oi-reload"></span>'.html_safe, products_path, class: 'btn btn-outline-dark form-control-xs' %>
-      <%= link_to '<span class="oi oi-list"></span>'.html_safe, products_path(otchet_type: 'selected', q: @params_q_to_csv), title: "Создать файл с выбранными товарами", class: 'btn btn-outline-dark form-control-xs'%>
+      <%= link_to '<span class="oi oi-list"></span>'.html_safe, products_path(otchet_type: 'selected', q: @params_q_to_csv),
+                  remote: true,
+                  data: {type: :js},
+                  title: "Создать файл с выбранными товарами",
+                  class: 'btn btn-outline-dark form-control-xs'%>
+      <%= link_to "Скачать CSV Selected", "/product_selected.csv", class: "btn-secondary btn form-control-xs" %>
     </div>
   <% end %>
 </div>
