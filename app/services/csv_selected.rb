@@ -14,8 +14,8 @@ class Services::CsvSelected
     @tovs = Product.where(id: product_ids).order(:id)
 
     CSV.open(file, 'w') do |writer|
-      headers = ['fid', 'Артикул', 'Название товара', 'Полное описание', 'Производитель', 'Цена продажи', 'Цена старая',
-                 'Остаток', 'Изображения', 'Url', 'Подкатегория 1', 'ID товара в InSales', 'ID варианта товара в InSales']
+      headers = ['fid', 'Артикул', 'Название товара', 'Полное описание', 'Производитель', 'Цена продажи',
+                 'Остаток', 'Остаток доп. склад', 'Изображения', 'Url', 'Корневая', 'ID товара в InSales', 'ID варианта товара в InSales']
 
       writer << headers
       @tovs.each do |pr|
@@ -27,15 +27,15 @@ class Services::CsvSelected
         desc = pr.desc
         distributor = pr.distributor
         price = pr.price
-        oldprice = pr.oldprice
         quantity = pr.quantity
+        quantity_add = pr.quantity_add
         image = pr.image
         url = pr.url
         cat = pr.cat
         insales_id = pr.insales_id
         insales_var_id = pr.insales_var_id
 
-        writer << [fid, sku, title, desc, distributor, price, oldprice, quantity, image, url, cat, insales_id, insales_var_id]
+        writer << [fid, sku, title, desc, distributor, price, quantity, quantity_add, image, url, cat, insales_id, insales_var_id]
       end
     end
 

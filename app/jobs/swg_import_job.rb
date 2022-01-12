@@ -1,4 +1,4 @@
-class SwgJob < ApplicationJob
+class SwgImportJob < ApplicationJob
   queue_as :default
 
   def perform

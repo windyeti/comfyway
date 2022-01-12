@@ -15,7 +15,7 @@
 
 
 # создание и апдейт товаров поставщиков
-# every 1.day, :at => '21:30' do
+# every 1.day, :at => '19:00' do
 #   runner "CreateUpdateProductJob.perform_later"
 # end
 
