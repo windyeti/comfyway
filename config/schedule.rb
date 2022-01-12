@@ -14,6 +14,12 @@
 # end
 
 
+# присвоение новым товарам "ID варианта" из инсайлс
+# + (хотя это можно не делать, так как все уже есть у товаров) получение в приложение остаков по складам из инсайсл
+every 1.day, :at => '18:00' do
+  runner "ImportInsalesXmlJob.perform_later"
+end
+
 # создание и апдейт товаров поставщиков
 # every 1.day, :at => '19:00' do
 #   runner "CreateUpdateProductJob.perform_later"
@@ -23,6 +29,9 @@
 every 1.day, :at => '21:30' do
   runner "CreateInsalesParamsJob.perform_later"
 end
+
+
+
 
 # создание файлов импорта с новыми товарами поставщиков для инсайлс
 # every 1.day, :at => '18:00' do
@@ -49,13 +58,12 @@ end
 #   runner "CreateXlsJob.perform_later(distributor: 'Elevel')"
 # end
 
+
+
+
+
 # создание файла апдейта остатков и цен в инсайлс
 every 1.day, :at => '07:30' do
   runner "CreateCsvUpdateJob.perform_later"
 end
 
-# присвоение новым товарам "ID варианта" из инсайлс
-# + (хотя это можно не делать, так как все уже есть у товаров) получение в приложение остаков по складам из инсайсл
-every 1.day, :at => '07:00' do
-  runner "ImportInsalesXmlJob.perform_later"
-end
