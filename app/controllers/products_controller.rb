@@ -122,16 +122,20 @@ class ProductsController < ApplicationController
   def create_xls_with_params
     distributor = params[:distributor]
     CreateXlsJob.perform_later(distributor: distributor)
-    redirect_to products_path, notice: "CREATE XLS WITH PARAMS OK"
+    respond_to do |format|
+      format.js
+    end
   end
 
   def create_csv_update
     CreateCsvUpdateJob.perform_later
-    redirect_to products_path, notice: "CREATE CSV Update OK"
+    respond_to do |format|
+      format.js
+    end
   end
 
   def import_ledron
-    ActionCable.server.broadcast 'state_process', {distributor: "Ledron", state: "start", message: "Запущен процесс импорта товаров Ledron"}
+    ActionCable.server.broadcast 'status_process', {distributor: "ledron", process: "update_distributor", status: "start", message: "Обновление товаров поставщика Ledron"}
 
     FileUtils.rm_rf(Dir.glob('public/ledron/*.*'))
     uploaded_io = params[:file]
@@ -144,19 +148,22 @@ class ProductsController < ApplicationController
     extend_file = uploaded_io.original_filename.to_s
     # Services::GettingProductDistributer::Ledron.call(path_file, extend_file)
     LedronImportJob.perform_later(path_file, extend_file)
-    # flash[:notice] = 'Задача импорта Товаров Ledron запущена'
-    # redirect_to products_path
+    respond_to do |format|
+      format.js
+    end
   end
 
   def update_distributor
     MaytoniImportJob.perform_later
     MantraImportJob.perform_later
     LightstarImportJob.perform_later
-    SwgJob.perform_later
+    SwgImportJob.perform_later
     ElevelImportJob.perform_later
 
     CreateInsalesParamsJob.perform_later
-    redirect_to products_path
+    respond_to do |format|
+      format.js
+    end
   end
 
   def import_insales_xml
@@ -164,20 +171,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.js
     end
-    # redirect_to products_path, notice: 'Запущен процесс Обновление Товаров InSales'
   end
-  #
-  # def syncronaize
-  #   SyncronaizeJob.perform_later
-  #   flash[:notice] = 'Задача синхронизации каталога запущена'
-  #   redirect_to products_path
-  # end
-  #
-  # def export_csv
-  #   ExportCsvJob.perform_later
-  #   flash[:notice] = 'Задача создания CSV для экспорта запущена'
-  #   redirect_to products_path
-  # end
 
   private
 

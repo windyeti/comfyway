@@ -1,5 +1,5 @@
 class NotificationChannel < ApplicationCable::Channel
   def follow
-    stream_from "state_process"
+    stream_from "status_process"
   end
 end

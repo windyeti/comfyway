@@ -4,33 +4,28 @@ $(document).ready(function() {
       this.perform('follow')
     },
     received: function(data) {
-      if(data.distributor == "Ledron") {
-        if(data.state == "start") {
-          $(".state_process.finish").remove();
-          $('body').prepend(
-            "<div class='state_process start'>" +
-            "<button type='button' class='close'>&#x2715</button>" +
-            "<div class='notification_message'>" + data.message + "</div>"
-            + "</div>");
+      if(data.status == "start") {
+        $(".status_process.finish." + data.distributor + "." + data.process).remove();
 
-          $(".form_import #file").val('');
-          $(".form_import input[type='submit']").attr('disabled', false);
-        }
-
-        if(data.state == "finish") {
-          $(".state_process.start").remove();
-          $('body').prepend(
-            "<div class='state_process finish'>" +
-            "<button type='button' class='close'>&#x2715</button>" +
-            "<div class='notification_message'>" + data.message + "</div>"
-            + "</div>")
-        }
+        $(".form_import #file").val('');
+        $(".form_import input[type='submit']").attr('disabled', true);
       }
-      $(".state_process .close").on('click', function() {
-        $(this).closest('.state_process').remove();
+
+      if(data.status == "finish") {
+        $(".status_process.start." + data.distributor + "." + data.process).remove();
+      }
+
+      var $div = $("<div>").addClass("status_process").addClass(data.status).addClass(data.distributor).addClass(data.process);
+      $('body').prepend($div.html(
+        "<button type='button' class='close'>&#x2715</button>" +
+        "<div class='notification_message'>" + data.message + "</div>"
+      ));
+
+      $(".status_process .close").on('click', function() {
+        $(this).closest('.status_process').remove();
       });
 
-      $(".state_process.finish").delay(5000).hide(0)
+      $(".status_process.finish").delay(5000).hide(0)
     }
   });
 });

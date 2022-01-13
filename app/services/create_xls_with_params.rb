@@ -51,6 +51,9 @@ class Services::CreateXlsWithParams
       @tovs = Product.where(distributor: @distributor, deactivated: @deacivated, insales_var_id: nil).order(:id)
     end
 
+    # прервать если выбрано Ноль товаров
+    return false if @tovs.empty?
+
     check_previous_files_csv
 
     create_csv_prep(PRODUCT_STRUCTURE)
