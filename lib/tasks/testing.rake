@@ -12,6 +12,7 @@ namespace :p do
 
     puts 'finish'
   end
+
   task get: :environment do
     @agent = Mechanize.new
     @agent.post('https://assets.transistor.ru/', {:loginUser => 'svet.online.store@yandex.ru', :loginPass => 'QAZwsx123&', :multipart => true}) #вошли
@@ -94,42 +95,45 @@ namespace :p do
 
   task sss: :environment do
     Product.all.each do |product|
-      product.update(deactivated: true)
+      product.update(deactivated: false)
     end
   end
 
-  task all: :environment do
-    Services::GettingProductDistributer::Maytoni.call
-    Services::GettingProductDistributer::Mantra.call
-    Services::GettingProductDistributer::Lightstar.call
-  end
 
   task maytoni: :environment do
-    Services::GettingProductDistributer::Maytoni.call
+   MaytoniImportJob.perform_later
   end
 
   task swg: :environment do
-    Services::GettingProductDistributer::Swg.call
+    SwgImportJob.perform_later
   end
 
   task mantra: :environment do
-    Services::GettingProductDistributer::Mantra.call
+    MantraImportJob.perform_later
   end
 
   task lightstar: :environment do
-    Services::GettingProductDistributer::Lightstar.call
+    LightstarImportJob.perform_later
   end
 
   task ledron: :environment do
-    Services::GettingProductDistributer::Ledron.call
+    LedronImportJob.perform_later
   end
 
   task elevel: :environment do
-    Services::GettingProductDistributer::Elevel.new.call
+    ElevelImportJob.perform_later
   end
 
   task xls: :environment do
     Services::CreateXlsWithParams.new(distributor: "Swg").call
+  end
+
+  task update_params: :environment do
+    CreateInsalesParamsJob.perform_later
+  end
+
+  task assings_id_var: :environment do
+    IdImportJob.perform_later
   end
 
   task uniq: :environment do

@@ -1,0 +1,162 @@
+.row
+  h2.mt-3.mb-2.col.col-12= @product.title
+
+  .col-md-3
+    h5
+      span.text-muted Fid:
+      span.small<= @product.fid
+  .col-md-3
+    h5
+      span.text-muted Ссылка на страницу у поставщика:
+      - if @product.url.present?
+        span.small<= link_to "страница", @product.url, target: '_blank'
+  .col-md-3
+    h5
+      span.text-muted Ссылка на страницу товара в InSales:
+      - if @product.insales_link.present?
+        span.small<= @product.insales_link
+  .col-md-3
+    h5
+      span.text-muted Артикул:
+      span.small<= @product.sku
+  .col-md-3
+    h5
+      span.text-muted Поставщик:
+      span.small<= @product.distributor
+  .col-12
+    h5
+      span.text-muted Изображения от поставщика:
+      - if @product.image.present?
+        span.small<= @product.image.split(" ").map {|img| "<img style='max-width: 100px' src='#{img}'></img>" }.join("").html_safe
+  .col-md-3
+    h5
+      span.text-muted Изображения в InSales:
+      - if @product.insales_images.present?
+        span.small<= @product.insales_images.split(" ").map {|img| "<img style='max-width: 100px' src='#{img}'></img>" }.join("").html_safe
+  .col-12
+    .row
+      .col-md-2
+        h5
+          span.text-muted Категория:
+          span.small<= @product.cat
+      .col-md-2
+        h5
+          span.text-muted Подкатегория 1:
+          span.small<= @product.cat1
+      .col-md-2
+        h5
+          span.text-muted Подкатегория 2:
+          span.small<= @product.cat2
+      .col-md-2
+        h5
+          span.text-muted Подкатегория 3:
+          span.small<= @product.cat3
+      .col-md-2
+        h5
+          span.text-muted Подкатегория 4:
+          span.small<= @product.cat4
+      .col-md-2
+        h5
+          span.text-muted Подкатегория 5:
+          span.small<= @product.cat5
+  .col-md-2
+    h5
+      span.text-muted Цена:
+      span.small<= @product.price
+  .col-md-2
+    h5
+      span.text-muted Цена закупки:
+      span.small<= @product.purchase_price
+  .col-md-2
+    h5
+      span.text-muted Старая цена:
+      span.small<= @product.oldprice
+  .col-md-2
+    h5
+      span.text-muted Остаток:
+      span.small<= @product.quantity
+  .col-md-2
+    h5
+      span.text-muted Доп. склад:
+      span.small<= @product.quantity_add
+  .col-12
+    h5
+      span.text-muted Параметры:
+      span.small<= @product.p1
+  .col-12
+    h5
+      span.text-muted Описание:
+      span.small<= @product.desc
+  .col-md-3
+    h5
+      span.text-muted ID товара в InSales:
+      span.small<= @product.insales_id
+  .col-md-3
+    h5
+      span.text-muted ID варианта в InSales:
+      span.small<= @product.insales_var_id
+  .col-md-3
+    h5
+      span.text-muted Актуальность у поставщика:
+      span.small<= @product.check
+  .col-md-3
+    h5
+      span.text-muted Актуальность в InSales:
+      span.small<= @product.insales_check
+  .col-md-3
+    h5
+      span.text-muted Штрих-код:
+      span.small<= @product.barcode
+  .col-md-3
+    h5
+      span.text-muted Видео:
+      -if @product.video.present?
+        span.small<= link_to "Видео", @product.video
+  .col-md-3
+    h5
+      span.text-muted Валюта:
+      span.small<= @product.currency
+  .col-md-3
+    h5
+      span.text-muted Производитель:
+      span.small<= @product.vendor
+  .col-md-3
+    h5
+      span.text-muted Manual:
+      span.small<= @product.manual
+  .col-md-3
+    h5
+      span.text-muted Preview_3d:
+      span.small<= @product.preview_3d
+  .col-md-3
+    h5
+      span.text-muted Foto:
+      span.small<= @product.foto
+  .col-md-3
+    h5
+      span.text-muted Draft:
+      span.small<= @product.draft
+  .col-md-3
+    h5
+      span.text-muted Model_3d:
+      span.small<= @product.model_3d
+  .col-md-3
+    h5
+      span.text-muted Manuals:
+      span.small<= @product.manuals
+  .col-md-3
+    h5
+      span.text-muted Дата прибытия:
+      span.small<= @product.date_arrival
+  .col-md-3
+    h5
+      span.text-muted Краткое описание:
+      span.small<= @product.sdesc
+  .col-md-3
+    h5
+      span.text-muted Deactivated:
+      span.small<= @product.deactivated
+  .col-md-3
+    h5
+      span.text-muted Вес:
+      span.small<= @product.weight

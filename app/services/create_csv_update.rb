@@ -5,6 +5,7 @@ class Services::CreateCsvUpdate
     insales_var_id: 'ID варианта',
     sku: 'Артикул',
     title: 'Название товара',
+    image: 'Изображения',
     price: 'Цена продажи',
     purchase_price: 'Цена закупки',
     quantity: 'Остаток',

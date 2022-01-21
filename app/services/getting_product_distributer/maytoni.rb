@@ -59,6 +59,7 @@ class Services::GettingProductDistributer::Maytoni
         end
       end
 
+      quantity = hash_arr_params["Остаток"].join("").present? ? (hash_arr_params["Остаток"].join("").to_i > 0 ? hash_arr_params["Остаток"].join("") : 0) : 0
       pp data = {
         fid: hash_arr_params["Артикул"].join("") + "___maytoni",
         title: hash_arr_params["Наименование"].join(""),
@@ -71,7 +72,7 @@ class Services::GettingProductDistributer::Maytoni
         cat1: hash_arr_params["Категория"].join(""),
         barcode: hash_arr_params["Штрихкод"].join(""),
         price: hash_arr_params["Цена"].join("").present? ? hash_arr_params["Цена"].join("") : 0,
-        quantity: hash_arr_params["Остаток"].join("").present? ? (hash_arr_params["Остаток"].join("") > 0 ? hash_arr_params["Остаток"].join("") : 0) : 0,
+        quantity: quantity,
         currency: hash_arr_params["Валюта"].join(""),
         weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join("") : nil,
         p1: params,

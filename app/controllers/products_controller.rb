@@ -9,7 +9,9 @@ class ProductsController < ApplicationController
       @params.delete(:deactivated_false) if @params[:deactivated_false] == '0'
 
       # делаем доступные параметры фильтров, чтобы их поместить их в параметр q «кнопки создать csv по фильтру»
-      @params_q_to_csv = @params.permit(:sku_or_title_cont,
+      @params_q_to_csv = @params.permit(
+                                        :title_or_sku_cont,
+                                        :check_eq,
                                         :distributor_eq,
                                         :quantity_eq,
                                         :quantity_not_eq,
@@ -160,7 +162,6 @@ class ProductsController < ApplicationController
     SwgImportJob.perform_later
     ElevelImportJob.perform_later
 
-    CreateInsalesParamsJob.perform_later
     respond_to do |format|
       format.js
     end
