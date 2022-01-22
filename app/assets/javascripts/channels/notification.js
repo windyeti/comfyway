@@ -27,10 +27,10 @@ $(document).ready(function() {
 
       var $div = $("<div>").addClass("status_process").addClass(data.status).addClass(data.distributor).addClass(data.process);
       $('body').prepend($div.html(
-        "<button type='button' class='close'>&#x2715</button>" +
         "<div class='notification_message'>" +
           "<div class='progress'></div>" +
           "<div class='message_process'>" + data.message + "</div>" +
+          "<button type='button' class='close'><span class='oi oi-x'></span></button>" +
         "</div>"
       ));
 
@@ -38,7 +38,7 @@ $(document).ready(function() {
         $(this).closest('.status_process').remove();
       });
 
-      $(".status_process.finish").delay(5000).hide(0).remove()
+      $(".status_process.finish").delay(5000).fadeOut('slow', this.remove)
     }
   });
 });

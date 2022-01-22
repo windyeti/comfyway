@@ -14,31 +14,31 @@
 # end
 
 
+
 # присвоение новым товарам "ID варианта" из инсайлс
 # + (хотя это можно не делать, так как все уже есть у товаров) получение в приложение остаков по складам из инсайсл
-every 1.day, :at => '18:00' do
+every 1.day, :at => '07:00' do
   runner "ImportInsalesXmlJob.perform_later"
 end
 
-# создание и апдейт товаров поставщиков
-# every 1.day, :at => '19:00' do
-#   runner "CreateUpdateProductJob.perform_later"
-# end
+# создание файла апдейта остатков и цен в инсайлс
+every 1.day, :at => '07:30' do
+  runner "CreateCsvUpdateJob.perform_later"
+end
 
 # созданеи параметров в инсайсл для новых товаров
-every 1.day, :at => '21:30' do
+every 1.day, :at => '08:00' do
   runner "CreateInsalesParamsJob.perform_later"
 end
 
 
-
-
+# ---------------------------
 # создание файлов импорта с новыми товарами поставщиков для инсайлс
-# every 1.day, :at => '18:00' do
+# every 1.day, :at => '20:00' do
 #   runner "CreateXlsJob.perform_later(distributor: 'Maytoni')"
 # end
 
-# every 1.day, :at => '20:00' do
+# every 1.day, :at => '21:00' do
 #   runner "CreateXlsJob.perform_later(distributor: 'Mantra')"
 # end
 
@@ -46,24 +46,24 @@ end
 #   runner "CreateXlsJob.perform_later(distributor: 'Lightstar')"
 # end
 
-# every 1.day, :at => '00:00' do
+# every 1.day, :at => '23:00' do
 #   runner "CreateXlsJob.perform_later(distributor: 'Ledron')"
 # end
 
-every 1.day, :at => '02:00' do
+every 1.day, :at => '00:00' do
   runner "CreateXlsJob.perform_later(distributor: 'Swg')"
 end
 
-# every 1.day, :at => '04:00' do
+# every 1.day, :at => '01:00' do
 #   runner "CreateXlsJob.perform_later(distributor: 'Elevel')"
 # end
+# ---------------------------
 
-
-
-
-
-# создание файла апдейта остатков и цен в инсайлс
-every 1.day, :at => '07:30' do
-  runner "CreateCsvUpdateJob.perform_later"
-end
+# ==============================
+# Update Product Distributor
+# Ledron -- руками днем
+# every 1.day, :at => '03:00' do
+#   runner "CreateUpdateProductJob.perform_later"
+# end
+# ==============================
 

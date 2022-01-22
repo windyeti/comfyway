@@ -256,7 +256,6 @@ class Services::GettingProductDistributer::Elevel
     hash_id_quantity = get_id_quantity(quantities)
 
     products.each do |product|
-      pp product
       id = product["id"]
       fid = "#{product["id"]}___elevel"
       product_db = Product.find_by(fid: fid)

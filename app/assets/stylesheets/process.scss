@@ -4,7 +4,10 @@
   font-size: 60%;
   color: #fff;
   .close {
-    float: right;
+    font-size: 70%;
+    position: absolute;
+    left: 3px;
+    top: 3px;
   }
   .notification_message {
     padding: 5px;
