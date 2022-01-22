@@ -38,7 +38,7 @@ $(document).ready(function() {
         $(this).closest('.status_process').remove();
       });
 
-      $(".status_process.finish").delay(5000).remove()
+      $(".status_process.finish").delay(5000).hide(0).remove()
     }
   });
 });

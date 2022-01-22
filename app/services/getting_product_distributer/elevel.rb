@@ -256,10 +256,11 @@ class Services::GettingProductDistributer::Elevel
     hash_id_quantity = get_id_quantity(quantities)
 
     products.each do |product|
+      pp product
       id = product["id"]
       fid = "#{product["id"]}___elevel"
-      product = Product.find_by(fid: fid)
-      product.update(
+      product_db = Product.find_by(fid: fid)
+      product_db.update(
         price: hash_id_price[id][:price_basic],
         purchase_price: hash_id_price[id][:price],
         image: product["images"].map {|image| image["link"]}.join(" "),
