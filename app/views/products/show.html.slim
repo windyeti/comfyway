@@ -14,7 +14,7 @@
     h5
       span.text-muted Ссылка на страницу товара в InSales:
       - if @product.insales_link.present?
-        span.small<= @product.insales_link
+        span.small<= link_to "страница", @product.insales_link, target: '_blank'
   .col-md-3
     h5
       span.text-muted Артикул:

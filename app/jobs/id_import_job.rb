@@ -18,7 +18,7 @@ class IdImportJob < ApplicationJob
                         insales_id: row["ID товара"],
                         insales_var_id: row["ID варианта"],
                         insales_link: row["URL"],
-                        image: row["Изображения"],
+                        insales_images: row["Изображения"],
                         quantity: row["Остаток"],
                         desc: row["Полное описание"]
                         )
