@@ -22,6 +22,7 @@ class Services::ImportInsalesXml
         insales_check: true
       }
       pp data_update = {
+        insales_link: pr.xpath("url").text,
         desc: pr.xpath("description").text,
         image: pr.xpath("picture").map(&:text).join(' '),
         quantity: pr.xpath("quantity").text.to_f,
