@@ -99,13 +99,9 @@ namespace :p do
     end
   end
 
-  task qwe: :environment do
-    begin
-      retries ||= 0
-      puts "try ##{ retries }"
-      raise "the roof"
-    rescue
-      retry if (retries += 1) < 3
+  task nil_id: :environment do
+    Product.all.each do |product|
+      product.update(insales_id: nil, insales_var_id: nil)
     end
   end
 
