@@ -93,7 +93,12 @@ class Services::GettingProductDistributer::Maytoni
       block = proc { |response|
         f.write response.body.force_encoding('UTF-8')
       }
-      RestClient::Request.new(method: :get, url: url, block_response: block).execute
+      begin
+        attampts ||= 0
+        RestClient::Request.new(method: :get, url: url, block_response: block).execute
+      rescue
+        retry if (retries += 1) < 3
+      end
     }
     "http://164.92.252.76/aws/#{(filename)}"
   end

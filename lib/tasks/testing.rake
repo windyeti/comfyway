@@ -99,6 +99,16 @@ namespace :p do
     end
   end
 
+  task qwe: :environment do
+    begin
+      retries ||= 0
+      puts "try ##{ retries }"
+      raise "the roof"
+    rescue
+      retry if (retries += 1) < 3
+    end
+  end
+
 
   task maytoni: :environment do
    MaytoniImportJob.perform_later
