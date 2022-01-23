@@ -108,6 +108,7 @@ class Services::GettingProductDistributer::Swg
         cat2: cat2,
         cat3: cat3,
         price: price,
+        purchase_price: 0,
         quantity: quantity,
         p1: params.join(" --- "),
         video: row["\"Видео обзор (ссылка на YouTube)\""] ? row["\"Видео обзор (ссылка на YouTube)\""].gsub(/"/, "") : nil,

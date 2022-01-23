@@ -62,8 +62,8 @@ end
 # ==============================
 # Update Product Distributor
 # Ledron -- руками днем
-# every 1.day, :at => '03:00' do
-#   runner "CreateUpdateProductJob.perform_later"
-# end
+every 1.day, :at => '03:00' do
+  runner "CreateUpdateProductJob.perform_later"
+end
 # ==============================
 

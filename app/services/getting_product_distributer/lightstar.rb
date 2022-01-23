@@ -54,6 +54,7 @@ class Services::GettingProductDistributer::Lightstar
         cat2: cats[1],
         cat3: cats[2],
         price: doc_offer.xpath("price") ? doc_offer.xpath("price").text : 0,
+        purchase_price: 0,
         quantity: sku_quantity[hash_arr_params["Артикул"].join("").gsub(/\s$/, "")] ? sku_quantity[hash_arr_params["Артикул"].join("").gsub(/\s$/, "")][:quantity] : 0,
         barcode: doc_offer.xpath("barcode") ? doc_offer.xpath("barcode").text : nil,
         desc: nil,

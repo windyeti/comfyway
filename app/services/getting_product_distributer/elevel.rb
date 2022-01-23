@@ -166,7 +166,7 @@ class Services::GettingProductDistributer::Elevel
         cat3: hash_id_category[id_cat][2],
         cat4: hash_id_category[id_cat][3],
         price: hash_id_price[id][:price_basic],
-        purchase_price: hash_id_price[id][:price],
+        purchase_price: hash_id_price[id][:price].present? ? hash_id_price[id][:price] : 0,
         quantity: hash_id_quantity[id][:stockamount],
         quantity_add: hash_id_quantity[id][:stockamount_add],
         p1: p1.join(" --- "),
@@ -261,7 +261,7 @@ class Services::GettingProductDistributer::Elevel
       product_db = Product.find_by(fid: fid)
       product_db.update(
         price: hash_id_price[id][:price_basic],
-        purchase_price: hash_id_price[id][:price],
+        purchase_price: hash_id_price[id][:price].present? ? hash_id_price[id][:price] : 0,
         image: product["images"].map {|image| image["link"]}.join(" "),
         quantity: hash_id_quantity[id][:stockamount],
         quantity_add: hash_id_quantity[id][:stockamount_add],

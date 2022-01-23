@@ -40,6 +40,7 @@ class Services::GettingProductDistributer::Mantra
         cat1: cats[0],
         cat2: cats[1],
         price: doc_offer.xpath("price") ? doc_offer.xpath("price").text : 0,
+        purchase_price: 0,
         quantity: hash_arr_params["Остаток"] ? hash_arr_params["Остаток"].join("") : 0,
         barcode: doc_offer.xpath("barcode") ? doc_offer.xpath("barcode").text : nil,
         desc: doc_offer.xpath("description") ? doc_offer.xpath("description").text.gsub("\n", " ") : nil,

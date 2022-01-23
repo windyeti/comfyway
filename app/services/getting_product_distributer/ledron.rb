@@ -70,7 +70,7 @@ class Services::GettingProductDistributer::Ledron
         cat: "Ledron",
         cat1: hash_arr_params["Категория"].join(", "),
         price: hash_arr_params["Цена"].join(", ").present? ? hash_arr_params["Цена"].join(", ") : 0,
-        purchase_price: hash_arr_params["Закупочная цена"].join(", "),
+        purchase_price: hash_arr_params["Закупочная цена"].join(", ").present? ? hash_arr_params["Закупочная цена"].join(", ") : 0,
         currency: hash_arr_params["Валюта"].join(", "),
         mtitle: hash_arr_params["Заголовок"].join(", "),
         mkeywords: hash_arr_params["META Keywords"].join(", "),
