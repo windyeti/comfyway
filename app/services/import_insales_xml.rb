@@ -14,7 +14,6 @@ class Services::ImportInsalesXml
 
       pp data_first_update = {
         insales_link: pr.xpath("url").text,
-        desc: pr.xpath("description").text,
         insales_images: pr.xpath("picture").map(&:text).join(' '),
         quantity: pr.xpath("quantity").text.to_f,
         insales_id: pr["group_id"],
