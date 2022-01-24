@@ -53,7 +53,9 @@ class Services::GettingProductDistributer::Maytoni
       (1..8).each do |num|
         row.each do |item|
           if item[0] == "Фото#{num}" && item[1].present?
-            p photo = get_image_aws(item[1]) if item[1].match(/onec-dev.s3/)
+            photo = item[1]
+            photo = get_image_aws(item[1]) if item[1].match(/onec-dev.s3/)
+            p photo
             photos << photo unless photo.nil?
           end
         end
