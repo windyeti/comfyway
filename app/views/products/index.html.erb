@@ -64,47 +64,44 @@
       </div>
     </div>
   </div>
-  <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
-    <%= f.collection_select :distributor_eq, Product.all.order('distributor ASC').map {|product| [product.distributor, product.distributor]}.uniq, :first, :last, {include_blank: "Поставщики"}, class: "form-control form-control-xs" , style: "max-width: 150px;" %>
+  <%#= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
+    <%#= f.collection_select :distributor_eq, Product.all.order('distributor ASC').map {|product| [product.distributor, product.distributor]}.uniq, :first, :last, {include_blank: "Поставщики"}, class: "form-control form-control-xs" , style: "max-width: 150px;" %>
     <%#= f.search_field :id_eq, placeholder: 'ID', class: "form-control form-control-xs"%>
-    <%= f.search_field :title_or_sku_cont, placeholder: 'Название, Артикул', class: "form-control form-control-xs"%>
-    <%= f.search_field :quantity_eq, placeholder: 'остаток', class: "form-control form-control-xs"%>
-    <%= f.search_field :quantity_not_eq, placeholder: 'остаток не равен', class: "form-control form-control-xs"%>
-    <%= f.search_field :quantity_add_not_eq, placeholder: 'доп. склад не равен', class: "form-control form-control-xs"%>
+    <%#= f.search_field :title_or_sku_cont, placeholder: 'Название, Артикул', class: "form-control form-control-xs"%>
+    <%#= f.search_field :quantity_eq, placeholder: 'остаток', class: "form-control form-control-xs"%>
+    <%#= f.search_field :quantity_not_eq, placeholder: 'остаток не равен', class: "form-control form-control-xs"%>
+    <%#= f.search_field :quantity_add_not_eq, placeholder: 'доп. склад не равен', class: "form-control form-control-xs"%>
     <%#= f.collection_select :quantity_eq, [[0, 0], [10, 10]], :first, :last, {include_blank: "Остаток"}, class: "form-control form-control-xs", style: "width: 120px;" %>
-    <%= f.collection_select :check_eq, Product.all.map {|product| [product.check, product.check]}.uniq, :first, :last, {include_blank: "Статус поставщика"}, class: "form-control form-control-xs", style: "width: 120px;" %>
-    <div class="form-group button_group">
-      <%= f.search_field :price_gteq, placeholder: 'Цена от', class: "form-control form-control-xs"%>
-      <%= f.search_field :price_lteq, placeholder: 'Цена до', class: "form-control form-control-xs"%>
-    </div>
+    <%#= f.collection_select :check_eq, Product.all.map {|product| [product.check, product.check]}.uniq, :first, :last, {include_blank: "Статус поставщика"}, class: "form-control form-control-xs", style: "width: 120px;" %>
+<!--    <div class="form-group button_group">-->
+      <%#= f.search_field :price_gteq, placeholder: 'Цена от', class: "form-control form-control-xs"%>
+      <%#= f.search_field :price_lteq, placeholder: 'Цена до', class: "form-control form-control-xs"%>
+<!--    </div>-->
 
-    <div class="dropdown">
-      <% attrs = [["deactivated_true", "Deactivated"], ["deactivated_false", "Activated"]] %>
-      <% head = attrs.map {|attr| attr[1] if @search.send(attr[0].to_sym) }.reject(&:nil?) %>
-      <button class="btn btn-outline-secondary dropdown-toggle form-control-xs" type="button" data-toggle="dropdown">
-        <%= head.present? ? head.join(', ') : "Все товары" %>
-      </button>
-      <ul class="dropdown-menu">
-        <% attrs.each do |attr| %>
-          <li class="dropdown-input dropdown-item">
-            <%= check_box_tag("q[#{attr[0]}]", 1, @search.send(attr[0].to_sym))%>
-            <%= attr[1] %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+<!--    <div class="dropdown">-->
+      <%# attrs = [["deactivated_true", "Deactivated"], ["deactivated_false", "Activated"]] %>
+      <%# head = attrs.map {|attr| attr[1] if @search.send(attr[0].to_sym) }.reject(&:nil?) %>
+<!--      <button class="btn btn-outline-secondary dropdown-toggle form-control-xs" type="button" data-toggle="dropdown">-->
+        <%#= head.present? ? head.join(', ') : "Все товары" %>
+<!--      </button>-->
+<!--      <ul class="dropdown-menu">-->
+        <%# attrs.each do |attr| %>
+<!--          <li class="dropdown-input dropdown-item">-->
+            <%#= check_box_tag("q[#{attr[0]}]", 1, @search.send(attr[0].to_sym))%>
+            <%#= attr[1] %>
+<!--          </li>-->
+        <%# end %>
+<!--      </ul>-->
+<!--    </div>-->
 
-    <div class="form-group ml-2 button_group">
-      <% f.submit 'Поиск', class: 'btn btn-info' %>
-      <%= button_tag(type: 'submit', :class => "btn btn-info form-control-xs") do %><span class="oi oi-magnifying-glass"></span><% end %>
-      <%= link_to '<span class="oi oi-reload"></span>'.html_safe, products_path, class: 'btn btn-outline-dark form-control-xs' %>
-      <%= link_to '<span class="oi oi-list"></span>'.html_safe, products_path(otchet_type: 'selected', q: @params_q_to_csv),
-                  remote: true,
-                  title: "Создать файл с выбранными товарами",
-                  class: 'btn btn-outline-dark form-control-xs'%>
-      <%= link_to "Скачать CSV Selected", "/product_selected.csv", class: "btn-secondary btn form-control-xs" %>
-    </div>
-  <% end %>
+<!--    <div class="form-group ml-2 button_group">-->
+      <%# f.submit 'Поиск', class: 'btn btn-info' %>
+<!--      <%#= button_tag(type: 'submit', :class => "btn btn-info form-control-xs") do %><span class="oi oi-magnifying-glass"></span><%# end %>-->
+      <%#= link_to '<span class="oi oi-reload"></span>'.html_safe, products_path, class: 'btn btn-outline-dark form-control-xs' %>
+      <%#= link_to '<span class="oi oi-list"></span>'.html_safe, products_path(otchet_type: 'selected', q: @params_q_to_csv), remote: true, title: "Создать файл с выбранными товарами", class: 'btn btn-outline-dark form-control-xs'%>
+      <%#= link_to "Скачать CSV Selected", "/product_selected.csv", class: "btn-secondary btn form-control-xs" %>
+<!--    </div>-->
+  <%# end %>
 </div>
 
 <div class="table-responsive" id="container_for_table_with_data">
