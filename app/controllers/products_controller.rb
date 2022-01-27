@@ -29,12 +29,16 @@ class ProductsController < ApplicationController
     @search.sorts = 'id desc' if @search.sorts.empty?
 
     # данные для «кнопки создать csv по фильтру», все данные в отличии от @products, который ограничен 100
-    @search_id_by_q = Product.ransack(@params_q_to_csv).result.pluck(:id)
+    if @params.present?
+      @search_id_by_q = Product.ransack(@params_q_to_csv)
+    else
+      @search_id_by_q = Product.all
+    end
 
     @products = @search.result.paginate(page: params[:page], per_page: 100)
 
     if params['otchet_type'] == 'selected'
-      CreateCsvSelectedJob.perform_later(@search_id_by_q)
+      CreateCsvSelectedJob.perform_later(@search_id_by_q.result.pluck(:id))
       # Services::CsvSelected.call(@search_id_by_q)
       respond_to do |format|
         format.js
