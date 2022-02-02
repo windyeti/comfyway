@@ -18,8 +18,9 @@ class ProductsController < ApplicationController
                                         :quantity_add_not_eq,
                                         :price_gteq,
                                         :price_lteq,
-                                        :deactivated_true,
-                                        :deactivated_false
+                                        :deactivated_eq,
+                                        :insales_check_eq,
+                                        :cat_or_cat1_or_cat2_or_cat3_or_cat4_cont
                                         )
     else
       @params = []
