@@ -86,6 +86,9 @@
     <% @search.quantity_eq.nil? ? quantity_eq_selecteed = '' : quantity_eq_selecteed = ' option_selected' %>
     <%= f.search_field :quantity_eq, placeholder: 'остаток', class: "form-control form-control-xs" + quantity_eq_selecteed %>
 
+    <% @search.cat_or_cat1_or_cat2_or_cat3_or_cat4_cont.nil? ? cat_cont_selected = '' : cat_cont_selected = ' option_selected' %>
+    <%= f.search_field :cat_or_cat1_or_cat2_or_cat3_or_cat4_cont, placeholder: 'категории', class: "form-control form-control-xs" + cat_cont_selected %>
+
     <% @search.quantity_not_eq.nil? ? quantity_not_eq_selecteed = '' : quantity_not_eq_selecteed = ' option_selected' %>
     <%= f.search_field :quantity_not_eq, placeholder: 'остаток не равен', class: "form-control form-control-xs" + quantity_not_eq_selecteed %>
 
