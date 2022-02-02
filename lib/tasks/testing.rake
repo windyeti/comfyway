@@ -94,9 +94,12 @@ namespace :p do
   end
 
   task sss: :environment do
-    Product.all.each do |product|
-      product.update(deactivated: false)
-    end
+    insales_rows = CSV.read("#{Rails.public_path}/shop.csv", headers: true).map {|row| row["Параметр: fid"]}
+    app_rows = CSV.read("#{Rails.public_path}/app.csv", headers: true).map {|row| row["fid"]}
+    p insales_rows.count
+    p app_rows.count
+    # p app_rows - insales_rows
+    # p insales_rows - app_rows
   end
 
   task nil_id: :environment do
@@ -105,6 +108,15 @@ namespace :p do
     end
   end
 
+
+  task roz: :environment do
+   Product.all.each do |product|
+     if [product.cat, product.cat1, product.cat2, product.cat3, product.cat4, product.cat5].include?("Розетка силовая (штепсельная)")
+       p product.title
+       return
+     end
+   end
+  end
 
   task maytoni: :environment do
    MaytoniImportJob.perform_later

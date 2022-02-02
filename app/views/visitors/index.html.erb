@@ -1,3 +1,8 @@
+<% file = "#{Rails.public_path}"+'/export_insales.csv'%>
+<% if File.file?(file) %>
+  <h3>Появились новые параметры</h3>
+  <%= link_to 'Скачать Новые параметры', "/new_params.txt", class: 'dropdown-item' %>
+<% end %>
 <!--<p>Всего товаров: <%#=Product.product_all_size %></p>-->
 <!--<p>Больше 0: <%##= Product.product_qt_not_null_size %></p>-->
   <%# file = "#{Rails.public_path}"+'/export_insales.csv'%>

@@ -26,6 +26,9 @@ class Services::CreateInsalesParams
         case response.code
         when 201
           puts 'sleep 0.2-201 - сохранили'
+          File.open("#{Rails.public_path}/new_params.txt", "a+") do |f|
+            f.write "#{value} - #{Time.now}\n"
+          end
         when 422
           puts '422'
         else

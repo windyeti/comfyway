@@ -21,7 +21,7 @@ class Services::CsvSelected
       @tovs.each do |pr|
         next if pr.title.nil?
 
-        fid = pr.id
+        fid = pr.fid
         sku = pr.sku
         title = pr.title
         desc = pr.desc
