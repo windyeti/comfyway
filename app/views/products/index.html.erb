@@ -65,54 +65,29 @@
     </div>
   </div>
   <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
-    <% @search.distributor_eq.nil? ? distributor_class_selected = '' : distributor_class_selected = ' option_selected' %>
     <% value_distributor = @search.distributor_eq %>
-    <%= f.select :distributor_eq, options_from_collection_for_select([["", "Поставщик"], ["Maytoni", "Maytoni"], ["Mantra", "Mantra"], ["Lightstar", "Lightstar"], ["Ledron", "Ledron"], ["Swg", "Swg"], ["Elevel", "Elevel"]], :first, :last , selected: value_distributor), {}, {class: "form-control form-control-xs" + distributor_class_selected} %>
+    <%= f.select :distributor_eq, options_from_collection_for_select(Product::DISTRIBUTOR, :first, :last , selected: value_distributor), {}, {class: "form-control form-control-xs" + addition_class(:distributor_eq)} %>
 
-    <% @search.deactivated_eq.nil? ? deactivated_class_selected = '' : deactivated_class_selected = ' option_selected' %>
     <% value_deactivated = @search.deactivated_eq %>
-    <%= f.select :deactivated_eq, options_from_collection_for_select([["", "Статус deactivated"], [true, "deactivated"], [false, "activated"]], :first, :last , selected: value_deactivated), {}, {class: 'form-control form-control-xs' + deactivated_class_selected} %>
+    <%= f.select :deactivated_eq, options_from_collection_for_select(Product::DEACTIVATED, :first, :last , selected: value_deactivated), {}, {class: 'form-control form-control-xs' + addition_class(:deactivated_eq)} %>
 
-    <% @search.insales_check_eq.nil? ? insales_check_class_selected = '' : insales_check_class_selected = ' option_selected' %>
     <% value_insales_check = @search.insales_check_eq %>
-    <%= f.select :insales_check_eq, options_from_collection_for_select([["", "Статус InSales ID"], [true, "связанные"], [false, "несвязанные"]], :first, :last , selected: value_insales_check), {}, {class: 'form-control form-control-xs' + insales_check_class_selected} %>
+    <%= f.select :insales_check_eq, options_from_collection_for_select(Product::INSALESID, :first, :last , selected: value_insales_check), {}, {class: 'form-control form-control-xs' + addition_class(:insales_check_eq)} %>
+    <%= f.search_field :title_or_sku_cont, placeholder: 'Название, Артикул', class: "form-control form-control-xs" + addition_class(:title_or_sku_cont) %>
+    <%= f.search_field :cat_or_cat1_or_cat2_or_cat3_or_cat4_cont, placeholder: 'категории', class: "form-control form-control-xs" + addition_class(:cat_or_cat1_or_cat2_or_cat3_or_cat4_cont) %>
+    <%= f.search_field :p1_cont, placeholder: 'параметры', class: "form-control form-control-xs" + addition_class(:p1_cont) %>
+    <%= f.search_field :quantity_eq, placeholder: 'остаток', class: "form-control form-control-xs" + addition_class(:quantity_eq) %>
+    <%= f.search_field :quantity_not_eq, placeholder: 'остаток не равен', class: "form-control form-control-xs" + addition_class(:quantity_not_eq) %>
+    <%= f.search_field :quantity_add_not_eq, placeholder: 'доп. склад не равен', class: "form-control form-control-xs" + addition_class(:quantity_add_not_eq) %>
 
-    <%#= f.collection_select :distributor_eq, Product.all.order('distributor ASC').map {|product| [product.distributor, product.distributor]}.uniq, :first, :last, {include_blank: "Поставщики"}, class: "form-control form-control-xs" , style: "max-width: 150px;" %>
-    <%#= f.search_field :id_eq, placeholder: 'ID', class: "form-control form-control-xs"%>
-
-    <% @search.title_or_sku_cont.nil? ? title_or_sku_cont_selecteed = '' : title_or_sku_cont_selecteed = ' option_selected' %>
-    <%= f.search_field :title_or_sku_cont, placeholder: 'Название, Артикул', class: "form-control form-control-xs" + title_or_sku_cont_selecteed %>
-
-    <% @search.quantity_eq.nil? ? quantity_eq_selecteed = '' : quantity_eq_selecteed = ' option_selected' %>
-    <%= f.search_field :quantity_eq, placeholder: 'остаток', class: "form-control form-control-xs" + quantity_eq_selecteed %>
-
-    <% @search.cat_or_cat1_or_cat2_or_cat3_or_cat4_cont.nil? ? cat_cont_selected = '' : cat_cont_selected = ' option_selected' %>
-    <%= f.search_field :cat_or_cat1_or_cat2_or_cat3_or_cat4_cont, placeholder: 'категории', class: "form-control form-control-xs" + cat_cont_selected %>
-
-    <% @search.quantity_not_eq.nil? ? quantity_not_eq_selecteed = '' : quantity_not_eq_selecteed = ' option_selected' %>
-    <%= f.search_field :quantity_not_eq, placeholder: 'остаток не равен', class: "form-control form-control-xs" + quantity_not_eq_selecteed %>
-
-    <% @search.quantity_add_not_eq.nil? ? quantity_add_not_eq_selecteed = '' : quantity_add_not_eq_selecteed = ' option_selected' %>
-    <%= f.search_field :quantity_add_not_eq, placeholder: 'доп. склад не равен', class: "form-control form-control-xs" + quantity_add_not_eq_selecteed %>
-
-    <%#= f.collection_select :quantity_eq, [[0, 0], [10, 10]], :first, :last, {include_blank: "Остаток"}, class: "form-control form-control-xs", style: "width: 120px;" %>
-    <%#= f.collection_select :check_eq, Product.all.map {|product| [product.check, product.check]}.uniq, :first, :last, {include_blank: "Статус поставщика"}, class: "form-control form-control-xs", style: "width: 120px;" %>
-      <%#= f.select :check_eq, options_from_collection_for_select(["true", {class: 'form-control form-control-xs'}], ["false", {class: 'form-control form-control-xs'}]) %>
     <div class="form-group button_group">
-      <% @search.price_gteq.nil? ? price_gteq_selecteed = '' : price_gteq_selecteed = ' option_selected' %>
-      <%= f.search_field :price_gteq, placeholder: 'Цена от', class: "form-control form-control-xs" + price_gteq_selecteed %>
-
-      <% @search.price_lteq.nil? ? price_lteq_selecteed = '' : price_lteq_selecteed = ' option_selected' %>
-      <%= f.search_field :price_lteq, placeholder: 'Цена до', class: "form-control form-control-xs" + price_lteq_selecteed %>
+      <%= f.search_field :price_gteq, placeholder: 'Цена от', class: "form-control form-control-xs" + addition_class(:price_gteq) %>
+      <%= f.search_field :price_lteq, placeholder: 'Цена до', class: "form-control form-control-xs" + addition_class(:price_lteq) %>
     </div>
-    <% @search.check_eq.nil? ? check_class_selected = '' : check_class_selected = ' option_selected' %>
     <% value_check = @search.check_eq %>
-    <%= f.select :check_eq, options_from_collection_for_select([["", "Статус у поставщика"], [true, "true"], [false, "false"]], :first, :last , selected: value_check), {}, {class: "form-control form-control-xs" + check_class_selected } %>
-<!--    <div class="dropdown">-->
-      <%#= render 'shared/filter_deactivated' %>
-<!--    </div>-->
+    <%= f.select :check_eq, options_from_collection_for_select(Product::STATUS_DISTRIBUTOR, :first, :last , selected: value_check), {}, {class: "form-control form-control-xs mr-2" + addition_class(:check_eq) } %>
 
-    <div class="form-group ml-2 button_group">
+    <div class="form-group button_group">
       <% f.submit 'Поиск', class: 'btn btn-info' %>
       <%= button_tag(type: 'submit', :class => "btn btn-info form-control-xs") do %><span class="oi oi-magnifying-glass"></span><% end %>
       <%= link_to '<span class="oi oi-reload"></span>'.html_safe, products_path, class: 'btn btn-outline-dark form-control-xs' %>

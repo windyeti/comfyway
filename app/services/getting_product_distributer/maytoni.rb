@@ -62,7 +62,7 @@ class Services::GettingProductDistributer::Maytoni
       end
 
       quantity = hash_arr_params["Остаток"].join("").present? ? (hash_arr_params["Остаток"].join("").to_i > 0 ? hash_arr_params["Остаток"].join("") : 0) : 0
-      pp data = {
+      data = {
         fid: hash_arr_params["Артикул"].join("") + "___maytoni",
         title: hash_arr_params["Наименование"].join(""),
         url: hash_arr_params["url"].join(", "),
