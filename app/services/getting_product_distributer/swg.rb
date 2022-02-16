@@ -62,7 +62,7 @@ class Services::GettingProductDistributer::Swg
         if value.present? && !arr_exclude.include?(key)
           key = key.gsub(/^"|"$/, "") rescue next
           name = param_name.compare(key)
-          value = value.join("##").gsub(/"/, "")
+          value = value.join(", ").gsub(/"/, "")
 
           if name == "Вес нетто, кг" && value.present?
             value = (value.to_f / 1000).to_s

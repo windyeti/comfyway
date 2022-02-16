@@ -1,6 +1,8 @@
 class Services::GettingProductDistributer::Elevel
+  attr_reader :param_name
   def initialize
     @auth = 'Basic ' + Base64.strict_encode64("#{Rails.application.credentials.krokus[:user]}:#{Rails.application.credentials.krokus[:password]}").chomp
+    @param_name = Services::CompareParams.new("LIGHTSTAR")
   end
 
   def call
@@ -199,18 +201,28 @@ class Services::GettingProductDistributer::Elevel
     product["attributes"].each do |attribute|
       name = attribute["name"].gsub("/","&#47;")
       value = attribute["value"] || attribute["valueId"]["value"]
-      result << "#{name}: #{value}" if value.present?
+      result << [ name, value ] if value.present?
     end
     if product["metaproperties"].present?
       product["metaproperties"].each do |attribute|
         name = attribute["name"].gsub("/","&#47;")
         value = attribute["valueText"] || attribute["valueId"]["value"]
-        result << "#{name}: #{value}" if value.present?
+        result << [ name, value ] if value.present?
       end
     end
-    result << "Вес, кг: #{product["weight"]["unitCount"]}" if product["weight"]
-    result << "Бренд: #{product["brandName"]}"
+    result << [ "Вес, кг", product["weight"]["unitCount"] ] if product["weight"]
+    result << [ "Бренд", product["brandName"] ]
+    # TODO преведение кназваний параметров к общим названиям
+    result = arr_params(result, param_name)
     result.uniq
+  end
+
+  def arr_params(arr_arr, param_name)
+    new_arr_arr_params = []
+    arr_arr.map do |arr|
+      new_arr_arr_params << [param_name.compare(arr[0]), arr[1]]
+    end
+    new_arr_arr_params.group_by(&:first).map{ |k,a| "#{k}: #{a.map(&:last).join(', ')}" }
   end
 
   def get_id_price(prices)

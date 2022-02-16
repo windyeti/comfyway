@@ -18,6 +18,15 @@ namespace :params do
     end
   end
 
+  task check_truefalse: :environment do
+    rows = CSV.read("#{Rails.public_path}/PRODUCTS.csv", headers: true)
+    rows.each do |row|
+      row.each do |str|
+        p row if str[1].match(/\Strue|\Sfalse|true\S|false\S/)
+      end
+    end
+  end
+
   task maytoni: :environment do
     MaytoniImportJob.perform_later
   end

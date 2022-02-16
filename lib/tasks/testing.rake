@@ -108,6 +108,23 @@ namespace :p do
     end
   end
 
+  task run_eval: :environment do
+
+  end
+
+  task readlog: :environment do
+    File.readlines("#{Rails.public_path}/import 86.log").each do |row|
+      next if row.match(/уже существует у данного товара/)
+      p row
+    end
+  end
+
+  task temper: :environment do
+    Product.where(distributor: "Elevel").each do |product|
+      p product.fid if product.p1.match(/Цветовая температура: /)
+    end
+  end
+
 
   task roz: :environment do
    Product.all.each do |product|

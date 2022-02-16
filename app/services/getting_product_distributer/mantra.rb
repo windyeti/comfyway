@@ -62,7 +62,7 @@ class Services::GettingProductDistributer::Mantra
     arr_exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток",]
     result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
-      "#{key.gsub("/","&#47;")}: #{value.join("##")}"
+      "#{key.gsub("/","&#47;")}: #{value.join(", ")}"
     end.reject(&:nil?)
     result.join(" --- ")
   end

@@ -45,13 +45,14 @@ class Services::GettingProductDistributer::Ledron
 
       params = ["Поставщик: Ledron"]
       hash_arr_params.map do |key, value|
-        value = value.reject(&:nil?).join("##")
+        value = value.reject(&:nil?).join(", ")
         next if arr_exclude_key.include?(key) || value == ""
-        params << "#{key.gsub("/","&#47;")}: #{value.gsub(",", "##")
-                               .gsub(/:/, "&#58;")
-                               .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
-                               .gsub(/\s{2,}/, " ")
-                               .gsub(/<br \/>|<br>|{|}|<|>/, "")}"
+        # TODO надо убрать ## замену (,)
+        params << "#{key.gsub("/","&#47;")}: #{value
+                                                   .gsub(/:/, "&#58;")
+                                                   .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
+                                                   .gsub(/\s{2,}/, " ")
+                                                   .gsub(/<br \/>|<br>|{|}|<|>/, "")}"
       end
 
       images = hash_arr_params["Изображения товаров"].reject(&:nil?)

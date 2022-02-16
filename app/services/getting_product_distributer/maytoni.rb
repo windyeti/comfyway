@@ -33,8 +33,8 @@ class Services::GettingProductDistributer::Maytoni
       hash_arr_params = hash_params(row, param_name)
 
       params = hash_arr_params.map do |key, value|
-        next if arr_exclude_key.include?(key) || value.join("##") == ""
-        value = value.join("##")
+        value = value.join(", ")
+        next if arr_exclude_key.include?(key) || value == ""
 
         if key == "Тип лампы"
           if value == "Да"
@@ -43,9 +43,9 @@ class Services::GettingProductDistributer::Maytoni
             next
           end
         end
-        if !arr_exlude_one_value.include?(key)
-          value = value.gsub(",","##")
-        end
+        # if !arr_exlude_one_value.include?(key)
+        #   value = value.gsub(",","##")
+        # end
         "#{key.gsub("/","&#47;")}: #{value}"
       end.reject(&:nil?).join(" --- ")
 
@@ -55,7 +55,6 @@ class Services::GettingProductDistributer::Maytoni
           if item[0] == "Фото#{num}" && item[1].present?
             photo = item[1]
             photo = get_image_aws(item[1]) if item[1].match(/onec-dev.s3/)
-            p photo
             photos << photo unless photo.nil?
           end
         end

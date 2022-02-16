@@ -51,40 +51,30 @@ class Services::CsvSelected
     p.each do |p|
       next if p.p1.nil?
 
-      p.p1.split('---').each do |pa|
+      p.p1.split(' --- ').each do |pa|
         vparamHeader << pa.split(':')[0].strip unless pa.nil?
       end
     end
     addHeaders = vparamHeader.uniq
 
-    # Load the original CSV file
     rows = CSV.read(file, headers: true).collect do |row|
       row.to_hash
     end
-    # puts check_property_use.to_s
 
-    # Original CSV column headers
     column_names = rows.first.keys
-    # Array of the new column headers
     addHeaders.each do |addH|
 
       additional_column_names = ['Параметр: ' + addH]
-      # Append new column name(s)
       column_names += additional_column_names
       s = CSV.generate do |csv|
         csv << column_names
         rows.each do |row|
-          # Original CSV values
           values = row.values
-          # Array of the new column(s) of data to be appended to row
-          # 				additional_values_for_row = ['1']
-          # 				values += additional_values_for_row
           csv << values
         end
       end
       File.open(file, 'w') { |file| file.write(s) }
     end
-    # Overwrite csv file
 
     # заполняем параметры по каждому товару в файле
 
@@ -96,19 +86,17 @@ class Services::CsvSelected
       csv_out << column_names
       CSV.foreach(file, headers: true) do |row|
         fid = row[0]
-        # puts fid
-        vel = Product.find_by_id(fid)
+        vel = Product.find_by(fid: fid)
         if !vel.nil? && vel.p1.present? # Вид записи должен быть типа - "Длина рамы: 20 --- Ширина рамы: 30"
-          vel.p1.split('---').each do |vp|
+          p vel.p1
+          vel.p1.split(' --- ').each do |vp|
             key = 'Параметр: ' + vp.split(':')[0].strip
-            value = vp.split(':')[1].remove('.') unless vp.split(':')[1].nil?
+            value = vp.split(':')[1] unless vp.split(':')[1].nil?
             row[key] = value
           end
         end
         csv_out << row
       end
     end
-    # current_process = "создаём файл csv_param"
-    # CaseMailer.notifier_process(current_process).deliver_now
   end
 end
