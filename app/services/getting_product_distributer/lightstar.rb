@@ -83,8 +83,10 @@ class Services::GettingProductDistributer::Lightstar
     arr_exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток", "Инструкция", "Инструкции", "3D preview", "Фото", "Чертёж", "3D-модель"]
     result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
-      "#{key.gsub("/","&#47;")}: #{value.join(", ")}"
-    end.reject(&:nil?)
+      "#{key.gsub("/","&#47;")}: #{value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")}"
+    end.compact
+    result << "Поставщик: Lightstar"
+    result << "Бренд: Lightstar"
     result.join(" --- ")
   end
 

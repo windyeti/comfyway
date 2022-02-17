@@ -120,9 +120,11 @@ namespace :p do
   end
 
   task temper: :environment do
+    count = 0
     Product.where(distributor: "Elevel").each do |product|
-      p product.fid if product.p1.match(/Цветовая температура: /)
+      count += 1 if product.p1.match(/Кратность заказа поставщику:/)
     end
+    p count
   end
 
 
@@ -135,41 +137,7 @@ namespace :p do
    end
   end
 
-  task maytoni: :environment do
-   MaytoniImportJob.perform_later
-  end
 
-  task swg: :environment do
-    SwgImportJob.perform_later
-  end
-
-  task mantra: :environment do
-    MantraImportJob.perform_later
-  end
-
-  task lightstar: :environment do
-    LightstarImportJob.perform_later
-  end
-
-  task ledron: :environment do
-    LedronImportJob.perform_later
-  end
-
-  task elevel: :environment do
-    ElevelImportJob.perform_later
-  end
-
-  task xls: :environment do
-    Services::CreateXlsWithParams.new(distributor: "Swg").call
-  end
-
-  task update_params: :environment do
-    CreateInsalesParamsJob.perform_later
-  end
-
-  task assings_id_var: :environment do
-    IdImportJob.perform_later
-  end
 
   task uniq: :environment do
     # names = CSV.read("#{Rails.public_path}/map_params.csv") do |row|

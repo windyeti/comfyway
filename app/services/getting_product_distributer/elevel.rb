@@ -1,8 +1,72 @@
 class Services::GettingProductDistributer::Elevel
+  BRANDS_FULL = ["Arlight", "Arte Lamp", "Evoluce", "Favourite", "F-PROMO", "Kink Light", "Lumion", "Novotech", "Odeon Light"].freeze
+  BRANDS_PARTIAL = ["ABB", "Schneider Electric", "Legrand"].freeze
+
+  CATEGORIES_PARTIAL = [
+    "Выключатели с дистанционным управлением",
+    "Инфракрасный выключатель (ИК ДУ)",
+    "Выключатели, переключатели и диммеры",
+    "Накладка для выключателей/ диммеров/ жалюзийных переключателей/ таймеров",
+    "Кнопка / Кнопочный выключатель",
+    "Жалюзийный выключатель/ переключатель/ кнопка",
+    "Шнуровой выключатель / светорегулятор (диммер)",
+    "Выключатель с электронной коммутацией",
+    "Блок комбинированный - кнопка/ выключатель/ розетка",
+    "Блок комбинированный (комбинация выключателя и розеток)",
+    "Диммер/светорегулятор шинной системы",
+    "Усилитель мощности диммера",
+    "Диммер (светорегулятор)",
+    "Вывод кабеля (розетка потолочная) для потолочных светильников",
+    "Мультимедийная розетка / многофункциональная соединительная коробка ",
+    "Монтажная коробка с предустановленными силовыми розетками (для монтажа в пол)",
+    "Настольный розеточный блок ",
+    "Основание (розетка) для установки энергетической стойки",
+    "Розетки антенные, информационные, коммуникационные",
+    "Розетка/коробка коммуникационная (для передачи данных медной витой парой)",
+    "Розетка антенная (TV/ТВ/SAT/FM/R/Радио)",
+    "USB розетка (зарядное устройство)",
+    "Розетка для выравнивания потенциалов",
+    "Розеточный таймер",
+    "Выключатель / Переключатель",
+    "Рамки, суппорты, адаптеры и декоративные элементы для ЭУИ",
+    "Рамка для электроустановочных устройств",
+    "Европейская розетка/вилка без защитного контакта",
+    "Таймеры",
+    "Мультимедиа накладка/вставка для коммуникационных устройств",
+    "Переходник-адаптер/рамка промежуточная для электроустановочных устройств",
+    "Суппорт/монтажное основание для ЭУИ скрытого монтажа",
+    "Корпус (адаптер) для накладного монтажа ЭУИ скрытой установки",
+    "Декоративный элемент/ вставка/ накладка для электроустановочных изделий",
+    "Электроустановочные устройства различного назначения",
+    "Кластер ЭУИ",
+    "Устройство управления рольставнями/жалюзи",
+    "Сенсорная клавиша для информационной шины",
+    "Электроустановочные изделия",
+    "Устройства управления жалюзи, звуком, сигнализацией, климатом",
+    "Комнатный терморегулятор / термостат",
+    "Терморегулятор комнатный (термостат)",
+    "Термостат с таймером",
+    "Комнатный термостат с таймером (хронотермостат)",
+    "Розетка силовая (штепсельная)"
+  ].freeze
+
+  EXCLUDE_KELVIN = [
+    '(более 5000)', '5000', '5300', '5400', '5500', '5600', '5700', '5750', '5800', '6000', '6250',
+    '6500', '7000', '7300', '7500', '7700', '8000', '9000', '10000', '11000', '15000'
+  ].freeze
+
+  EXCLUDE_CATEGORIES = [
+    'Кабель для связи и передачи данных', 'Клемма безвинтовая (розеточная)',
+    'Модуль светодиодный (LED)', 'Одно- и многополюсная клемма/ клеммная колодка',
+    'Светильник для освещения высоких пролетов (хайбей)',
+    'Светильник переносной (ручной)', 'Светодиод одиночный (LED)',
+    'Фонарь ручной', 'Фонарь-прожектор переносной (ручной)'
+  ].freeze
+
   attr_reader :param_name
   def initialize
     @auth = 'Basic ' + Base64.strict_encode64("#{Rails.application.credentials.krokus[:user]}:#{Rails.application.credentials.krokus[:password]}").chomp
-    @param_name = Services::CompareParams.new("LIGHTSTAR")
+    @param_name = Services::CompareParams.new("Elevel")
   end
 
   def call
@@ -10,58 +74,12 @@ class Services::GettingProductDistributer::Elevel
     arr_brands_categories =
       [
         {
-          brands: ["Arlight", "Arte Lamp", "Evoluce", "Favourite", "F-PROMO", "Kink Light", "Lumion", "Novotech", "Odeon Light"],
+          brands: BRANDS_FULL,
           categories: nil
         },
         {
-          brands: ["ABB", "Schneider Electric", "Legrand"],
-          categories: get_ids_categories([
-            "Выключатели с дистанционным управлением",
-            "Инфракрасный выключатель (ИК ДУ)",
-            "Выключатели, переключатели и диммеры",
-            "Накладка для выключателей/ диммеров/ жалюзийных переключателей/ таймеров",
-            "Кнопка / Кнопочный выключатель",
-            "Жалюзийный выключатель/ переключатель/ кнопка",
-            "Шнуровой выключатель / светорегулятор (диммер)",
-            "Выключатель с электронной коммутацией",
-            "Блок комбинированный - кнопка/ выключатель/ розетка",
-            "Блок комбинированный (комбинация выключателя и розеток)",
-            "Диммер/светорегулятор шинной системы",
-            "Усилитель мощности диммера",
-            "Диммер (светорегулятор)",
-            "Вывод кабеля (розетка потолочная) для потолочных светильников",
-            "Мультимедийная розетка / многофункциональная соединительная коробка ",
-            "Монтажная коробка с предустановленными силовыми розетками (для монтажа в пол)",
-            "Настольный розеточный блок ",
-            "Основание (розетка) для установки энергетической стойки",
-            "Розетки антенные, информационные, коммуникационные",
-            "Розетка/коробка коммуникационная (для передачи данных медной витой парой)",
-            "Розетка антенная (TV/ТВ/SAT/FM/R/Радио)",
-            "USB розетка (зарядное устройство)",
-            "Розетка для выравнивания потенциалов",
-            "Розеточный таймер",
-            "Выключатель / Переключатель",
-            "Рамки, суппорты, адаптеры и декоративные элементы для ЭУИ",
-            "Рамка для электроустановочных устройств",
-            "Европейская розетка/вилка без защитного контакта",
-            "Таймеры",
-            "Мультимедиа накладка/вставка для коммуникационных устройств",
-            "Переходник-адаптер/рамка промежуточная для электроустановочных устройств",
-            "Суппорт/монтажное основание для ЭУИ скрытого монтажа",
-            "Корпус (адаптер) для накладного монтажа ЭУИ скрытой установки",
-            "Декоративный элемент/ вставка/ накладка для электроустановочных изделий",
-            "Электроустановочные устройства различного назначения",
-            "Кластер ЭУИ",
-            "Устройство управления рольставнями/жалюзи",
-            "Сенсорная клавиша для информационной шины",
-            "Электроустановочные изделия",
-            "Устройства управления жалюзи, звуком, сигнализацией, климатом",
-            "Комнатный терморегулятор / термостат",
-            "Терморегулятор комнатный (термостат)",
-            "Термостат с таймером",
-            "Комнатный термостат с таймером (хронотермостат)",
-            "Розетка силовая (штепсельная)"
-            ])
+          brands: BRANDS_PARTIAL,
+          categories: get_ids_categories(CATEGORIES_PARTIAL)
         },
       ]
 
@@ -146,11 +164,16 @@ class Services::GettingProductDistributer::Elevel
 
     products.each do |product|
       id = product["id"]
-      p1 = get_p1(product)
+      arr_all_params_product = arr_all_params(product) # ==> [[name1, value1],[name2, value2]]
       id_cat = product["categoryId"]
+      hash_arr_params_product = arr_arr_params(arr_all_params_product, param_name) # ==> Hash {name1: [value12, value12], name2: [value21, value22]}
 
-      # товара не берем, условия для исключения товара
-      next if exclude_product?(id_cat, hash_id_category, p1)
+      # товар не берем, условия для исключения товара
+      next if exclude_product?(id_cat, hash_id_category, hash_arr_params_product)
+
+      params = product_params(hash_arr_params_product) # ==> + проверка на исключение параметров "Параметр1: значени1, значени2 ---  Параметр2: значени3, значени4 --- ..."
+
+      prices = get_prices_product(hash_id_price, product)
 
       data = {
         fid:  "#{product["id"]}___elevel",
@@ -167,11 +190,11 @@ class Services::GettingProductDistributer::Elevel
         cat2: hash_id_category[id_cat][1],
         cat3: hash_id_category[id_cat][2],
         cat4: hash_id_category[id_cat][3],
-        price: hash_id_price[id][:price_basic],
-        purchase_price: hash_id_price[id][:price].present? ? hash_id_price[id][:price] : 0,
+        price: prices[:price],
+        purchase_price: prices[:purchase_price],
         quantity: hash_id_quantity[id][:stockamount],
         quantity_add: hash_id_quantity[id][:stockamount_add],
-        p1: p1.join(" --- "),
+        p1: params,
         weight: product["weight"] ? product["weight"]["unitCount"] : nil,
         check: true
       }
@@ -180,23 +203,20 @@ class Services::GettingProductDistributer::Elevel
     p '---------'
   end
 
-  def exclude_product?(id_cat, hash_id_category, p1)
-    arr_exclude_props = [
-                          '(более 5000)', '5000', '5300', '5400', '5500', '5600', '5700', '5750', '5800', '6000', '6250',
-                          '6500', '7000', '7300', '7500', '7700', '8000', '9000', '10000', '11000', '15000'
-                        ].map {|value| "Цветовая температура: #{value}"}
-
-    arr_exclude_cattgories =  [
-                                'Кабель для связи и передачи данных', 'Клемма безвинтовая (розеточная)',
-                                'Модуль светодиодный (LED)', 'Одно- и многополюсная клемма/ клеммная колодка',
-                                'Светильник для освещения высоких пролетов (хайбей)',
-                                'Светильник переносной (ручной)', 'Светодиод одиночный (LED)',
-                                'Фонарь ручной', 'Фонарь-прожектор переносной (ручной)'
-                              ]
-    (p1 & arr_exclude_props).present? || (hash_id_category[id_cat] & arr_exclude_cattgories).present?
+  def exclude_product?(id_cat, hash_id_category, hash_arr_params_product)
+    (hash_arr_params_product["Цветовая температура, K"] & EXCLUDE_KELVIN).present? || (hash_id_category[id_cat] & EXCLUDE_CATEGORIES).present?
   end
 
-  def get_p1(product)
+  def product_params(hash_arr_params_product)
+    arr_exclude = []
+    result = hash_arr_params_product.map do |name, value|
+      next if arr_exclude.include?(name)
+      "#{name.gsub("/","&#47;")}: #{value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")}"
+    end.compact
+    result.join(" --- ")
+  end
+
+  def arr_all_params(product)
     result = []
     product["attributes"].each do |attribute|
       name = attribute["name"].gsub("/","&#47;")
@@ -212,17 +232,16 @@ class Services::GettingProductDistributer::Elevel
     end
     result << [ "Вес, кг", product["weight"]["unitCount"] ] if product["weight"]
     result << [ "Бренд", product["brandName"] ]
-    # TODO преведение кназваний параметров к общим названиям
-    result = arr_params(result, param_name)
+    result << ["Поставщик", "Elevel"]
     result.uniq
   end
 
-  def arr_params(arr_arr, param_name)
+  def arr_arr_params(arr_arr, param_name)
     new_arr_arr_params = []
     arr_arr.map do |arr|
       new_arr_arr_params << [param_name.compare(arr[0]), arr[1]]
     end
-    new_arr_arr_params.group_by(&:first).map{ |k,a| "#{k}: #{a.map(&:last).join(', ')}" }
+    Hash[ new_arr_arr_params.group_by(&:first).map{ |k,a| [k,a.map(&:last)] } ]
   end
 
   def get_id_price(prices)
@@ -260,6 +279,29 @@ class Services::GettingProductDistributer::Elevel
     result
   end
 
+  def get_prices_product(hash_id_price, product)
+    batch_quantity = nil
+    product["attributes"].each do |attribute|
+      if attribute["name"] == "Кратность заказа поставщику"
+        batch_quantity = attribute["value"].to_f
+      end
+    end
+
+    id = product["id"]
+
+    if batch_quantity
+      price = hash_id_price[id][:price_basic].to_f / batch_quantity
+      purchase_price = hash_id_price[id][:price].present? ? hash_id_price[id][:price].to_f / batch_quantity : 0
+    else
+      price = hash_id_price[id][:price_basic]
+      purchase_price = hash_id_price[id][:price].present? ? hash_id_price[id][:price] : 0
+    end
+    {
+      price: price,
+      purchase_price: purchase_price
+    }
+  end
+
   def update_price_quantity(products)
     prices = get_prices(products)
     quantities = get_quantities(products)
@@ -269,11 +311,15 @@ class Services::GettingProductDistributer::Elevel
 
     products.each do |product|
       id = product["id"]
+
+      prices = get_prices_product(hash_id_price, product)
+
       fid = "#{product["id"]}___elevel"
       product_db = Product.find_by(fid: fid)
+
       product_db.update(
-        price: hash_id_price[id][:price_basic],
-        purchase_price: hash_id_price[id][:price].present? ? hash_id_price[id][:price] : 0,
+        price: prices[:price],
+        purchase_price: prices[:purchase_price],
         image: product["images"].map {|image| image["link"]}.join(" "),
         quantity: hash_id_quantity[id][:stockamount],
         quantity_add: hash_id_quantity[id][:stockamount_add],

@@ -30,13 +30,6 @@ class Services::GettingProductDistributer::Swg
 
     param_name = Services::CompareParams.new("SWG")
 
-    arr_exclude = ["﻿\"Внешний код\"", "\"Длинное наименование [OLD_NAME]\"", "\"Артикул [ARTNUMBER]\"", "\"Краткое наименование [short_title]\"", "\"Наименование элемента\"",
-                   "\"Цена \"\"Розничная цена\"\"\"", "\"Название раздела\"", "\"Валюта для цены \"\"Розничная цена\"\"\"",
-                   "\"URL страницы детального просмотра\"",
-    "\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\"", "\"Детальная картинка (путь)\"", "\"Фотографии галереи [MORE_PHOTO]\"",
-                   "\"Заголовок окна браузера [TITLE]\"", "\"Мета-описание [META_DESCRIPTION]\"", "\"Уникальное наименование в детальной карточке товара [H1_DETAIL]\"",
-                   "\"Видео обзор (ссылка на YouTube)\""
-    ]
     rows.each do |row|
 
       cell_sku = row["﻿\"Внешний код\""]
@@ -55,21 +48,8 @@ class Services::GettingProductDistributer::Swg
       price = cell_price.gsub(/"/, "")
       quantity = cell_quantity.gsub(/"/, "")
 
-      params = []
       hash_arr_params = hash_params(row, param_name)
-      hash_arr_params.each do |key, value|
-
-        if value.present? && !arr_exclude.include?(key)
-          key = key.gsub(/^"|"$/, "") rescue next
-          name = param_name.compare(key)
-          value = value.join(", ").gsub(/"/, "")
-
-          if name == "Вес нетто, кг" && value.present?
-            value = (value.to_f / 1000).to_s
-          end
-          params << "#{name.gsub("/","&#47;")}: #{value}" if name.present? && value.present?
-        end
-      end
+      params = product_params(hash_arr_params)
 
       photos = []
       photos << row["\"Детальная картинка (путь)\""] if row["\"Детальная картинка (путь)\""].present? && row["\"Детальная картинка (путь)\""] != " "
@@ -141,4 +121,29 @@ class Services::GettingProductDistributer::Swg
       ["более 5000", "6000-6500", "6000", "RGB+6000", "10000", "5100-6100",
        "6500-7000", "10000-13000", "7500", "6500", "5000"].include?(hash_arr_params["Цветовая температура, K [LOW_EMISSION]"])
     end
+
+  def product_params(hash_arr_params)
+    arr_exclude = ["﻿\"Внешний код\"", "\"Длинное наименование [OLD_NAME]\"", "\"Артикул [ARTNUMBER]\"", "\"Краткое наименование [short_title]\"", "\"Наименование элемента\"",
+                   "\"Цена \"\"Розничная цена\"\"\"", "\"Название раздела\"", "\"Валюта для цены \"\"Розничная цена\"\"\"",
+                   "\"URL страницы детального просмотра\"",
+                   "\"Количество на складе \"\"Основной склад (с. Дмитровское)\"\"\"", "\"Детальная картинка (путь)\"", "\"Фотографии галереи [MORE_PHOTO]\"",
+                   "\"Заголовок окна браузера [TITLE]\"", "\"Мета-описание [META_DESCRIPTION]\"", "\"Уникальное наименование в детальной карточке товара [H1_DETAIL]\"",
+                   "\"Видео обзор (ссылка на YouTube)\""
+    ]
+    result = hash_arr_params.each do |key, value|
+      next if arr_exclude.include?(key)
+      if value.present? && !arr_exclude.include?(key)
+        key = key.gsub(/^"|"$/, "") rescue next
+        name = param_name.compare(key)
+        value = value.join(", ").gsub(/"/, "")
+
+        if name == "Вес нетто, кг" && value.present?
+          value = (value.to_f / 1000).to_s
+        end
+        params << "#{name.gsub("/","&#47;")}: #{value.gsub(/true/, "Да").gsub(/false/, "Нет")}" if name.present? && value.present?
+      end
+    end
+    result << "Поставщик: Swg"
+    result
+  end
 end

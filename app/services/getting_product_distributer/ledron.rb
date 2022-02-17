@@ -35,25 +35,11 @@ class Services::GettingProductDistributer::Ledron
     end
 
     param_name = Services::CompareParams.new("Ledron")
-    arr_exclude_key = ["Тип строки", "Наименование", "Код артикула", "Валюта", "Цена", "Доступен для заказа",
-                       "Изображения товаров", "Доступен для заказа", "ID артикула",
-                       "Закупочная цена", "В наличии", "Идентификатор 1С", "status", "ID товара", "Адрес видео на YouTube или Vimeo",
-                       "Товар: Идентификатор 1С", "Категория", "META Keywords", "META Description", "Заголовок", "Ссылка на витрину",
-                       "Остаток", "Краткое описание"]
+
     rows.each do |row|
       hash_arr_params = hash_params(row, param_name)
 
-      params = ["Поставщик: Ledron"]
-      hash_arr_params.map do |key, value|
-        value = value.reject(&:nil?).join(", ")
-        next if arr_exclude_key.include?(key) || value == ""
-        # TODO надо убрать ## замену (,)
-        params << "#{key.gsub("/","&#47;")}: #{value
-                                                   .gsub(/:/, "&#58;")
-                                                   .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
-                                                   .gsub(/\s{2,}/, " ")
-                                                   .gsub(/<br \/>|<br>|{|}|<|>/, "")}"
-      end
+      params = product_params(hash_arr_params)
 
       images = hash_arr_params["Изображения товаров"].reject(&:nil?)
       images = images.select {|photo| RestClient.get(photo) rescue nil }
@@ -86,6 +72,26 @@ class Services::GettingProductDistributer::Ledron
       puts "ok"
     end
     puts '=====>>>> FINISH Ledron CSV '+Time.now.to_s
+  end
+
+  def self.product_params(hash_arr_params)
+    arr_exclude_key = ["Тип строки", "Наименование", "Код артикула", "Валюта", "Цена", "Доступен для заказа",
+                       "Изображения товаров", "Доступен для заказа", "ID артикула",
+                       "Закупочная цена", "В наличии", "Идентификатор 1С", "status", "ID товара", "Адрес видео на YouTube или Vimeo",
+                       "Товар: Идентификатор 1С", "Категория", "META Keywords", "META Description", "Заголовок", "Ссылка на витрину",
+                       "Остаток", "Краткое описание"]
+    result = hash_arr_params.map do |key, value|
+      value = value.reject(&:nil?).join(", ")
+      next if arr_exclude_key.include?(key) || value == ""
+      "#{key.gsub("/","&#47;")}: #{value
+                                               .join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")
+                                               .gsub(/:/, "&#58;")
+                                               .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
+                                               .gsub(/\s{2,}/, " ")
+                                               .gsub(/<br \/>|<br>|{|}|<|>/, "")}"
+    end
+    result << "Поставщик: Ledron"
+    result
   end
 
   def self.hash_params(row, param_name)

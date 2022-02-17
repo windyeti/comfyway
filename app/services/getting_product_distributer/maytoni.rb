@@ -22,32 +22,11 @@ class Services::GettingProductDistributer::Maytoni
     end
 
     param_name = Services::CompareParams.new("Maytoni")
-    arr_exclude_key = [
-      "Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток", "﻿id", "available", "name", "Stock", "barcode", "vendorCode", "price", "Категория", "url", "currencyId",
-      "Фото1", "Фото2", "Фото3", "Фото4", "Фото5", "Фото6", "Фото7", "Фото8"
-    ]
-    arr_exlude_one_value = [
-      "Вес нетто, кг", "Вес брутто, кг"
-    ]
+
     rows.each do |row|
       hash_arr_params = hash_params(row, param_name)
 
-      params = hash_arr_params.map do |key, value|
-        value = value.join(", ")
-        next if arr_exclude_key.include?(key) || value == ""
-
-        if key == "Тип лампы"
-          if value == "Да"
-            value = "LED"
-          else
-            next
-          end
-        end
-        # if !arr_exlude_one_value.include?(key)
-        #   value = value.gsub(",","##")
-        # end
-        "#{key.gsub("/","&#47;")}: #{value}"
-      end.reject(&:nil?).join(" --- ")
+      params = product_params(hash_arr_params)
 
       photos = []
       (1..8).each do |num|
@@ -77,7 +56,7 @@ class Services::GettingProductDistributer::Maytoni
         quantity: quantity,
         currency: hash_arr_params["Валюта"].join(""),
         weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join("") : nil,
-        p1: params,
+        p1: params.join(" --- "),
         check: true
       }
 
@@ -102,6 +81,28 @@ class Services::GettingProductDistributer::Maytoni
       end
     }
     "http://164.92.252.76/aws/#{(filename)}"
+  end
+
+  def product_params(hash_arr_params)
+    arr_exclude_key = [
+      "Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток", "﻿id", "available", "name", "Stock", "barcode", "vendorCode", "price", "Категория", "url", "currencyId",
+      "Фото1", "Фото2", "Фото3", "Фото4", "Фото5", "Фото6", "Фото7", "Фото8"
+    ]
+    result = hash_arr_params.map do |key, value|
+      value = value.join(", ")
+      next if arr_exclude_key.include?(key) || value == ""
+
+      if key == "Тип лампы"
+        if value == "Да"
+          value = "LED"
+        else
+          next
+        end
+      end
+      "#{key.gsub("/","&#47;")}: #{value.gsub(/true/, "Да").gsub(/false/, "Нет")}"
+    end.compact.join(" --- ")
+    result << "Поставщик: Maytoni"
+    result
   end
 
   # [[k1, v1], [k2, v2], [k1, v3]] ==> {k1: [v1, v3], k2: [v2]}

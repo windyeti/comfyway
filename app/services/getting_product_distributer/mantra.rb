@@ -44,7 +44,7 @@ class Services::GettingProductDistributer::Mantra
         quantity: hash_arr_params["Остаток"] ? hash_arr_params["Остаток"].join("") : 0,
         barcode: doc_offer.xpath("barcode") ? doc_offer.xpath("barcode").text : nil,
         desc: doc_offer.xpath("description") ? doc_offer.xpath("description").text.gsub("\n", " ") : nil,
-        p1: params,
+        p1: params.join(" --- "),
         video: nil,
         currency: doc_offer.xpath("currencyId") ? doc_offer.xpath("currencyId").text : nil,
         weight: hash_arr_params["Вес брутто, кг"] ? hash_arr_params["Вес брутто, кг"].join("") : nil,
@@ -62,9 +62,10 @@ class Services::GettingProductDistributer::Mantra
     arr_exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток",]
     result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
-      "#{key.gsub("/","&#47;")}: #{value.join(", ")}"
-    end.reject(&:nil?)
-    result.join(" --- ")
+      "#{key.gsub("/","&#47;")}: #{value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")}"
+    end.compact
+    result << "Поставщик: Mantra"
+    result
   end
 
   def self.hash_params(doc_params, param_name)
