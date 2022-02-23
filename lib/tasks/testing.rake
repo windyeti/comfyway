@@ -112,6 +112,12 @@ namespace :p do
 
   end
 
+  task compare: :environment do
+    param_name = Services::CompareParams.new("Elevel")
+    p param_name.compare("Цветовая температура")
+    p param_name.compare("Цветовая температура, K")
+  end
+
   task readlog: :environment do
     File.readlines("#{Rails.public_path}/import 86.log").each do |row|
       next if row.match(/уже существует у данного товара/)

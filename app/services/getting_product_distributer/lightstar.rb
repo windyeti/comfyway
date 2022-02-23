@@ -100,7 +100,7 @@ class Services::GettingProductDistributer::Lightstar
     arr_arr_params.map do |arr|
       new_arr_arr_params << [param_name.compare(arr[0]), arr[1]]
     end
-    Hash[ new_arr_arr_params.group_by(&:first).map{ |k,a| [k,a.map(&:last)] } ]
+    Hash[ new_arr_arr_params.group_by(&:first).map{ |k,a| [k,a.map(&:last).uniq] } ]
   end
 
   def self.hash_categories(doc_categories)
