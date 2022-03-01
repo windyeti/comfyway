@@ -185,6 +185,7 @@ class Services::GettingProductDistributer::Elevel
         image: product["images"].map {|image| image["link"]}.join(" "),
         video: product["youtube"]["link"],
         barcode: product["barcodes"].join(", "),
+        unit: product["unit"]["name"],
         cat: "Elevel",
         cat1: hash_id_category[id_cat][0],
         cat2: hash_id_category[id_cat][1],
@@ -281,11 +282,12 @@ class Services::GettingProductDistributer::Elevel
 
   def get_prices_product(hash_id_price, product)
     batch_quantity = nil
-    product["attributes"].each do |attribute|
-      if attribute["name"] == "Кратность заказа поставщику"
-        batch_quantity = attribute["value"].to_f
-      end
-    end
+    # передаем цену как есть, без деления на "Кратность заказа постащику"
+    # product["attributes"].each do |attribute|
+    #   if attribute["name"] == "Кратность заказа поставщику"
+    #     batch_quantity = attribute["value"].to_f
+    #   end
+    # end
 
     id = product["id"]
 

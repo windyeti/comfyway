@@ -1,4 +1,4 @@
-class Services::CreateXlsWithParams
+class Services::XlsSelected
   PRODUCT_STRUCTURE = {
     fid: 'Параметр: fid',
     sku: 'Артикул',
@@ -36,21 +36,15 @@ class Services::CreateXlsWithParams
     mkeywords: 'Мета-тег keywords',
   }.freeze
 
-  def initialize(data)
-    @distributor = data[:distributor] || 'all'
-    @deacivated = data[:deacivated] || false
+  def initialize(ids)
+    @file_path_prep = "#{Rails.public_path}/product_selected_prep.csv"
+    @file_path_prep_xls = "#{Rails.public_path}/product_selected_prep_xls.xls"
+    @file_name_output = "#{Rails.public_path}/product_selected_output.xls"
+
+    @tovs = Product.where(id: ids).order(:id)
   end
 
   def call
-    @file_path_prep = "#{Rails.public_path}/product_#{@distributor}_prep.csv"
-    @file_path_prep_xls = "#{Rails.public_path}/product_#{@distributor}_prep_xls.xls"
-    @file_name_output = "#{Rails.public_path}/product_#{@distributor}_output.xls"
-
-    if @distributor == 'all'
-      @tovs = Product.where(deactivated: @deacivated, insales_var_id: nil).order(:id)
-    else
-      @tovs = Product.where(distributor: @distributor, deactivated: @deacivated, insales_var_id: nil).order(:id)
-    end
 
     # прервать если выбрано Ноль товаров
     return false if @tovs.empty?

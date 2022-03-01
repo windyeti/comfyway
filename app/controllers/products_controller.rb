@@ -38,14 +38,20 @@ class ProductsController < ApplicationController
 
     @products = @search.result.paginate(page: params[:page], per_page: 100)
 
-    if params['otchet_type'] == 'selected'
+    if params['otchet_type'] == 'csv_selected'
       CreateCsvSelectedJob.perform_later(@search_id_by_q.result.pluck(:id))
       # Services::CsvSelected.call(@search_id_by_q)
       respond_to do |format|
         format.js
       end
-      # redirect_to '/product_selected.csv'
+    elsif params['otchet_type'] == 'xls_selected'
+      CreateXlsSelectedJob.perform_later(@search_id_by_q.result.pluck(:id))
+      # Services::XlsSelected.new(@search_id_by_q.result.pluck(:id)).call
+      respond_to do |format|
+        format.js
+      end
     end
+
   end
 
   def show; end

@@ -7,6 +7,7 @@ class Services::CreateCsvUpdate
     title: 'Название товара',
     desc: 'Полное описание',
     image: 'Изображения',
+    unit: 'Единица измерения',
     price: 'Цена продажи',
     purchase_price: 'Цена закупки',
     quantity: 'Остаток',
