@@ -10,7 +10,7 @@ class CreateXlsJob < ApplicationJob
                                   message: "Создание Xls для импорта новых товаров #{data[:distributor]}"
                                  }
 
-    Services::CreateXlsWithParams.new(data).call
+    Services::Xls::Distributor.new(data).call
 
     ActionCable.server.broadcast 'status_process',
                                  {

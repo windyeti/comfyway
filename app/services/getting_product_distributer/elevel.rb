@@ -292,8 +292,8 @@ class Services::GettingProductDistributer::Elevel
     id = product["id"]
 
     if batch_quantity
-      price = hash_id_price[id][:price_basic].to_f / batch_quantity
-      purchase_price = hash_id_price[id][:price].present? ? hash_id_price[id][:price].to_f / batch_quantity : 0
+      # price = hash_id_price[id][:price_basic].to_f / batch_quantity
+      # purchase_price = hash_id_price[id][:price].present? ? hash_id_price[id][:price].to_f / batch_quantity : 0
     else
       price = hash_id_price[id][:price_basic]
       purchase_price = hash_id_price[id][:price].present? ? hash_id_price[id][:price] : 0
