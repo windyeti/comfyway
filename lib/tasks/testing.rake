@@ -319,4 +319,14 @@ namespace :p do
     # end
     # Services::GettingProductDistributer::Maytoni.call
   end
+
+  task param_xls: :environment do
+    file = "#{Rails.public_path}/product_Elevel_output.xls"
+    book_prep = Spreadsheet.open(file)
+    sheet_prep = book_prep.worksheet("Output")
+    headers = sheet_prep.row(0)
+    p headers.count
+    p headers & ['Параметр: Тип монтажа', 'Параметр: Цоколь', 'Параметр: Кол-во ламп, шт', 'Параметр: Общая мощность, Вт', 'Параметр: Мощность ленты на 1м, Вт/м', 'Параметр: Выходное напряжение, В', 'Параметр: Материал корпуса/арматуры', 'Параметр: Номин. Ток, А', 'Параметр: Коммутируем. Мощность, Вт', 'Параметр: Общая длина, м (мм)', 'Параметр: Коммутируем. Нагрузка, Вт', 'Параметр: Коммутируем. Напряжение, В' ]
+  end
 end
+

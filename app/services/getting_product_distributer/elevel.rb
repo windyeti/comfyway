@@ -178,7 +178,7 @@ class Services::GettingProductDistributer::Elevel
       data = {
         fid:  "#{product["id"]}___elevel",
         title: product["name"],
-        sku: product["articulElevel"],
+        sku: product["manufacturerCode"],
         desc: product["description"],
         vendor: product["manufacturerName"],
         distributor: "Elevel",
