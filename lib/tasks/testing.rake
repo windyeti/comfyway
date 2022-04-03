@@ -150,12 +150,13 @@ namespace :p do
     #   row
     # end
     # a = names.map {|row| row[1]}
-    a = Product.where(distributor: "Elevel").map(&:sku)
+    # a = Product.where(distributor: "Elevel").map(&:sku)
+    a = Product.all.map(&:sku)
     p a.uniq.
       map { | e | [a.count(e), e] }.
       select { | c, _ | c > 1 }.
       sort.reverse.
-      map { | c, e | "#{e}:#{c}" }.count
+      map { | c, e | "#{e}:#{c}" }
   end
 
   task s: :environment do
