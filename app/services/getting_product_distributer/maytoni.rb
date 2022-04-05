@@ -83,7 +83,7 @@ class Services::GettingProductDistributer::Maytoni
     "http://164.92.252.76/aws/#{(filename)}"
   end
 
-  def product_params(hash_arr_params)
+  def self.product_params(hash_arr_params)
     arr_exclude_key = [
       "Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток", "﻿id", "available", "name", "Stock", "barcode", "vendorCode", "price", "Категория", "url", "currencyId",
       "Фото1", "Фото2", "Фото3", "Фото4", "Фото5", "Фото6", "Фото7", "Фото8"
@@ -100,7 +100,7 @@ class Services::GettingProductDistributer::Maytoni
         end
       end
       "#{key.gsub("/","&#47;")}: #{value.gsub(/true/, "Да").gsub(/false/, "Нет")}"
-    end.compact.join(" --- ")
+    end.compact
     result << "Поставщик: Maytoni"
     result
   end
