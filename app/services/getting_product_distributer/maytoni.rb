@@ -77,10 +77,10 @@ class Services::GettingProductDistributer::Maytoni
         attampts ||= 0
         RestClient::Request.new(method: :get, url: url, block_response: block).execute
       rescue
-        retry if (retries += 1) < 3
+        retry if (attampts += 1) < 3
       end
     }
-    "http://164.92.252.76/aws/#{(filename)}"
+    "http://5.63.155.35/aws/#{(filename)}"
   end
 
   def self.product_params(hash_arr_params)
