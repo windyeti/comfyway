@@ -17,19 +17,19 @@
 
 # присвоение новым товарам "ID варианта" из инсайлс
 # + (хотя это можно не делать, так как все уже есть у товаров) получение в приложение остаков по складам из инсайсл
-# every 1.day, :at => '07:00' do
-#   runner "ImportInsalesXmlJob.perform_later"
-# end
-#
-# # создание файла апдейта остатков и цен в инсайлс
-# every 1.day, :at => '07:30' do
-#   runner "CreateCsvUpdateJob.perform_later"
-# end
-#
-# # созданеи параметров в инсайсл для новых товаров
-# every 1.day, :at => '08:00' do
-#   runner "CreateInsalesParamsJob.perform_later"
-# end
+every 1.day, :at => '07:00' do
+  runner "ImportInsalesXmlJob.perform_later"
+end
+
+# создание файла апдейта остатков и цен в инсайлс
+every 1.day, :at => '07:30' do
+  runner "CreateCsvUpdateJob.perform_later"
+end
+
+# созданеи параметров в инсайсл для новых товаров
+every 1.day, :at => '08:00' do
+  runner "CreateInsalesParamsJob.perform_later"
+end
 
 
 # ---------------------------
