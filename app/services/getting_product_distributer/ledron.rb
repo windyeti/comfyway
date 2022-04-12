@@ -84,7 +84,7 @@ class Services::GettingProductDistributer::Ledron
       value = value.reject(&:nil?).join(", ")
       next if arr_exclude_key.include?(key) || value == ""
       "#{key.gsub("/","&#47;")}: #{value
-                                               .join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")
+                                               .gsub(/true/, "Да").gsub(/false/, "Нет")
                                                .gsub(/:/, "&#58;")
                                                .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
                                                .gsub(/\s{2,}/, " ")
