@@ -122,7 +122,7 @@ class Services::GettingProductDistributer::Swg
        "6500-7000", "10000-13000", "7500", "6500", "5000"].include?(hash_arr_params["Цветовая температура, K [LOW_EMISSION]"])
     end
 
-  def product_params(hash_arr_params)
+  def self.product_params(hash_arr_params)
     arr_exclude = ["﻿\"Внешний код\"", "\"Длинное наименование [OLD_NAME]\"", "\"Артикул [ARTNUMBER]\"", "\"Краткое наименование [short_title]\"", "\"Наименование элемента\"",
                    "\"Цена \"\"Розничная цена\"\"\"", "\"Название раздела\"", "\"Валюта для цены \"\"Розничная цена\"\"\"",
                    "\"URL страницы детального просмотра\"",
