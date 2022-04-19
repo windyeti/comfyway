@@ -130,19 +130,18 @@ class Services::GettingProductDistributer::Swg
                    "\"Заголовок окна браузера [TITLE]\"", "\"Мета-описание [META_DESCRIPTION]\"", "\"Уникальное наименование в детальной карточке товара [H1_DETAIL]\"",
                    "\"Видео обзор (ссылка на YouTube)\""
     ]
-    result = hash_arr_params.each do |key, value|
+    result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
       if value.present? && !arr_exclude.include?(key)
         key = key.gsub(/^"|"$/, "") rescue next
-        name = param_name.compare(key)
         value = value.join(", ").gsub(/"/, "")
 
-        if name == "Вес нетто, кг" && value.present?
+        if key == "Вес нетто, кг" && value.present?
           value = (value.to_f / 1000).to_s
         end
-        params << "#{name.gsub("/","&#47;")}: #{value.gsub(/true/, "Да").gsub(/false/, "Нет")}" if name.present? && value.present?
+        "#{key.gsub("/","&#47;")}: #{value.gsub(/true/, "Да").gsub(/false/, "Нет")}" if key.present? && value.present?
       end
-    end
+    end.compact
     result << "Поставщик: Swg"
     result
   end
