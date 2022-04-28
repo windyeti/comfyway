@@ -87,8 +87,10 @@ class Services::Xls::Base
   end
 
   def get_additions_headers
+    tovs = @distributor_name.present? ? Product.where(distributor: @distributor_name) : @tovs
     result = []
-    p = @tovs.select(:p1)
+    p = tovs.select(:p1)
+
     p.each do |p|
       if p.p1 != nil
         p.p1.split(' --- ').each do |pa|

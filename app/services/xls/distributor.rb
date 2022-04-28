@@ -6,5 +6,6 @@ class Services::Xls::Distributor < Services::Xls::Base
     @file_name_output = "#{Rails.public_path}/product_#{data[:distributor]}_output.xls"
 
     @tovs = Product.distributor_for_insales(data)
+    @distributor_name = data[:distributor]
   end
 end
