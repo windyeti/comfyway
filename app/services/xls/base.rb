@@ -87,7 +87,7 @@ class Services::Xls::Base
   end
 
   def get_additions_headers
-    tovs = @distributor_name.present? ? Product.where(distributor: @distributor_name) : @tovs
+    tovs = @distributor_name.present? ? Product.where(distributor: @distributor_name).order(:id) : @tovs
     result = []
     p = tovs.select(:p1)
 
