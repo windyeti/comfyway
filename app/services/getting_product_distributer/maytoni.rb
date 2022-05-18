@@ -5,7 +5,7 @@ class Services::GettingProductDistributer::Maytoni
 
     Product.where(distributor: "Maytoni").each {|tov| tov.update(quantity: 0, check: false)}
 
-    uri = "https://onec-dev.s3.amazonaws.com/upload/public/documents/all.csv"
+    uri = "https://mais-upload.maytoni.de/YML/all.csv"
 
     FileUtils.rm_rf(Dir.glob('public/maytoni.csv'))
     FileUtils.rm_rf(Dir.glob('public/aws/*.*'))
