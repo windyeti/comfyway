@@ -143,6 +143,14 @@ namespace :p do
    end
   end
 
+  task uniq_params_count: :environment do
+   p Product.where(distributor: "Mantra")
+       .map {|tov| tov.p1.split(" --- ")}
+       .flatten
+       .uniq
+       .count
+  end
+
 
 
   task uniq: :environment do

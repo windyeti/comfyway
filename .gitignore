@@ -33,6 +33,7 @@
 /public/product_*
 /public/pre_*
 /public/product_
+/public/old_map_params/*.*
 
 .byebug_history
 

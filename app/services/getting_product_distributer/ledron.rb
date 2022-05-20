@@ -97,8 +97,9 @@ class Services::GettingProductDistributer::Ledron
   def self.hash_params(row, param_name)
     new_arr_arr_params = []
     row.map do |arr|
-      new_arr_arr_params << [param_name.compare(arr[0]), arr[1]]
-    end
+      common_name_param = param_name.compare(arr[0])
+      new_arr_arr_params << [common_name_param, arr[1]] if common_name_param.present?
+    end.compact
     Hash[ new_arr_arr_params.group_by(&:first).map{ |k,a| [k,a.map(&:last).uniq] } ]
   end
 

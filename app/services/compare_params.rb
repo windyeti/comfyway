@@ -9,7 +9,7 @@ class Services::CompareParams
   def compare(param)
     @map_params ||= get_map_params
     result = @map_params[param]
-    result.present? ? result : param
+    result.present? ? result : nil
   end
 
   private

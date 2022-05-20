@@ -87,18 +87,19 @@ class Services::Xls::Base
   end
 
   def get_additions_headers
-    tovs = @distributor_name.present? ? Product.where(distributor: @distributor_name).order(:id) : @tovs
-    result = []
-    p = tovs.select(:p1)
-
-    p.each do |p|
-      if p.p1 != nil
-        p.p1.split(' --- ').each do |pa|
-          result << pa.split(':')[0].strip if pa != nil
-        end
-      end
-    end
-    result.uniq
+    CSV.read("#{Rails.public_path}/map_params.csv", headers: true).map { |row| row["Название"] }.uniq.compact
+    # tovs = @distributor_name.present? ? Product.where(distributor: @distributor_name).order(:id) : @tovs
+    # result = []
+    # p = tovs.select(:p1)
+    #
+    # p.each do |p|
+    #   if p.p1 != nil
+    #     p.p1.split(' --- ').each do |pa|
+    #       result << pa.split(':')[0].strip if pa != nil
+    #     end
+    #   end
+    # end
+    # result.uniq
   end
 
   def get_product_hashs
