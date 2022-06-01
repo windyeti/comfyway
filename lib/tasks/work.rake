@@ -1,6 +1,7 @@
 namespace :work do
   task maytoni: :environment do
-    MaytoniImportJob.perform_later
+    # MaytoniImportJob.perform_later
+    Services::GettingProductDistributer::Maytoni.call
   end
 
   task swg: :environment do
@@ -15,9 +16,9 @@ namespace :work do
     LightstarImportJob.perform_later
   end
 
-  task ledron: :environment do
-    LedronImportJob.perform_later
-  end
+  # task ledron: :environment do
+  #   LedronImportJob.perform_later
+  # end
 
   task elevel: :environment do
     # Services::GettingProductDistributer::Elevel.new.call

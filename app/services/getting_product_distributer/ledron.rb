@@ -59,11 +59,11 @@ class Services::GettingProductDistributer::Ledron
         price: hash_arr_params["Цена"].join(", ").present? ? hash_arr_params["Цена"].join(", ") : 0,
         purchase_price: hash_arr_params["Закупочная цена"].join(", ").present? ? hash_arr_params["Закупочная цена"].join(", ") : 0,
         currency: hash_arr_params["Валюта"].join(", "),
-        mtitle: hash_arr_params["Заголовок"].join(", "),
-        mkeywords: hash_arr_params["META Keywords"].join(", "),
-        mdesc: hash_arr_params["META Description"].join(", "),
+        mtitle: hash_arr_params["Заголовок"].present? ? hash_arr_params["Заголовок"].join(", ") : nil,
+        mkeywords: hash_arr_params["META Keywords"].present? ? hash_arr_params["META Keywords"].join(", ") : nil,
+        mdesc: hash_arr_params["META Description"].present? ? hash_arr_params["META Description"].join(", ") : nil,
         p1: params.reject(&:nil?).join(" --- "),
-        weight: hash_arr_params["Вес"] ? hash_arr_params["Вес"].join("") : nil,
+        weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join("") : nil,
         check: true
       }
 
