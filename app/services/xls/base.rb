@@ -110,7 +110,7 @@ class Services::Xls::Base
   end
 
   def get_additions_headers
-    CSV.read("#{Rails.public_path}/map_params.csv", headers: true).map { |row| row["Название"].gsub("/", "&#47;") if row["Название"].present? }.uniq.compact
+    CSV.read("#{Rails.public_path}/map_params2.csv", headers: true).map { |row| row["Название"].gsub("/", "&#47;") if row["Название"].present? }.uniq.compact
   end
 
   def get_product_hashs

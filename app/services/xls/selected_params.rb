@@ -94,7 +94,9 @@ class Services::Xls::SelectedParams
         product_properties_amount = product_properties.map do |property|
           tov.send(property)
         end
-        amount = product_properties_amount.push(get_id_var(product_properties_amount[0]))
+        id_var = get_id_var(product_properties_amount[0])
+        next if id_var.nil?
+        amount = product_properties_amount.push(id_var)
         writer << amount
       end
     end
@@ -114,7 +116,7 @@ class Services::Xls::SelectedParams
   end
 
   def get_additions_headers
-    CSV.read("#{Rails.public_path}/map_params.csv", headers: true).map { |row| row["Название"].gsub("/", "&#47;") if row["Название"].present? }.uniq.compact
+    CSV.read("#{Rails.public_path}/map_params2.csv", headers: true).map { |row| row["Название"].gsub("/", "&#47;") if row["Название"].present? }.uniq.compact
   end
 
   def get_product_hashs
