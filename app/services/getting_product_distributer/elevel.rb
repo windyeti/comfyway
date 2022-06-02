@@ -304,10 +304,6 @@ class Services::GettingProductDistributer::Elevel
   end
 
   def update_price_quantity(products)
-    arr_all_params_product = arr_all_params(product) # ==> [[name1, value1],[name2, value2]]
-    hash_arr_params_product = arr_arr_params(arr_all_params_product, param_name) # ==> Hash {name1: [value12, value12], name2: [value21, value22]}
-    params = product_params(hash_arr_params_product) # ==> + проверка на исключение параметров "Параметр1: значени1, значени2 ---  Параметр2: значени3, значени4 --- ..."
-
     prices = get_prices(products)
     quantities = get_quantities(products)
 
@@ -315,6 +311,10 @@ class Services::GettingProductDistributer::Elevel
     hash_id_quantity = get_id_quantity(quantities)
 
     products.each do |product|
+      arr_all_params_product = arr_all_params(product) # ==> [[name1, value1],[name2, value2]]
+      hash_arr_params_product = arr_arr_params(arr_all_params_product, param_name) # ==> Hash {name1: [value12, value12], name2: [value21, value22]}
+      params = product_params(hash_arr_params_product) # ==> + проверка на исключение параметров "Параметр1: значени1, значени2 ---  Параметр2: значени3, значени4 --- ..."
+
       id = product["id"]
 
       prices = get_prices_product(hash_id_price, product)
