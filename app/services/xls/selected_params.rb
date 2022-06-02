@@ -90,6 +90,7 @@ class Services::Xls::SelectedParams
       writer << headers
 
       @tovs.each do |tov|
+        next unless tov.check
         product_properties = product_hash_structure.keys
         product_properties_amount = product_properties.map do |property|
           tov.send(property)
