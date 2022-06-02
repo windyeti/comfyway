@@ -1,4 +1,4 @@
-class Services::Xls::Base
+class Services::Xls::SelectedParams
   PRODUCT_STRUCTURE = {
     fid: 'Параметр: fid',
     # sku: 'Артикул',
@@ -35,11 +35,21 @@ class Services::Xls::Base
     # mdesc: 'Мета-тег description',
     # mkeywords: 'Мета-тег keywords',
   }.freeze
+  def initialize(ids)
+    @file_path_prep = "#{Rails.public_path}/product_selected_prep.csv"
+    @file_path_prep_xls = "#{Rails.public_path}/product_selected_prep_xls.xls"
+    @file_name_output = "#{Rails.public_path}/product_selected_output.xls"
+
+    @tovs = Product.where(id: ids).order(:id)
+    @fid_id_var = {}
+  end
 
   def call
 
     # прервать если выбрано Ноль товаров
     return false if @tovs.empty?
+
+    create_hash_fid_id_var
 
     check_previous_files_csv
 
@@ -75,38 +85,32 @@ class Services::Xls::Base
   def create_csv_prep(product_hash_structure)
 
     # !!!!!------------- УДАЛИТЬ + удалить @fid_id_var
-    # CSV.open(@file_path_prep, 'w') do |writer|
-    #   headers = product_hash_structure.values.push("ID варианта")
-    #   writer << headers
-    #
-    #   @tovs.each do |tov|
-    #     product_properties = product_hash_structure.keys
-    #     product_properties_amount = product_properties.map do |property|
-    #       tov.send(property)
-    #     end
-    #     amount = product_properties_amount.push(get_id_var(product_properties_amount[0]))
-    #     writer << amount
-    #   end
-    # end
-    #
-    # def get_id_var(fid)
-    #   @fid_id_var[fid] # ==> {"123 (asd)"=> 345}
-    # end
-    # --------------------- delete end
-
-    # --------------- ВОССТАНОВИТЬ
     CSV.open(@file_path_prep, 'w') do |writer|
-      writer << product_hash_structure.values
+      headers = product_hash_structure.values.push("ID варианта")
+      writer << headers
 
       @tovs.each do |tov|
         product_properties = product_hash_structure.keys
         product_properties_amount = product_properties.map do |property|
           tov.send(property)
         end
-        writer << product_properties_amount
+        amount = product_properties_amount.push(get_id_var(product_properties_amount[0]))
+        writer << amount
       end
     end
-    # -----------------------------
+    # --------------------- delete end
+  end
+
+  def get_id_var(fid)
+    @fid_id_var[fid] # ==> {"123 (asd)"=> 345}
+  end
+
+  def create_hash_fid_id_var
+    CSV.read("#{Rails.public_path}/shop.csv",headers: true).each do |row|
+      key = row["Параметр: fid"]
+      value = row["ID варианта"]
+      @fid_id_var[key] = value
+    end
   end
 
   def get_additions_headers

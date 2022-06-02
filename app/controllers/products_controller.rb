@@ -46,7 +46,13 @@ class ProductsController < ApplicationController
       end
     elsif params['otchet_type'] == 'xls_selected'
       CreateXlsSelectedJob.perform_later(@search_id_by_q.result.pluck(:id))
-      # Services::XlsSelected.new(@search_id_by_q.result.pluck(:id)).call
+      # Services::Xls::Selected.new(@search_id_by_q.result.pluck(:id)).call
+      respond_to do |format|
+        format.js
+      end
+    elsif params['otchet_type'] == 'xls_selected_params'
+      CreateXlsSelectedParamsJob.perform_later(@search_id_by_q.result.pluck(:id))
+      # Services::Xls::SelectedParams.new(@search_id_by_q.result.pluck(:id)).call
       respond_to do |format|
         format.js
       end
@@ -135,6 +141,7 @@ class ProductsController < ApplicationController
   def create_xls_with_params
     distributor = params[:distributor]
     deactivated = params[:deactivated]
+    # Services::Xls::Distributor.new(distributor: distributor, deactivated: deactivated).call
     CreateXlsJob.perform_later(distributor: distributor, deactivated: deactivated)
     respond_to do |format|
       format.js
