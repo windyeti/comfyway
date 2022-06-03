@@ -3,7 +3,7 @@ class Services::CompareParams
 
   def initialize(name_provider)
     @name_provider = name_provider
-    @file_path_prep = "#{Rails.root.join("public", "map_params2.csv")}"
+    @file_path_prep = "#{Rails.root.join("public", "map_params.csv")}"
   end
 
   def compare(param)
