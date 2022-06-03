@@ -1,16 +1,8 @@
 class Services::CreateInsalesParams
   def self.call
     puts 'start'
-    vparamHeader = []
-    p = Product.all.select(:p1)
-    p.each do |p|
-      if p.p1 != nil
-        p.p1.split(' --- ').each do |pa|
-          vparamHeader << pa.split(':')[0].strip if pa != nil
-        end
-      end
-    end
-    values = vparamHeader.uniq
+
+    values = get_additions_headers
     values.each do |value|
       puts "параметр - "+"#{value}"
       url = "http://#{Rails.application.credentials[:shop][:api_key]}:#{Rails.application.credentials[:shop][:password]}@#{Rails.application.credentials[:shop][:domain]}/admin/properties.json"
@@ -38,5 +30,13 @@ class Services::CreateInsalesParams
       sleep 1
     end
     puts 'finish'
+  end
+
+  def self.get_additions_headers
+    params = CSV.read("#{Rails.public_path}/map_params.csv", headers: true).map { |row| row["Название"].gsub("/", "&#47;") if row["Название"].present? }.uniq.compact
+    exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Остаток", "Краткое описание", "url", "ID артикула",
+               "Ссылка на витрину", "Адрес видео на YouTube или Vimeo", "Закупочная цена", "Изображения товаров",  "Штрихкод"]
+    result = params - exclude
+    result
   end
 end

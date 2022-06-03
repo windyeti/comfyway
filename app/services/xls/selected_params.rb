@@ -117,7 +117,11 @@ class Services::Xls::SelectedParams
   end
 
   def get_additions_headers
-    CSV.read("#{Rails.public_path}/map_params2.csv", headers: true).map { |row| row["Название"].gsub("/", "&#47;") if row["Название"].present? }.uniq.compact
+    params = CSV.read("#{Rails.public_path}/map_params.csv", headers: true).map { |row| row["Название"].gsub("/", "&#47;") if row["Название"].present? }.uniq.compact
+    exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Остаток", "Краткое описание", "url", "ID артикула",
+               "Ссылка на витрину", "Адрес видео на YouTube или Vimeo", "Закупочная цена", "Изображения товаров",  "Штрихкод"]
+    result = params - exclude
+    result
   end
 
   def get_product_hashs
