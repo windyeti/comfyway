@@ -37,4 +37,8 @@ namespace :work do
   task assings_id_var: :environment do
     IdImportJob.perform_later
   end
+
+  task test_maytoni: :environment do
+    CreateXlsJob.perform_later(distributor: 'Maytoni', deactivated: false, insales_var_id: nil)
+  end
 end

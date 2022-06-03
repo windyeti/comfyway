@@ -1,39 +1,39 @@
 class Services::Xls::Base
   PRODUCT_STRUCTURE = {
     fid: 'Параметр: fid',
-    # sku: 'Артикул',
+    sku: 'Артикул',
     title: 'Название товара',
-    # desc: 'Полное описание',
-    # sdesc: 'Краткое описание',
+    desc: 'Полное описание',
+    sdesc: 'Краткое описание',
     price: 'Цена продажи',
-    # purchase_price: 'Цена закупки',
-    # oldprice: 'Старая цена',
-    # quantity: 'Остаток',
-    # image: 'Изображения',
-    # unit: 'Единица измерения',
-    # distributor: 'Дополнительное поле: Поставщик',
-    # vendor: 'Дополнительное поле: Производитель',
-    # manual: 'Дополнительное поле: Инструкция',
-    # manuals: 'Дополнительное поле: Инструкции',
-    # preview_3d: 'Дополнительное поле: 3D preview',
-    # foto: 'Дополнительное поле: Фото',
-    # draft: 'Дополнительное поле: Чертёж',
-    # model_3d: 'Дополнительное поле: 3D-модель',
-    # date_arrival: 'Дополнительное поле: Ожидается',
-    # quantity_add: 'Дополнительное поле: Склад',
-    # video: 'Ссылка на видео',
+    purchase_price: 'Цена закупки',
+    oldprice: 'Старая цена',
+    quantity: 'Остаток',
+    image: 'Изображения',
+    unit: 'Единица измерения',
+    distributor: 'Дополнительное поле: Поставщик',
+    vendor: 'Дополнительное поле: Производитель',
+    manual: 'Дополнительное поле: Инструкция',
+    manuals: 'Дополнительное поле: Инструкции',
+    preview_3d: 'Дополнительное поле: 3D preview',
+    foto: 'Дополнительное поле: Фото',
+    draft: 'Дополнительное поле: Чертёж',
+    model_3d: 'Дополнительное поле: 3D-модель',
+    date_arrival: 'Дополнительное поле: Ожидается',
+    quantity_add: 'Дополнительное поле: Склад',
+    video: 'Ссылка на видео',
     url: 'Параметр: OLDLINK',
-    # barcode: 'Штрих-код',
-    # weight: 'Вес',
-    # currency: 'Валюта склада',
-    # cat: 'Корневая',
-    # cat1: 'Подкатегория 1',
-    # cat2: 'Подкатегория 2',
-    # cat3: 'Подкатегория 3',
-    # cat4: 'Подкатегория 4',
-    # mtitle: 'Тег title',
-    # mdesc: 'Мета-тег description',
-    # mkeywords: 'Мета-тег keywords',
+    barcode: 'Штрих-код',
+    weight: 'Вес',
+    currency: 'Валюта склада',
+    cat: 'Корневая',
+    cat1: 'Подкатегория 1',
+    cat2: 'Подкатегория 2',
+    cat3: 'Подкатегория 3',
+    cat4: 'Подкатегория 4',
+    mtitle: 'Тег title',
+    mdesc: 'Мета-тег description',
+    mkeywords: 'Мета-тег keywords',
   }.freeze
 
   def call
@@ -73,28 +73,6 @@ class Services::Xls::Base
   end
 
   def create_csv_prep(product_hash_structure)
-
-    # !!!!!------------- УДАЛИТЬ + удалить @fid_id_var
-    # CSV.open(@file_path_prep, 'w') do |writer|
-    #   headers = product_hash_structure.values.push("ID варианта")
-    #   writer << headers
-    #
-    #   @tovs.each do |tov|
-    #     product_properties = product_hash_structure.keys
-    #     product_properties_amount = product_properties.map do |property|
-    #       tov.send(property)
-    #     end
-    #     amount = product_properties_amount.push(get_id_var(product_properties_amount[0]))
-    #     writer << amount
-    #   end
-    # end
-    #
-    # def get_id_var(fid)
-    #   @fid_id_var[fid] # ==> {"123 (asd)"=> 345}
-    # end
-    # --------------------- delete end
-
-    # --------------- ВОССТАНОВИТЬ
     CSV.open(@file_path_prep, 'w') do |writer|
       writer << product_hash_structure.values
 
@@ -106,7 +84,6 @@ class Services::Xls::Base
         writer << product_properties_amount
       end
     end
-    # -----------------------------
   end
 
   def get_additions_headers

@@ -151,6 +151,14 @@ namespace :p do
        .count
   end
 
+  task params_csv: :environment do
+      params = CSV.read("#{Rails.public_path}/map_params.csv", headers: true).map { |row| row["Название"].gsub("/", "&#47;") if row["Название"].present? }.uniq.compact
+      exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Остаток", "Краткое описание", "url", "ID артикула",
+                 "Ссылка на витрину", "Адрес видео на YouTube или Vimeo", "Закупочная цена", "Изображения товаров",  "Штрихкод"]
+      result = params - exclude
+      p result
+  end
+
 
 
   task uniq: :environment do

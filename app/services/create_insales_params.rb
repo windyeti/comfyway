@@ -3,6 +3,7 @@ class Services::CreateInsalesParams
     puts 'start'
 
     values = get_additions_headers
+    # values = ["fid", "OLDLINK"]
     values.each do |value|
       puts "параметр - "+"#{value}"
       url = "http://#{Rails.application.credentials[:shop][:api_key]}:#{Rails.application.credentials[:shop][:password]}@#{Rails.application.credentials[:shop][:domain]}/admin/properties.json"
@@ -14,7 +15,7 @@ class Services::CreateInsalesParams
       }
 
       RestClient.post( url, data.to_json, {:content_type => 'application/json', accept: :json}) { |response, request, result, &block|
-        puts response.code
+        # puts response.code
         case response.code
         when 201
           puts 'sleep 0.2-201 - сохранили'
