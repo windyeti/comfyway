@@ -26,10 +26,6 @@ namespace :work do
     ElevelImportJob.perform_later
   end
 
-  task xls: :environment do
-    Services::CreateXlsWithParams.new(distributor: "Swg").call
-  end
-
   task update_params: :environment do
     CreateInsalesParamsJob.perform_later
   end
@@ -38,7 +34,7 @@ namespace :work do
     IdImportJob.perform_later
   end
 
-  task test_maytoni: :environment do
-    CreateXlsJob.perform_later(distributor: 'Maytoni', deactivated: false, insales_var_id: nil)
+  task :xls, [:name] => :environment do |_t, args|
+    CreateXlsJob.perform_later(distributor: args[:name], deactivated: false, insales_var_id: nil)
   end
 end
