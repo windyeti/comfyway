@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
       # делаем доступные параметры фильтров, чтобы их поместить их в параметр q «кнопки создать csv по фильтру»
       @params_q_to_csv = @params.permit(
                                         :title_or_sku_cont,
+                                        :p1_cont,
                                         :check_eq,
                                         :distributor_eq,
                                         :quantity_eq,
