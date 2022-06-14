@@ -25,8 +25,6 @@ class Services::ImportInsalesXml
         insales_images: pr.xpath("picture").map(&:text).join(' '),
         quantity: pr.xpath("quantity").text.to_f,
         insales_check: true,
-        insales_id: pr["group_id"],
-        insales_var_id: pr["id"],
       }
 
       product = Product.find_by(fid: fid)

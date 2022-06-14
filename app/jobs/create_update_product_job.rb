@@ -4,8 +4,8 @@ class CreateUpdateProductJob < ApplicationJob
   def perform
     Services::GettingProductDistributer::Elevel.new.call
     Services::GettingProductDistributer::Maytoni.call
-    # Services::GettingProductDistributer::Mantra.call
-    # Services::GettingProductDistributer::Lightstar.call
-    # Services::GettingProductDistributer::Swg.call
+    Services::GettingProductDistributer::Mantra.call
+    Services::GettingProductDistributer::Lightstar.call
+    Services::GettingProductDistributer::Swg.call
   end
 end
