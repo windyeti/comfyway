@@ -195,6 +195,7 @@ class Services::GettingProductDistributer::Elevel
         quantity_add: hash_id_quantity[id][:stockamount_add],
         p1: params,
         weight: product["weight"] ? product["weight"]["unitCount"] : nil,
+        currency: "RUR",
         check: true
       }
       Product.create(data)
