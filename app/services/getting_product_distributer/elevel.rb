@@ -191,7 +191,7 @@ class Services::GettingProductDistributer::Elevel
         cat4: hash_id_category[id_cat][3],
         price: prices[:price],
         purchase_price: prices[:purchase_price],
-        quantity: hash_id_quantity[id][:stockamount],
+        quantity: hash_id_quantity[id][:stockamount].to_i + hash_id_quantity[id][:stockamount_add].to_i,
         quantity_add: hash_id_quantity[id][:stockamount_add],
         p1: params,
         weight: product["weight"] ? product["weight"]["unitCount"] : nil,
