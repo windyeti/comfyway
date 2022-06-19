@@ -327,7 +327,7 @@ class Services::GettingProductDistributer::Elevel
         price: prices[:price],
         purchase_price: prices[:purchase_price],
         image: product["images"].map {|image| image["link"]}.join(" "),
-        quantity: hash_id_quantity[id][:stockamount],
+        quantity: hash_id_quantity[id][:stockamount].to_i + hash_id_quantity[id][:stockamount_add].to_i,
         quantity_add: hash_id_quantity[id][:stockamount_add],
         p1: params,
         check: true
