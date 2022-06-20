@@ -108,9 +108,70 @@ namespace :p do
     end
   end
 
-  task run_eval: :environment do
 
-  end
+
+  # task quantity: :environment do
+  #   products = [{"id"=> "2480216"}]
+  #   p quantities = get_quantities(products)
+  #   p hash_id_quantity = get_id_quantity(quantities)
+  #   products.each do |product|
+  #     id = product['id']
+  #     p hash_id_quantity[id][:stockamount].to_i + hash_id_quantity[id][:stockamount_add].to_i
+  #   end
+  #
+  # end
+  #
+  # def get_quantities(products_for_create)
+  #   url = 'http://swop.krokus.ru/ExchangeBase/hs/catalog/stockOfGoodsOffline'
+  #   p products_for_create.pluck("id")
+  #   payload = {
+  #     "ids": products_for_create.pluck("id")
+  #   }
+  #   result = api_elevel(url, payload)["stockOfGoods"]
+  #   result.present? ? result : []
+  # end
+  #
+  # def get_id_quantity(quantities)
+  #   result = {}
+  #   quantities.each do |quantity|
+  #     key = quantity["id"]
+  #     result[key] = {
+  #       stockamount: quantity["stockamount"],
+  #       stockamount_add: quantity["stockamountAdd"]
+  #     }
+  #   end
+  #   result
+  # end
+  #
+  # def api_elevel(url, payload)
+  #   p @auth = 'Basic ' + Base64.strict_encode64("#{Rails.application.credentials.krokus[:user]}:#{Rails.application.credentials.krokus[:password]}").chomp
+  #   RestClient.post( url, payload.to_json, timeout: 120, :accept => :json, :content_type => "application/json", :Authorization => @auth) do |response, request, result, &block|
+  #     case response.code
+  #     when 200
+  #       # puts 'Okey'
+  #       # pp response.body
+  #       response.body.present? ? JSON.parse(response.body) : {}
+  #     when 422
+  #       puts "error 422 - не добавили категорию"
+  #       puts response
+  #     when 404
+  #       puts 'error 404'
+  #       puts response
+  #     when 503
+  #       puts 'error 503'
+  #     else
+  #       p response.code
+  #       puts 'UNKNOWN ERROR'
+  #     end
+  #   end
+  # end
+
+
+
+
+
+
+
 
   task compare: :environment do
     param_name = Services::CompareParams.new("Elevel")

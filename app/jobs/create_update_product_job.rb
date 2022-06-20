@@ -6,6 +6,10 @@ class CreateUpdateProductJob < ApplicationJob
     Services::GettingProductDistributer::Mantra.call
     Services::GettingProductDistributer::Lightstar.call
     Services::GettingProductDistributer::Swg.call
-    Services::GettingProductDistributer::Elevel.new.call rescue retry
+    begin
+      Services::GettingProductDistributer::Elevel.new.call
+    rescue
+      retry
+    end
   end
 end
