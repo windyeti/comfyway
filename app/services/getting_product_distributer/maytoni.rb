@@ -1,4 +1,5 @@
 class Services::GettingProductDistributer::Maytoni
+  extend Utils
 
   def self.call
     puts '=====>>>> СТАРТ Maytoni SCV '+Time.now.to_s

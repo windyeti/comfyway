@@ -1,4 +1,6 @@
 class Services::GettingProductDistributer::Lightstar
+  extend Utils
+
   def self.call
     puts "=====>>>> START Lightstar YML #{Time.now}"
 

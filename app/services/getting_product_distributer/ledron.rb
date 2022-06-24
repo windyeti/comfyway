@@ -1,4 +1,6 @@
 class Services::GettingProductDistributer::Ledron
+  extend Utils
+
   def self.call(path_file, _extend_file)
     puts '=====>>>> СТАРТ Ledron SCV '+Time.now.to_s
     path_middle_csv = "#{Rails.public_path}/ledron/ledron_middle.csv"

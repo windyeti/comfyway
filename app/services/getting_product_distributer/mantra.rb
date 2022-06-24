@@ -1,4 +1,5 @@
 class Services::GettingProductDistributer::Mantra
+  extend Utils
 
   def self.call
     puts '=====>>>> START Mantra YML '+Time.now.to_s
