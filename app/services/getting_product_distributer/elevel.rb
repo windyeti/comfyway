@@ -211,7 +211,9 @@ class Services::GettingProductDistributer::Elevel
     arr_exclude = []
     result = hash_arr_params_product.map do |name, value|
       next if arr_exclude.include?(name)
-      "#{name.gsub("/","&#47;")}: #{value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")}"
+      value = value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")
+      value = replace_semi_to_dot(value)
+      "#{name.gsub("/","&#47;")}: #{value}"
     end.compact
     result.join(" --- ")
   end

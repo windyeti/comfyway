@@ -99,7 +99,9 @@ class Services::GettingProductDistributer::Maytoni
           next
         end
       end
-      "#{key.gsub("/","&#47;")}: #{value.gsub(/true/, "Да").gsub(/false/, "Нет")}"
+      value = value.gsub(/true/, "Да").gsub(/false/, "Нет")
+      value = replace_semi_to_dot(value)
+      "#{key.gsub("/","&#47;")}: #{value}"
     end.compact
     result << "Поставщик: Maytoni"
     result

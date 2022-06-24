@@ -81,12 +81,6 @@ class ProductsController < ApplicationController
     if insales_product_id.present?
       response = Services::DeleteProductInsales.new(insales_product_id).call
       if response["status"] == 'ok'
-        product.update(
-          deactivated: true,
-          insales_id: nil,
-          insales_var_id: nil,
-          insales_link: nil
-        )
         @product.destroy
         respond_to do |format|
           format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
@@ -94,6 +88,9 @@ class ProductsController < ApplicationController
           format.js
         end
       else
+        respond_to do |format|
+          format.json { render json: { title: @product.title }, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -123,8 +120,8 @@ class ProductsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Товары удалёны' }
-      format.json { render json: {status: "okey", message: "Товары удалёны", ids: params[:ids]} }
+      format.html { redirect_to products_url, notice: 'Товары деактивированы и из магазина удалены' }
+      format.json { render json: {status: "okey", message: "Товары деактивированы и из магазина удалены", ids: params[:ids]} }
     end
   end
 

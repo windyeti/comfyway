@@ -14,8 +14,7 @@ class Services::DeleteProductInsales
     RestClient.delete( url_api_category, :accept => :json, :content_type => "application/json") do |response, request, result, &block|
       case response.code
       when 200
-        puts "sleep 0.5 #{id} товар удалили"
-        sleep 0.5
+        puts "sleep 1 #{id} товар удалили"
         JSON.parse(response)
       when 422
         puts "error 422 - не удалили товар"
@@ -24,12 +23,12 @@ class Services::DeleteProductInsales
         puts 'error 403'
         JSON.parse(response)
       when 503
-        sleep 1
         puts 'sleep 1 error 503'
         JSON.parse(response)
       else
         puts 'UNKNOWN ERROR'
       end
     end
+    sleep 1
   end
 end

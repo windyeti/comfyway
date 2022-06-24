@@ -62,7 +62,9 @@ class Services::GettingProductDistributer::Mantra
     arr_exclude = ["Наименование", "Артикул", "Цена", "Валюта", "Штрихкод", "Остаток",]
     result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
-      "#{key.gsub("/","&#47;")}: #{value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")}"
+      value = value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")
+      value = replace_semi_to_dot(value)
+      "#{key.gsub("/","&#47;")}: #{value}"
     end.compact
     result << "Поставщик: Mantra"
     result

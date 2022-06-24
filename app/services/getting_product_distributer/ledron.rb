@@ -83,12 +83,14 @@ class Services::GettingProductDistributer::Ledron
     result = hash_arr_params.map do |key, value|
       value = value.reject(&:nil?).join(", ")
       next if arr_exclude_key.include?(key) || value == ""
-      "#{key.gsub("/","&#47;")}: #{value
-                                               .gsub(/true/, "Да").gsub(/false/, "Нет")
-                                               .gsub(/:/, "&#58;")
-                                               .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
-                                               .gsub(/\s{2,}/, " ")
-                                               .gsub(/<br \/>|<br>|{|}|<|>/, "")}"
+      value = value
+                .gsub(/true/, "Да").gsub(/false/, "Нет")
+                .gsub(/:/, "&#58;")
+                .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
+                .gsub(/\s{2,}/, " ")
+                .gsub(/<br \/>|<br>|{|}|<|>/, "")
+      value = replace_semi_to_dot(value)
+      "#{key.gsub("/","&#47;")}: #{value}"
     end
     result << "Поставщик: Ledron"
     result

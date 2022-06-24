@@ -140,7 +140,11 @@ class Services::GettingProductDistributer::Swg
         if key == "Вес нетто, кг" && value.present?
           value = (value.to_f / 1000).to_s
         end
-        "#{key.gsub("/","&#47;")}: #{value.gsub(/true/, "Да").gsub(/false/, "Нет")}" if key.present? && value.present?
+        if key.present? && value.present?
+          value = value.gsub(/true/, "Да").gsub(/false/, "Нет")
+          value = replace_semi_to_dot(value)
+          "#{key.gsub("/","&#47;")}: #{value}"
+        end
       end
     end.compact
     result << "Поставщик: Swg"

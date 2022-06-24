@@ -12,7 +12,7 @@ module Comfyway
     config.load_defaults 5.2
 
     config.active_job.queue_adapter = :delayed_job
-    config.autoload_paths += %W(#{config.root}/app #{config.root}/app/services)
+    config.autoload_paths += %W(#{config.root}/app #{config.root}/app/services #{config.root}/lib/utils)
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

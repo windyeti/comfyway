@@ -1,7 +1,7 @@
 namespace :work do
   task maytoni: :environment do
-    # MaytoniImportJob.perform_later
-    Services::GettingProductDistributer::Maytoni.call
+    MaytoniImportJob.perform_later
+    # Services::GettingProductDistributer::Maytoni.call
   end
 
   task swg: :environment do
