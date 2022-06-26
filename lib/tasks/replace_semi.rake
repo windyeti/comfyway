@@ -88,4 +88,27 @@ namespace :replace_semi do
     end
 
   end
+
+  task every: :environment do
+    require 'utils'
+    include Utils
+    count = 0
+    p time_start = Time.now
+
+    Product.find_each do |product|
+
+      arr_params = product.p1.split(" --- ")
+      new_arr_params = arr_params.map do |param|
+        arr_param = param.split(": ")
+        name = arr_param[0]
+        value = arr_param[1]
+        new_value = replace_semi_to_dot(value)
+        "#{name}: #{new_value}"
+      end
+      product.update(p1: new_arr_params.join(" --- "))
+      p count += 1
+    end
+    p count
+    p time_start
+  end
 end
