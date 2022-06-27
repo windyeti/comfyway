@@ -1,6 +1,6 @@
 module Utils
   def replace_semi_to_dot(name, value)
-    arr_name = ["Пылевлагозащита, IP", "Световой поток, Лм (для лент Лм&#47;м)"]
+    arr_name = ["Пылевлагозащита, IP", "Цветовая температура, K"]
     value = if arr_name.include?(name)
       value.remove(/[a-zA-Zа-яА-Я]/)
     else
