@@ -1,4 +1,4 @@
-class Services::GettingProductDistributer::Isonex
+class Services::GettingProductDistributer::IsonexUpdate
   extend Utils
 
   def self.call

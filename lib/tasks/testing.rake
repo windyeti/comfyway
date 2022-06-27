@@ -166,13 +166,6 @@ namespace :p do
   #   end
   # end
 
-
-
-
-
-
-
-
   task compare: :environment do
     param_name = Services::CompareParams.new("Elevel")
     p param_name.compare("Цветовая температура")
