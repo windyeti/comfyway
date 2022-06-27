@@ -30,7 +30,7 @@ namespace :replace_semi do
             arr_param = param.split(": ")
             name = arr_param[0]
             value = arr_param[1]
-            new_value = replace_semi_to_dot(value)
+            new_value = replace_semi_to_dot(name, value)
 
             if new_value == value
               f.write "<span>#{name}: #{value}</span>"
@@ -72,7 +72,7 @@ namespace :replace_semi do
             arr_param = param.split(": ")
             name = arr_param[0]
             value = arr_param[1]
-            new_value = replace_semi_to_dot(value)
+            new_value = replace_semi_to_dot(name, value)
 
             if new_value == value
               f.write "<span>#{name}: #{value}</span>"
@@ -102,7 +102,7 @@ namespace :replace_semi do
         arr_param = param.split(": ")
         name = arr_param[0]
         value = arr_param[1]
-        new_value = replace_semi_to_dot(value)
+        new_value = replace_semi_to_dot(name, value)
         "#{name}: #{new_value}" if new_value.present?
       end.compact
       product.update(p1: new_arr_params.join(" --- "))
