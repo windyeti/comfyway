@@ -143,8 +143,8 @@ class Services::GettingProductDistributer::Swg
         end
         if key.present? && value.present?
           value = value.gsub(/true/, "Да").gsub(/false/, "Нет")
-          value = replace_semi_to_dot(value)
-          "#{key.gsub("/","&#47;")}: #{value}"
+          value = replace_semi_to_dot(key, value)
+          "#{key.gsub("/","&#47;")}: #{value}" if value.present?
         end
       end
     end.compact

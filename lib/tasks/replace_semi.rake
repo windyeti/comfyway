@@ -103,8 +103,8 @@ namespace :replace_semi do
         name = arr_param[0]
         value = arr_param[1]
         new_value = replace_semi_to_dot(value)
-        "#{name}: #{new_value}"
-      end
+        "#{name}: #{new_value}" if new_value.present?
+      end.compact
       product.update(p1: new_arr_params.join(" --- "))
       p count += 1
     end

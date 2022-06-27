@@ -91,9 +91,9 @@ class Services::GettingProductDistributer::Ledron
                 .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
                 .gsub(/\s{2,}/, " ")
                 .gsub(/<br \/>|<br>|{|}|<|>/, "")
-      value = replace_semi_to_dot(value)
-      "#{key.gsub("/","&#47;")}: #{value}"
-    end
+      value = replace_semi_to_dot(key, value)
+      "#{key.gsub("/","&#47;")}: #{value}" if value.present?
+    end.compact
     result << "Поставщик: Ledron"
     result
   end

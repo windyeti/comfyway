@@ -86,8 +86,8 @@ class Services::GettingProductDistributer::Lightstar
     result = hash_arr_params.map do |key, value|
       next if arr_exclude.include?(key)
       value = value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")
-      value = replace_semi_to_dot(value)
-      "#{key.gsub("/","&#47;")}: #{value}"
+      value = replace_semi_to_dot(key, value)
+      "#{key.gsub("/","&#47;")}: #{value}" if value.present?
     end.compact
     result << "Поставщик: Lightstar"
     result << "Бренд: Lightstar"

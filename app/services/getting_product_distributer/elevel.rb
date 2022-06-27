@@ -214,8 +214,8 @@ class Services::GettingProductDistributer::Elevel
     result = hash_arr_params_product.map do |name, value|
       next if arr_exclude.include?(name)
       value = value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")
-      value = self.class.replace_semi_to_dot(value)
-      "#{name.gsub("/","&#47;")}: #{value}"
+      value = self.class.replace_semi_to_dot(name, value)
+      "#{name.gsub("/","&#47;")}: #{value}" if value.present?
     end.compact
     result.join(" --- ")
   end
