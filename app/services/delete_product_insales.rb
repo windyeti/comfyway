@@ -6,6 +6,7 @@ class Services::DeleteProductInsales
   end
 
   def call
+    sleep 1
     api_key = Rails.application.credentials[:shop][:api_key]
     password = Rails.application.credentials[:shop][:password]
     domain = Rails.application.credentials[:shop][:domain]
@@ -29,6 +30,5 @@ class Services::DeleteProductInsales
         puts 'UNKNOWN ERROR'
       end
     end
-    sleep 1
   end
 end

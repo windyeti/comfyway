@@ -83,14 +83,20 @@ class ProductsController < ApplicationController
       if response["status"] == 'ok'
         @product.destroy
         respond_to do |format|
-          format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-          format.json { render json: { title: @product.title }, status: :ok }
+          # format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+          # format.json { render json: { title: @product.title }, status: :ok }
           format.js
         end
       else
         respond_to do |format|
           format.json { render json: { title: @product.title }, status: :unprocessable_entity }
         end
+      end
+    else
+      @product.destroy
+      respond_to do |format|
+        # format.json { render json: { title: @product.title }, status: :ok }
+        format.js
       end
     end
   end

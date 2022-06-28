@@ -151,7 +151,7 @@
 <!--        <td><%#= best_in_place product, :quantity_add, :as => :input %></td>-->
 <!--        <td><%#= best_in_place product, :price, :as => :input %></td>-->
         <td><%= product.distributor %></td>
-        <td><%= link_to '<span class="oi oi-x"></span>'.html_safe, product, method: :delete, data: { type: :json, confirm: "Удалить? #{product.title}" }, remote: true, class: "btn btn-danger form-control-xs" %></td>
+        <td><%= link_to '<span class="oi oi-x"></span>'.html_safe, product, method: :delete, data: { type: :js, confirm: "Удалить? #{product.title}" }, remote: true, class: "btn btn-danger form-control-xs" %></td>
       </tr>
     <% end %>
     </tbody>
