@@ -2,6 +2,7 @@
   <h3 class="mr-2">Товары</h3>
   <div class="col- mr-1">
     <div class="form-import">
+      <strong>Ledron</strong>
       <%= form_tag import_ledron_products_path, remote: true, multipart: true, class: "form_import" do %>
         <%= file_field_tag :file, class: "form-control-xs file_field" %>
         <%= submit_tag "Import" , class:'btn btn-primary btn-sm form-control-xs', disabled: true %>
@@ -10,6 +11,7 @@
   </div>
   <div class="col- mr-1">
     <div class="form-import">
+      <strong>Isonex</strong>
       <%= form_tag import_isonex_products_path, remote: true, multipart: true, class: "form_import" do %>
         <%= file_field_tag :file, class: "form-control-xs file_field" %>
         <%= submit_tag "Import" , class:'btn btn-primary btn-sm form-control-xs', disabled: true %>
@@ -120,9 +122,9 @@
           <span class="btn btn-success form-control-xs" id="showAll">
             <span class="oi oi-eye"></span>
           </span>
-          <span class="btn btn-danger form-control-xs" id="deleteAll">
-            <span class="oi oi-x"></span>
-          </span>
+<!--          <span class="btn btn-danger form-control-xs" id="deleteAll">-->
+<!--            <span class="oi oi-x"></span>-->
+<!--          </span>-->
         </div>
         <%= check_box_tag 'selectAll', value = 'selectAll'%>
       </th>

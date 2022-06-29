@@ -26,6 +26,11 @@ namespace :work do
     ElevelImportJob.perform_later
   end
 
+  task isonex: :environment do
+    Services::GettingProductDistributer::IsonexUpdate.call
+    # IsonexUpdateJob.perform_later
+  end
+
   task update_params: :environment do
     CreateInsalesParamsJob.perform_later
   end

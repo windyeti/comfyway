@@ -57,6 +57,10 @@ end
 every 1.day, :at => '01:00' do
   runner "CreateXlsJob.perform_later(distributor: 'Elevel', deactivated: false, insales_var_id: nil)"
 end
+
+every 1.day, :at => '02:00' do
+  runner "CreateXlsJob.perform_later(distributor: 'Isonex', deactivated: false, insales_var_id: nil)"
+end
 # ---------------------------
 
 # ==============================

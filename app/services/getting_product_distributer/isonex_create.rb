@@ -10,78 +10,90 @@ class Services::GettingProductDistributer::IsonexCreate
     rows = []
     xlsx.sheets.each do |sheet_name|
       sheet = xlsx.sheet(sheet_name)
-      p headers = sheet.row(1)
-
+      headers = sheet.row(1)
       last_row = sheet.last_row
 
       (2..last_row).each do |i|
+      p sheet.cell(i, "B")
         rows << headers.zip(sheet.row(i))
       end
     end
-    p rows
-    p "====>>> Isonex все продукты импортировались"
 
     param_name = Services::CompareParams.new("Isonex")
 
     rows.each do |row|
-      pp hash_arr_params = hash_params(row, param_name)
+      hash_arr_params = hash_params(row, param_name)
 
-      # params = product_params(hash_arr_params)
-      #
-      # images = hash_arr_params["Изображения товаров"].reject(&:nil?)
-      # images = images.select {|photo| RestClient.get(photo) rescue nil }
+      params = product_params(hash_arr_params)
 
+      images = []
+      images << find_cell(row, "Фото на сайте")
+      images << find_cell(row, "Ссылка на схему товара")
+      images << find_cell(row, "Ссылка на интерьерное фото")
+      images << find_cell(row, "Ссылка на фото на цветном фоне_вкл")
+      images << find_cell(row, "Ссылка на интерьерное фото_1")
+      images << find_cell(row, "Ссылка на композицию")
+      images << find_cell(row, "Ссылка на композицию_1")
+      images << find_cell(row, "Ссылка на рендер 3D")
+      images << find_cell(row, "Ссылка на фото на белом фоне_вкл")
+      images << find_cell(row, "Ссылка на фото на цветном фоне_выкл")
+      images << find_cell(row, "Ссылка на фото_доп ракурс")
+      images << find_cell(row, "Ссылка на фрагмент")
+      images << find_cell(row, "Ссылка на фрагмент_1")
+      images << find_cell(row, "Ссылка на фрагмент_2")
+      images << find_cell(row, "Ссылка на 3D модель")
+
+      sku = hash_arr_params["Артикул"].join(", ").remove(/\.0$/)
       data = {
-    #     fid: hash_arr_params["ID артикула"].join(", ") + "___ledron",
-    #     title: hash_arr_params["Наименование"].join(", "),
-    #     url: "https://ledron.ru/product/" + hash_arr_params["Ссылка на витрину"].join(", "),
-    #     sku: hash_arr_params["Артикул"].join(", ") + " " + "(#{hash_arr_params["ID артикула"].join(", ")})",
-    #     desc: hash_arr_params["Краткое описание"].join("<br>"),
-    #     distributor: "Ledron",
-    #     quantity: nil,
-    #     image: images.join(" "),
-    #     video: hash_arr_params["Адрес видео на YouTube или Vimeo"].join(", "),
-    #     cat: "Ledron",
-    #     cat1: hash_arr_params["Категория"].join(", "),
-    #     price: hash_arr_params["Цена"].join(", ").present? ? hash_arr_params["Цена"].join(", ") : 0,
-    #     purchase_price: hash_arr_params["Закупочная цена"].join(", ").present? ? hash_arr_params["Закупочная цена"].join(", ") : 0,
-    #     currency: hash_arr_params["Валюта"].join(", "),
-    #     mtitle: hash_arr_params["Заголовок"].present? ? hash_arr_params["Заголовок"].join(", ") : nil,
-    #     mkeywords: hash_arr_params["META Keywords"].present? ? hash_arr_params["META Keywords"].join(", ") : nil,
-    #     mdesc: hash_arr_params["META Description"].present? ? hash_arr_params["META Description"].join(", ") : nil,
-    #     p1: params.reject(&:nil?).join(" --- "),
-    #     weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join("") : nil,
-        check: true
+        fid: "#{sku}___isonex",
+        title: hash_arr_params["Наименование"].join(", "),
+        url: nil,
+        sku: sku,
+        desc: hash_arr_params["Краткое описание"].join("<br>"),
+        distributor: "Isonex",
+        quantity: nil,
+        image: images.compact.join(" "),
+        vendor: hash_arr_params["Изготовитель"].join(", "),
+        video: find_cell(row, "Ссылка на видеоконтент"),
+        cat: "Isonex",
+        cat1: hash_arr_params["Изготовитель"].join(", "),
+        price: nil,
+        purchase_price: nil,
+        currency: nil,
+        mtitle: nil,
+        mkeywords: nil,
+        mdesc: nil,
+        p1: params.reject(&:nil?).join(" --- "),
+        weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join("") : nil,
       }
 
-      # product = Product.find_by(fid: data[:fid])
-      # product ? product.update(data) : Product.create(data)
+      product = Product.find_by(fid: data[:fid])
+      product ? product.update(data) : Product.create(data)
       puts "ok"
     end
-    # puts '=====>>>> FINISH Isonex XLS '+Time.now.to_s
+    puts '=====>>>> FINISH Isonex XLS '+Time.now.to_s
   end
 
-  # def self.product_params(hash_arr_params)
-  #   arr_exclude_key = ["Артикул","Тип строки", "Наименование", "Код артикула", "Валюта", "Цена", "Доступен для заказа",
-  #                      "Изображения товаров", "Доступен для заказа", "ID артикула",
-  #                      "Закупочная цена", "В наличии", "Идентификатор 1С", "status", "ID товара", "Адрес видео на YouTube или Vimeo",
-  #                      "Товар: Идентификатор 1С", "Категория", "META Keywords", "META Description", "Заголовок", "Ссылка на витрину",
-  #                      "Остаток", "Краткое описание"]
-  #   result = hash_arr_params.map do |key, value|
-  #     value = value.reject(&:nil?).join(", ")
-  #     next if arr_exclude_key.include?(key) || value == ""
-  #     value = value
-  #               .gsub(/true/, "Да").gsub(/false/, "Нет")
-  #               .gsub(/:/, "&#58;")
-  #               .gsub(/-{3}/, "&#8722;&#8722;&#8722;")
-  #               .gsub(/\s{2,}/, " ")
-  #               .gsub(/<br \/>|<br>|{|}|<|>/, "")
-  #     value = replace_semi_to_dot(name, value)
-  #     "#{key.gsub("/","&#47;")}: #{value}" if value.present?
-  #   end.compact
-  #   result << "Поставщик: Ledron"
-  #   result
-  # end
+  def self.find_cell(row, name)
+    row.each do |arr|
+      if arr[0] == name
+        return arr[1]
+      end
+    end
+  end
+
+  def self.product_params(hash_arr_params)
+    arr_exclude_key = ["Артикул", "Наименование", "Изготовитель", "Краткое описание", "Ссылка на видеоконтент"]
+    result = hash_arr_params.map do |key, value|
+      value = value.reject(&:nil?).join(", ")
+      next if arr_exclude_key.include?(key) || value == ""
+      value = value.gsub(/:/, "&#58;")
+      value = replace_semi_to_dot(key, value)
+      "#{key.gsub("/","&#47;")}: #{value}" if value.present?
+    end.compact
+    result << "Поставщик: Isonex"
+    result
+  end
 
   def self.hash_params(row, param_name)
     new_arr_arr_params = []

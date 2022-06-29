@@ -10,16 +10,21 @@ class Services::GettingProductDistributer::IsonexUpdate
     doc_items = doc_data.xpath("//item")
 
     doc_items.each do |doc_item|
-      fid = doc_item.xpath("article") + "___isonex"
-      quantity = doc_item.xpath("stock")
-      discount = doc_item.xpath("discount").gsub(/,/,".")
-      oldprice = discount > 0 ? doc_item.xpath("price").gsub(/,/,".") : nil
-      price = oldprice.to_f - discount.to_f
+      fid = doc_item.xpath("article").text + "___isonex"
+      quantity = doc_item.xpath("stock").text
+      discount = doc_item.xpath("discount").text.gsub(/,/,".")
+      if discount.to_f > 0
+        oldprice = doc_item.xpath("price").text.gsub(/,/,".")
+        price = oldprice.to_f - discount.to_f
+      else
+        oldprice = nil
+        price = doc_item.xpath("price").text.gsub(/,/,".")
+      end
 
       data = {
         price: price,
-        oldprice: oldprice,
-        quantity: quantity,
+        oldprice: oldprice.to_f.ceil,
+        quantity: quantity.to_f.ceil,
         check: true
       }
 
