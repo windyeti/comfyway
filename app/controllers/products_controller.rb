@@ -204,6 +204,7 @@ class ProductsController < ApplicationController
     LightstarImportJob.perform_later
     SwgImportJob.perform_later
     ElevelImportJob.perform_later
+    IsonexUpdateJob.perform_later
 
     respond_to do |format|
       format.js
