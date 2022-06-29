@@ -401,7 +401,7 @@ namespace :p do
   end
 
   task delete_insales: :environment do
-    response = Services::DeleteProductInsales.new('9999999999').call
+    response = Services::DeleteProductInsales.new('304812839').call
     pp response
   end
 end

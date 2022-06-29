@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get :create_csv_update
       get :import_insales_xml
       post :import_ledron
+      post :import_isonex
       post :price_edit
       post :price_update
       get :update_distributor

@@ -35,7 +35,8 @@
 /public/product_
 /public/replace
 /public/old_map_params/*.*
-public/isonex.xls
+/public/isonex.xls
+/public/map_params.xls
 
 .byebug_history
 

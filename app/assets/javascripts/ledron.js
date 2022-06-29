@@ -1,10 +1,12 @@
 $(document).ready(function () {
-  $("#file").on('change',function(_event){
-    var filename=$(this).val();
-    if(filename!=='') {
-      $("form.form_import input[type='submit']").attr('disabled', false);
+  $(".file_field").on('change',function(_event){
+    var $self = $(this);
+    console.log($self)
+    var filename=$self.val();
+    if(filename !== '') {
+      $self.parent().find("input[type='submit']").attr('disabled', false);
     } else {
-      $("form.form_import input[type='submit']").attr('disabled', true);
+      $self.parent().find("input[type='submit']").attr('disabled', true);
     }
   })
 });

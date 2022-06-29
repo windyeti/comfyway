@@ -100,7 +100,36 @@ class ProductsController < ApplicationController
       end
     end
   end
-
+  
+  # def delete_selected
+  #   ids = params[:ids]
+  #   ids.each do |id|
+  #     @product = Product.find(id)
+  #     insales_product_id = @product.insales_id
+  #     if insales_product_id.present?
+  #       response = Services::DeleteProductInsales.new(insales_product_id).call
+  #       if response["status"] == 'ok'
+  #         @product.destroy
+  #         respond_to do |format|
+  #           # format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+  #           # format.json { render json: { title: @product.title }, status: :ok }
+  #           format.js
+  #         end
+  #       else
+  #         respond_to do |format|
+  #           format.json { render json: { title: @product.title }, status: :unprocessable_entity }
+  #         end
+  #       end
+  #     else
+  #       @product.destroy
+  #       respond_to do |format|
+  #         format.html { redirect_to products_url, notice: 'Товары удалены из приложения и магазина' }
+  #         format.json { render json: {status: "okey", message: "Товары удалены из приложения и магазина", ids: params[:ids]} }
+  #       end
+  #     end
+  #   end
+  # end
+  
   def deactivated_selected
     @products = Product.find(params[:ids])
     @products.each do |product|
@@ -173,6 +202,26 @@ class ProductsController < ApplicationController
     extend_file = uploaded_io.original_filename.to_s
     # Services::GettingProductDistributer::Ledron.call(path_file, extend_file)
     LedronImportJob.perform_later(path_file, extend_file)
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def import_isonex
+    ActionCable.server.broadcast 'status_process', {distributor: "isonex", process: "update_distributor", status: "start", message: "Обновление товаров поставщика Isonex"}
+
+    uploaded_io = params[:file]
+    file_path = "#{Rails.root}/public/isonex/isonex.xls"
+
+    FileUtils.rm_rf(Dir.glob('public/isonex/*.*'))
+
+    File.open(file_path, 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
+
+    extend_file = uploaded_io.original_filename.to_s
+    # Services::GettingProductDistributer::IsonexCreate.call(uploaded_io, extend_file)
+    IsonexImportJob.perform_later(file_path, extend_file)
     respond_to do |format|
       format.js
     end

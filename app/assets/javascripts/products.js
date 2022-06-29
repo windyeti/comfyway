@@ -79,6 +79,36 @@ $(document).ready(function() {
     })
   });
 
+  $('#deleteAll').click(function(event) {
+    var result = confirm("Вы уверенны?");
+    if(!result) return false;
+    // event.preventDefault();
+    $('#products_table :checked').each(function() {
+      var id = $(this).val();
+      $.ajax({
+        type: "DELETE",
+        url: `/products/${id}`,
+        // url: $(this).attr('href') + '.json',
+        data: {
+          id: id
+        },
+        // beforeSend: function() {
+        //   return confirm("Вы уверенны?");
+        // },
+        success: function(data, textStatus, jqXHR) {
+          if (data.status === 'okey') {
+            $(data.id).each(function() {
+              $(".product_id_" + this).remove();
+            });
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR);
+        }
+      })
+    });
+  });
+
   $("#active_products_count").on("change", function(){
     var $this = $(this).closest('span');
     if (+$this.text() > 40000) {
