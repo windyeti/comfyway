@@ -105,6 +105,7 @@ class Services::GettingProductDistributer::Maytoni
       "#{key.gsub("/","&#47;")}: #{value}" if value.present?
     end.compact
     result << "Поставщик: Maytoni"
+    result << "Статус у поставщика: true"
     result
   end
 

@@ -91,6 +91,7 @@ class Services::GettingProductDistributer::Lightstar
     end.compact
     result << "Поставщик: Lightstar"
     result << "Бренд: Lightstar"
+    result << "Статус у поставщика: true"
     result.join(" --- ")
   end
 

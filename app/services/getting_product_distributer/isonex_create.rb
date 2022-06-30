@@ -83,7 +83,7 @@ class Services::GettingProductDistributer::IsonexCreate
   end
 
   def self.product_params(hash_arr_params)
-    arr_exclude_key = ["Артикул", "Наименование", "Изготовитель", "Краткое описание", "Ссылка на видеоконтент"]
+    arr_exclude_key = ["Артикул", "Наименование", "Изготовитель", "Краткое описание", "Ссылка на видеоконтент", "Цена"]
     result = hash_arr_params.map do |key, value|
       value = value.reject(&:nil?).join(", ")
       next if arr_exclude_key.include?(key) || value == ""
@@ -92,6 +92,7 @@ class Services::GettingProductDistributer::IsonexCreate
       "#{key.gsub("/","&#47;")}: #{value}" if value.present?
     end.compact
     result << "Поставщик: Isonex"
+    result << "Статус у поставщика: true"
     result
   end
 

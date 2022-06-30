@@ -217,6 +217,7 @@ class Services::GettingProductDistributer::Elevel
       value = self.class.replace_semi_to_dot(name, value)
       "#{name.gsub("/","&#47;")}: #{value}" if value.present?
     end.compact
+    result << "Статус у поставщика: true"
     result.join(" --- ")
   end
 

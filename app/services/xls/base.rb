@@ -23,6 +23,7 @@ class Services::Xls::Base
     quantity_add: 'Дополнительное поле: Склад',
     video: 'Ссылка на видео',
     url: 'Параметр: OLDLINK',
+    check: 'Параметр: Статус у поставщика',
     barcode: 'Штрих-код',
     weight: 'Вес',
     currency: 'Валюта склада',

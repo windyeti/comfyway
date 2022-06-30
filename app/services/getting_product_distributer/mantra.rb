@@ -68,6 +68,7 @@ class Services::GettingProductDistributer::Mantra
       "#{key.gsub("/","&#47;")}: #{value}" if value.present?
     end.compact
     result << "Поставщик: Mantra"
+    result << "Статус у поставщика: true"
     result
   end
 

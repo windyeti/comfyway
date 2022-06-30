@@ -149,6 +149,7 @@ class Services::GettingProductDistributer::Swg
       end
     end.compact
     result << "Поставщик: Swg"
+    result << "Статус у поставщика: true"
     result
   end
 end

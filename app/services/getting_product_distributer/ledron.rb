@@ -95,6 +95,7 @@ class Services::GettingProductDistributer::Ledron
       "#{key.gsub("/","&#47;")}: #{value}" if value.present?
     end.compact
     result << "Поставщик: Ledron"
+    result << "Статус у поставщика: true"
     result
   end
 

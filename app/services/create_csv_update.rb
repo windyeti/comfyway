@@ -12,7 +12,8 @@ class Services::CreateCsvUpdate
     purchase_price: 'Цена закупки',
     quantity: 'Остаток',
     date_arrival: 'Дополнительное поле: Ожидается',
-    quantity_add: 'Дополнительное поле: Склад'
+    quantity_add: 'Дополнительное поле: Склад',
+    check: 'Параметр: Статус у поставщика',
   }.freeze
 
   def call
