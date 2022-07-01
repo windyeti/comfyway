@@ -41,9 +41,9 @@ class Services::GettingProductDistributer::IsonexCreate
       images << find_cell(row, "Ссылка на фрагмент")
       images << find_cell(row, "Ссылка на фрагмент_1")
       images << find_cell(row, "Ссылка на фрагмент_2")
-      images << find_cell(row, "Ссылка на 3D модель")
+      # images << find_cell(row, "Ссылка на 3D модель")
 
-      sku = hash_arr_params["Артикул"].join(", ").remove(/\.0$/)
+      sku = remove_zero_end(hash_arr_params["Артикул"].join(", "))
       data = {
         fid: "#{sku}___isonex",
         title: hash_arr_params["Наименование"].join(", "),
@@ -72,6 +72,10 @@ class Services::GettingProductDistributer::IsonexCreate
       puts "ok"
     end
     puts '=====>>>> FINISH Isonex XLS '+Time.now.to_s
+  end
+
+  def self.remove_zero_end(str)
+    str.remove(/\.0$/)
   end
 
   def self.find_cell(row, name)
