@@ -10,15 +10,13 @@ namespace :destroy_by_brand do
       fid = "#{product['id']}___elevel"
       product_app = Product.find_by(fid: fid)
 
-      next if product_app.nil?
-
       insales_product_id = get_id_var(fid)
 
       next if insales_product_id.nil?
 
       response = Services::DeleteProductInsales.new(insales_product_id).call
 
-      if response["status"] == 'ok'
+      if response["status"] == 'ok' && product_app.present?
         product_app.destroy
       end
     end
