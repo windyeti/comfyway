@@ -1,6 +1,5 @@
 namespace :destroy_by_brand do
   task :start, [:brand] => :environment do |_t, args|
-    @auth = 'Basic ' + Base64.strict_encode64("#{Rails.application.credentials.krokus[:user]}:#{Rails.application.credentials.krokus[:password]}").chomp
     brand = args[:brand]
 
     create_hash_fid_id_var
@@ -18,6 +17,14 @@ namespace :destroy_by_brand do
       if response["status"] == 'ok'
         product_app.destroy
       end
+    end
+  end
+
+  task check: :environment do
+    ["Lumion", "Novotech", "Odeon Light"].each do |brand|
+      products = get_products_by_brand(brand)
+      p brand
+      p products.count
     end
   end
 
@@ -46,7 +53,8 @@ namespace :destroy_by_brand do
   end
 
   def api_elevel(url, payload)
-    RestClient.post( url, payload.to_json, timeout: 120, :accept => :json, :content_type => "application/json", :Authorization => @auth) do |response, request, result, &block|
+    auth = 'Basic ' + Base64.strict_encode64("#{Rails.application.credentials.krokus[:user]}:#{Rails.application.credentials.krokus[:password]}").chomp
+    RestClient.post( url, payload.to_json, timeout: 120, :accept => :json, :content_type => "application/json", :Authorization => auth) do |response, request, result, &block|
       case response.code
       when 200
         # puts 'Okey'
@@ -61,6 +69,7 @@ namespace :destroy_by_brand do
       when 503
         puts 'error 503'
       else
+        puts response
         puts 'UNKNOWN ERROR'
       end
     end
