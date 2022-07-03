@@ -6,7 +6,7 @@ namespace :delete_brand do
     ["Lumion", "Novotech", "Odeon Light"].each do |brand|
       products = get_products_by_brand(brand)
       products.each do |product|
-        fid = "#{product['id']}__elevel"
+        fid = "#{product['id']}___elevel"
         product_app = Product.find_by(fid: fid)
 
         next if product_app.nil?
