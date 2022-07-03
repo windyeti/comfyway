@@ -1,22 +1,22 @@
-namespace :delete_brand do
-  task start: :environment do
+namespace :destroy_by_brand do
+  task :start, [:brand] => :environment do |_t, args|
     @fid_id_var = {}
+    brand = args[:brand]
+
     create_hash_fid_id_var
 
-    ["Lumion", "Novotech", "Odeon Light"].each do |brand|
-      products = get_products_by_brand(brand)
-      products.each do |product|
-        fid = "#{product['id']}___elevel"
-        product_app = Product.find_by(fid: fid)
+    products = get_products_by_brand(brand)
+    products.each do |product|
+      fid = "#{product['id']}___elevel"
+      product_app = Product.find_by(fid: fid)
 
-        next if product_app.nil?
+      next if product_app.nil?
 
-        insales_product_id = get_id_var(fid)
+      insales_product_id = get_id_var(fid)
 
-        response = Services::DeleteProductInsales.new(insales_product_id).call
-        if response["status"] == 'ok'
-          product_app.destroy
-        end
+      response = Services::DeleteProductInsales.new(insales_product_id).call
+      if response["status"] == 'ok'
+        product_app.destroy
       end
     end
   end
