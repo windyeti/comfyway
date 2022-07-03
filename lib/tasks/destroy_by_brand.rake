@@ -6,6 +6,7 @@ namespace :destroy_by_brand do
     create_hash_fid_id_var
 
     products = get_products_by_brand(brand)
+    p products.count
     products.each do |product|
       fid = "#{product['id']}___elevel"
       product_app = Product.find_by(fid: fid)
@@ -33,7 +34,7 @@ namespace :destroy_by_brand do
   def create_hash_fid_id_var
     CSV.read("#{Rails.public_path}/shop.csv",headers: true).each do |row|
       key = row["Параметр: fid"]
-      value = row["ID варианта"]
+      value = row["ID товара"]
       @fid_id_var[key] = value
     end
   end
