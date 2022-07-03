@@ -19,15 +19,19 @@ class Services::DeleteProductInsales
         JSON.parse(response)
       when 422
         puts "error 422 - не удалили товар"
-        JSON.parse(response)
+        File.open("#{Rails.public_path}/err_delete.txt", "a+") {|f| f.write "#{@id} -- error 422"}
+        # JSON.parse(response)
       when 403
         puts 'error 403'
-        JSON.parse(response)
+        File.open("#{Rails.public_path}/err_delete.txt", "a+") {|f| f.write "#{@id} -- error 403"}
+        # JSON.parse(response)
       when 503
         puts 'sleep 1 error 503'
-        JSON.parse(response)
+        File.open("#{Rails.public_path}/err_delete.txt", "a+") {|f| f.write "#{@id} -- error 503"}
+        # JSON.parse(response)
       else
         puts 'UNKNOWN ERROR'
+        File.open("#{Rails.public_path}/err_delete.txt", "a+") {|f| f.write "#{@id} -- error UNKNOWN"}
       end
     end
   end
