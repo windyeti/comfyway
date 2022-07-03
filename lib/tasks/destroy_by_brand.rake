@@ -1,5 +1,6 @@
 namespace :delete_brand do
   task start: :environment do
+    @fid_id_var = {}
     create_hash_fid_id_var
 
     ["Lumion", "Novotech", "Odeon Light"].each do |brand|
