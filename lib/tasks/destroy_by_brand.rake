@@ -14,10 +14,11 @@ namespace :destroy_by_brand do
 
       insales_product_id = get_id_var(fid)
 
+      next if insales_product_id.nil?
+
       response = Services::DeleteProductInsales.new(insales_product_id).call
-      p response
-      p response["status"]
-      if !response["status"].nil? && response["status"] == 'ok'
+
+      if response["status"] == 'ok'
         product_app.destroy
       end
     end
