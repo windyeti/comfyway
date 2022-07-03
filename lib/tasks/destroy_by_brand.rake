@@ -1,4 +1,4 @@
-namespace :destroy_by_brand do
+namespace :delete_brand do
   task start: :environment do
     create_hash_fid_id_var
 
