@@ -1,5 +1,5 @@
 namespace :destroy_by_brand do
-  task :start, [:brand] => :environment do |_t, args|
+  task start: :environment do
     create_hash_fid_id_var
 
     ["Lumion", "Novotech", "Odeon Light"].each do |brand|
