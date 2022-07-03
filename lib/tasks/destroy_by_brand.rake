@@ -16,7 +16,8 @@ namespace :destroy_by_brand do
 
       response = Services::DeleteProductInsales.new(insales_product_id).call
       p response
-      if response["status"].present? && response["status"] == 'ok'
+      p response["status"]
+      if !response["status"].nil? && response["status"] == 'ok'
         product_app.destroy
       end
     end
