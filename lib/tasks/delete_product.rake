@@ -3,12 +3,19 @@ namespace :product do
     get_products
   end
 
+  task delete_from_file: :environment do
+    CSV.read("#{Rails.public_path}/compare/insales_fid_nil.csv", headers: true).each do |row|
+      id = row["ID товара"]
+      delete_product(id)
+    end
+  end
+
   def get_products
     page = 1
 
     loop do
       list_resp = RestClient.get "http://#{Rails.application.credentials[:shop][:api_key]}:#{Rails.application.credentials[:shop][:password]}@#{Rails.application.credentials[:shop][:domain]}/admin/products.json?page=#{page}&per_page=250}"
-      sleep 0.5
+      sleep 1
       list_data = JSON.parse(list_resp.body)
       p list_data.count
 

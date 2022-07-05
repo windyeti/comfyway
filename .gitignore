@@ -37,6 +37,8 @@
 /public/old_map_params/*.*
 /public/isonex.xls
 /public/map_params.xls
+/public/compare
+/public/compare/*.*
 
 .byebug_history
 

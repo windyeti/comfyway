@@ -404,5 +404,49 @@ namespace :p do
     response = Services::DeleteProductInsales.new('304812839').call
     pp response
   end
+
+  # вычисление лишних в магазине относительно приложения
+  task insales_diff_insales: :environment do
+    rows_insales = CSV.read("#{Rails.public_path}/compare/shop_data.csv", headers: true)
+    fids_app = CSV.read("#{Rails.public_path}/compare/product_selected.csv", headers: true).map {|row| row["fid"]}
+
+    CSV.open("#{Rails.public_path}/compare/app_diff_insales.csv", "a+") do |csv|
+      csv << rows_insales.first.to_hash.keys
+      rows_insales.each do |row_insales|
+        fid_row = row_insales["Параметр: fid"]
+        next if fid_row.nil?
+        csv << row_insales unless fids_app.include?(fid_row)
+      end
+    end
+  end
+
+  # вычисление лишних в приложении относительно магазина
+  task app_diff: :environment do
+    fids_insales = CSV.read("#{Rails.public_path}/compare/shop_data.csv", headers: true).map {|row| row["Параметр: fid"]}
+    rows_app = CSV.read("#{Rails.public_path}/compare/product_selected.csv", headers: true)
+
+    CSV.open("#{Rails.public_path}/compare/app_diff.csv", "a+") do |csv|
+      csv << rows_app.first.to_hash.keys
+      rows_app.each do |row_app|
+        fid_row = row_app["fid"]
+        csv << row_app unless fids_insales.include?(fid_row)
+      end
+    end
+  end
+
+  task insales_fid_nil: :environment do
+    rows_insales = CSV.read("#{Rails.public_path}/compare/shop_data.csv", headers: true)
+    fids_app = CSV.read("#{Rails.public_path}/compare/product_selected.csv", headers: true).map {|row| row["fid"]}
+
+    CSV.open("#{Rails.public_path}/compare/insales_fid_nil.csv", "a+") do |csv|
+      csv << rows_insales.first.to_hash.keys
+      rows_insales.each do |row_insales|
+        fid_row = row_insales["Параметр: fid"]
+        cat_row = row_insales["Корневая"]
+        next if fid_row.present? || cat_row.nil?
+        csv << row_insales unless fids_app.include?(fid_row)
+      end
+    end
+  end
 end
 
