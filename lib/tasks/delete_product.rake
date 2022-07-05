@@ -10,6 +10,14 @@ namespace :product do
     end
   end
 
+  task delete_product_app: :environment do
+    CSV.read("#{Rails.public_path}/compare/app_diff.csv", headers: true).each do |row|
+      fid = row["fid"]
+      product = Product.find_by(fid: fid)
+      product.destroy
+    end
+  end
+
   def get_products
     page = 1
 
