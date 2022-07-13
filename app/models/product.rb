@@ -6,7 +6,7 @@ class Product < ApplicationRecord
 
   # scope :elevel_for_insales, -> { where(distributor: "Elevel", deactivated: false, insales_var_id: nil).order(:id) }
   scope :distributor_for_insales,
-        ->(date) { where(distributor: date[:distributor], deactivated: date[:deactivated], insales_var_id: date[:insales_var_id]).order(:id) }
+        ->(date) { where(distributor: date[:distributor], deactivated: false, insales_var_id: nil).order(:id) }
 
   scope :product_all_size, -> { order(:id).size }
   scope :product_qt_not_null, -> { where('quantity > 0') }

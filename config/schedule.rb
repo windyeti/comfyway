@@ -35,31 +35,31 @@ end
 # ---------------------------
 # создание файлов импорта с новыми товарами поставщиков для инсайлс
 every 1.day, :at => '20:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Maytoni', deactivated: false, insales_var_id: nil)"
+  runner "CreateXlsJob.perform_later(distributor: 'Maytoni')"
 end
 
 every 1.day, :at => '21:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Mantra', deactivated: false, insales_var_id: nil)"
+  runner "CreateXlsJob.perform_later(distributor: 'Mantra')"
 end
 
 every 1.day, :at => '22:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Lightstar', deactivated: false, insales_var_id: nil)"
+  runner "CreateXlsJob.perform_later(distributor: 'Lightstar')"
 end
 
 every 1.day, :at => '23:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Ledron', deactivated: false, insales_var_id: nil)"
+  runner "CreateXlsJob.perform_later(distributor: 'Ledron')"
 end
 
 every 1.day, :at => '00:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Swg', deactivated: false, insales_var_id: nil)"
+  runner "CreateXlsJob.perform_later(distributor: 'Swg')"
 end
 
-every 1.day, :at => '01:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Elevel', deactivated: false, insales_var_id: nil)"
+every 1.day, :at => '15:00' do
+  runner "CreateXlsJob.perform_later(distributor: 'Elevel')"
 end
 
 every 1.day, :at => '02:00' do
-  runner "CreateXlsJob.perform_later(distributor: 'Isonex', deactivated: false, insales_var_id: nil)"
+  runner "CreateXlsJob.perform_later(distributor: 'Isonex')"
 end
 # ---------------------------
 

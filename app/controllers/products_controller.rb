@@ -144,9 +144,8 @@ class ProductsController < ApplicationController
 
   def create_xls_with_params
     distributor = params[:distributor]
-    deactivated = params[:deactivated]
     # Services::Xls::Distributor.new(distributor: distributor, deactivated: deactivated).call
-    CreateXlsJob.perform_later(distributor: distributor, deactivated: deactivated)
+    CreateXlsJob.perform_later(distributor: distributor)
     respond_to do |format|
       format.js
     end
