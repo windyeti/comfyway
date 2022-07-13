@@ -54,7 +54,7 @@ every 1.day, :at => '00:00' do
   runner "CreateXlsJob.perform_later(distributor: 'Swg')"
 end
 
-every 1.day, :at => '15:00' do
+every 1.day, :at => '01:00' do
   runner "CreateXlsJob.perform_later(distributor: 'Elevel')"
 end
 
