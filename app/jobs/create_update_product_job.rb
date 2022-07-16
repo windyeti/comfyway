@@ -13,6 +13,8 @@ class CreateUpdateProductJob < ApplicationJob
       retry
     end
 
+    IsonexUpdateJob.perform_later
+
     # Services::GettingProductDistributer::Maytoni.call
     # Services::GettingProductDistributer::Mantra.call
     # Services::GettingProductDistributer::Lightstar.call
