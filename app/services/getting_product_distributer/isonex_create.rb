@@ -14,13 +14,13 @@ class Services::GettingProductDistributer::IsonexCreate
       last_row = sheet.last_row
 
       (2..last_row).each do |i|
-      p sheet.cell(i, "B")
+      # p sheet.cell(i, "B")
         rows << headers.zip(sheet.row(i))
       end
     end
 
     param_name = Services::CompareParams.new("Isonex")
-
+p rows.count
     rows.each do |row|
       hash_arr_params = hash_params(row, param_name)
 
@@ -43,28 +43,29 @@ class Services::GettingProductDistributer::IsonexCreate
       images << find_cell(row, "Ссылка на фрагмент_2")
       # images << find_cell(row, "Ссылка на 3D модель")
 
-      sku = remove_zero_end(hash_arr_params["Артикул"].join(", "))
-      data = {
-        fid: "#{sku}___isonex",
-        title: hash_arr_params["Наименование"].join(", "),
-        url: nil,
-        sku: sku,
-        desc: hash_arr_params["Краткое описание"].join("<br>"),
-        distributor: "Isonex",
-        quantity: nil,
-        image: images.compact.join(" "),
-        vendor: hash_arr_params["Изготовитель"].join(", "),
-        video: find_cell(row, "Ссылка на видеоконтент"),
-        cat: "Isonex",
-        cat1: hash_arr_params["Изготовитель"].join(", "),
-        price: nil,
-        purchase_price: nil,
-        currency: nil,
-        mtitle: nil,
-        mkeywords: nil,
-        mdesc: nil,
-        p1: params.reject(&:nil?).join(" --- "),
-        weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join("") : nil,
+      p sku = remove_zero_end(hash_arr_params["Артикул"].join(", "))
+      images = images.compact.join(" ") rescue nil
+      p data = {
+          fid: "#{sku}___isonex",
+          title: hash_arr_params["Наименование"].join(", "),
+          url: nil,
+          sku: sku,
+          desc: hash_arr_params["Краткое описание"] ? hash_arr_params["Краткое описание"].join("<br>") : nil,
+          distributor: "Isonex",
+          quantity: nil,
+          image: images,
+          vendor: hash_arr_params["Изготовитель"] ? hash_arr_params["Изготовитель"].join(", ") : nil,
+          video: find_cell(row, "Ссылка на видеоконтент"),
+          cat: "Isonex",
+          cat1: hash_arr_params["Изготовитель"] ? hash_arr_params["Изготовитель"].join(", ") : nil,
+          price: nil,
+          purchase_price: nil,
+          currency: nil,
+          mtitle: nil,
+          mkeywords: nil,
+          mdesc: nil,
+          p1: params.compact.join(" --- "),
+          weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join("") : nil,
       }
 
       product = Product.find_by(fid: data[:fid])
