@@ -3,9 +3,9 @@ class CreateUpdateProductJob < ApplicationJob
 
   def perform
     MaytoniImportJob.perform_later
-    MantraImportJob.perform_later
+    # MantraImportJob.perform_later
     LightstarImportJob.perform_later
-    SwgImportJob.perform_later
+    # SwgImportJob.perform_later
 
     begin
       ElevelImportJob.perform_later
