@@ -224,7 +224,7 @@ namespace :p do
     # end
     # a = names.map {|row| row[1]}
     # a = Product.where(distributor: "Elevel").map(&:sku)
-    a = Product.where(distributor: "Loftit").map(&:sku)
+    a = Product.where(distributor: "Kinklight").map(&:sku)
     p a.uniq.
       map { | e | [a.count(e), e] }.
       select { | c, _ | c > 1 }.

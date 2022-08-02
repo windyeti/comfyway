@@ -78,7 +78,7 @@ class Services::GettingProductDistributer::Favourite
         value = replace_semi_to_dot(key, value)
         "#{key.gsub("/","&#47;")}: #{value}" if value.present? && value != "<>"
       end.compact
-      result << "Поставщик: Loftit"
+      result << "Поставщик: Favourite"
       result << "Статус у поставщика: true"
       result
     end
