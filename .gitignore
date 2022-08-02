@@ -39,6 +39,8 @@
 /public/map_params.xls
 /public/compare
 /public/compare/*.*
+/public/map_params.csv
+/public/old_map_params/06/map_params.xls
 
 .byebug_history
 

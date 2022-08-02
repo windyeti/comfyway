@@ -36,40 +36,80 @@
           Действия
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <%= link_to "Создать XLS Maytoni", create_xls_with_params_products_path(distributor: "Maytoni"),
-                      class: "btn-primary btn form-control-xs",
-                      remote: true%>
-          <%= link_to "Скачать XLS Maytoni", "/product_Maytoni_output.xls", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать XLS Mantra", create_xls_with_params_products_path(distributor: "Mantra"),
-                      class: "btn-primary btn form-control-xs",
-                      remote: true %>
-          <%= link_to "Скачать XLS Mantra", "/product_Mantra_output.xls", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать XLS Lightstar", create_xls_with_params_products_path(distributor: "Lightstar"),
-                      class: "btn-primary btn form-control-xs",
-                      remote: true %>
-          <%= link_to "Скачать XLS Lightstar", "/product_Lightstar_output.xls", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать XLS Swg", create_xls_with_params_products_path(distributor: "Swg"),
-                      class: "btn-primary btn form-control-xs",
-                      remote: true %>
-          <%= link_to "Скачать XLS Swg", "/product_Swg_output.xls", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать XLS Ledron", create_xls_with_params_products_path(distributor: "Ledron"),
-                      class: "btn-primary btn form-control-xs",
-                      remote: true %>
-          <%= link_to "Скачать XLS Ledron", "/product_Ledron_output.xls", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать XLS Elevel", create_xls_with_params_products_path(distributor: "Elevel"),
-                      class: "btn-primary btn form-control-xs",
-                      remote: true %>
-          <%= link_to "Скачать XLS Elevel", "/product_Elevel_output.xls", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Update: Maytoni Mantra Lightstar Swg Эlevel", update_distributor_products_path,
-                      remote: true,
-                      class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Создать CSV Update", create_csv_update_products_path,
-                      remote: true,
-                      class: "btn-primary btn form-control-xs" %>
-          <%= link_to "Скачать CSV Update", "/product_update_output.csv", class: "btn-secondary btn form-control-xs" %>
-          <%= link_to "Import InSales Product", import_insales_xml_products_path,
-                      remote: true,
-                      class: "btn-primary btn form-control-xs" %>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Maytoni", create_xls_with_params_products_path(distributor: "Maytoni"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true%>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Maytoni_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Mantra", create_xls_with_params_products_path(distributor: "Mantra"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Mantra_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Lightstar", create_xls_with_params_products_path(distributor: "Lightstar"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Lightstar_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Swg", create_xls_with_params_products_path(distributor: "Swg"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Swg_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Ledron", create_xls_with_params_products_path(distributor: "Ledron"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Ledron_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Elevel", create_xls_with_params_products_path(distributor: "Elevel"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Elevel_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Isonex", create_xls_with_params_products_path(distributor: "Isonex"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Isonex_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Loftit", create_xls_with_params_products_path(distributor: "Loftit"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Loftit_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Favourite", create_xls_with_params_products_path(distributor: "Favourite"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Favourite_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать XLS Kinklight", create_xls_with_params_products_path(distributor: "Kinklight"),
+                        class: "btn-primary btn form-control-xs",
+                        remote: true %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_Kinklight_output.xls", class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Update: Maytoni Mantra Lightstar Swg Эlevel Isonex Loftit Favourite Kinklight", update_distributor_products_path,
+                        remote: true,
+                        class: "btn-secondary btn form-control-xs" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Создать CSV Update", create_csv_update_products_path,
+                        remote: true,
+                        class: "btn-primary btn form-control-xs" %>
+            <%= link_to '<span class="oi oi-data-transfer-download"></span>'.html_safe, "/product_update_output.csv", class: "btn-secondary btn form-control-xs" %>
+            <%= link_to "Import InSales Product", import_insales_xml_products_path,
+                        remote: true,
+                        class: "btn-primary btn form-control-xs" %>
+          </li>
         </div>
       </div>
     </div>

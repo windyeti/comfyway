@@ -61,6 +61,18 @@ end
 every 1.day, :at => '02:00' do
   runner "CreateXlsJob.perform_later(distributor: 'Isonex')"
 end
+
+every 1.day, :at => '03:00' do
+  runner "CreateXlsJob.perform_later(distributor: 'Loftit')"
+end
+
+every 1.day, :at => '04:00' do
+  runner "CreateXlsJob.perform_later(distributor: 'Favourite')"
+end
+
+every 1.day, :at => '05:00' do
+  runner "CreateXlsJob.perform_later(distributor: 'Kinklight')"
+end
 # ---------------------------
 
 # ==============================

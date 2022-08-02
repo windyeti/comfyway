@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  DISTRIBUTOR = [["", "Поставщик"], ["Maytoni", "Maytoni"], ["Mantra", "Mantra"], ["Lightstar", "Lightstar"], ["Ledron", "Ledron"], ["Swg", "Swg"], ["Elevel", "Elevel"], ["Isonex", "Isonex"]]
+  DISTRIBUTOR = [["", "Поставщик"], ["Maytoni", "Maytoni"], ["Mantra", "Mantra"], ["Lightstar", "Lightstar"], ["Ledron", "Ledron"], ["Swg", "Swg"], ["Elevel", "Elevel"], ["Isonex", "Isonex"], ["Loftit", "Loftit"], ["Favourite", "Favourite"], ["Kinklight", "Kinklight"]]
   DEACTIVATED = [["", "Статус deactivated"], [true, "deactivated"], [false, "activated"]]
   INSALESID = [["", "Статус InSales ID"], [true, "связанные"], [false, "несвязанные"]]
   STATUS_DISTRIBUTOR = [["", "Статус у поставщика"], [true, "true"], [false, "false"]]

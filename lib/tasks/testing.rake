@@ -187,14 +187,17 @@ namespace :p do
     p count
   end
 
-
   task roz: :environment do
-   Product.all.each do |product|
-     if [product.cat, product.cat1, product.cat2, product.cat3, product.cat4, product.cat5].include?("Розетка силовая (штепсельная)")
-       p product.title
-       return
-     end
-   end
+    uri = "https://loftit.ru/catalog.xml"
+
+    response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
+    doc_data = Nokogiri::XML(response)
+    doc_offers = doc_data.xpath("//offer")
+
+    doc_offers.each do |doc_offer|
+      doc_params = doc_offer.xpath("param")
+      p doc_params.search('[name="Категория"]').text
+    end
   end
 
   task uniq_params_count: :environment do

@@ -197,6 +197,8 @@ class ProductsController < ApplicationController
     end
   end
 
+
+
   def update_distributor
     MaytoniImportJob.perform_later
     MantraImportJob.perform_later

@@ -24,7 +24,7 @@ namespace :destroy_by_brand do
   end
 
   task check: :environment do
-    ["Lumion", "Novotech", "Odeon Light"].each do |brand|
+    ["Loft it"].each do |brand|
       products = get_products_by_brand(brand)
       p brand
       p products.count

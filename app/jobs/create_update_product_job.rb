@@ -15,6 +15,10 @@ class CreateUpdateProductJob < ApplicationJob
 
     IsonexUpdateJob.perform_later
 
+    LoftitImportJob.perform_later
+    FavouriteImportJob.perform_later
+    KinklightImportJob.perform_later
+
     # Services::GettingProductDistributer::Maytoni.call
     # Services::GettingProductDistributer::Mantra.call
     # Services::GettingProductDistributer::Lightstar.call
