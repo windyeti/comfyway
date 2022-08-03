@@ -23,8 +23,22 @@ namespace :destroy_by_brand do
     end
   end
 
+  task :only_store, [:brand] => :environment do |_t, args|
+    brand = args[:brand]
+
+    products = get_products_by_brand(brand)
+    p products.count
+    products.each do |product|
+      fid = "#{product['id']}___elevel"
+      product_app = Product.find_by(fid: fid)
+
+      product_app.destroy if product_app.present?
+
+    end
+  end
+
   task check: :environment do
-    ["Loft it"].each do |brand|
+    ["Loft it", "Favourite", "F-Promo", "Kink light"].each do |brand|
       products = get_products_by_brand(brand)
       p brand
       p products.count
