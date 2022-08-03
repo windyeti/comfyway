@@ -93,6 +93,18 @@ namespace :p do
     IO.copy_stream(download_response, download_path)
   end
 
+  task gauss: :environment do
+    url = 'http://swop.krokus.ru/ExchangeBase/hs/catalog/getidbyarticles'
+    payload = {
+      "articles": [
+        "gauss"
+      ],
+      "typeOfSearch": "Бренд"
+    }
+    products = api_elevel(url, payload)["result"]
+    p products.count
+  end
+
   task sss: :environment do
     insales_rows = CSV.read("#{Rails.public_path}/shop.csv", headers: true).map {|row| row["Параметр: fid"]}
     app_rows = CSV.read("#{Rails.public_path}/app.csv", headers: true).map {|row| row["fid"]}
