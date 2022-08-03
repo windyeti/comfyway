@@ -1,6 +1,5 @@
 class Services::Xls::Base
   PRODUCT_STRUCTURE = {
-    insales_var_id: 'ID варианта',
     fid: 'Параметр: fid',
     sku: 'Артикул',
     title: 'Название товара',
