@@ -4,7 +4,7 @@ namespace :product do
   end
 
   task delete_from_file: :environment do
-    CSV.read("#{Rails.public_path}/compare/insales_fid_nil.csv", headers: true).each do |row|
+    CSV.read("#{Rails.public_path}/delete.csv", headers: true).each do |row|
       id = row["ID товара"]
       delete_product(id)
     end

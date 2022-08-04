@@ -1,7 +1,7 @@
 class Services::GettingProductDistributer::IsonexUpdate
   def self.call
     puts '=====>>>> START Isonex XML '+Time.now.to_s
-    Product.where(distributor: "Isonex").each {|tov| tov.update(quantity: 0, check: false)}
+    Product.where(distributor: "Isonex").each {|tov| tov.update(price: 0, quantity: 0, check: false)}
 
     uri = "http://isonex.ru/upload/stocks.xml"
 
