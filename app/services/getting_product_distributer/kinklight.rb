@@ -64,7 +64,7 @@ class Services::GettingProductDistributer::Kinklight
         next if arr_exclude.include?(key)
         value = value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")
         value = replace_semi_to_dot(key, value)
-        "#{key.gsub("/","&#47;")}: #{value}" if value.present? && value != "-"
+        "#{key.gsub("/","&#47;")}: #{cm_to_mm(key, value)}" if value.present? && value != "-"
       end.compact
       result << "Поставщик: Kinklight"
       result << "Статус у поставщика: true"
@@ -85,7 +85,12 @@ class Services::GettingProductDistributer::Kinklight
       Hash[ new_arr_arr_params.group_by(&:first).map{ |k,a| [k,a.map(&:last).uniq] } ]
     end
 
-    # def self.hash_categories(doc_categories)
+    def self.cm_to_mm(key, value)
+      value = value.to_f * 10 if ["Длина, мм", "Ширина, мм", "Высота, мм", "Глубина, мм", "Диаметр, мм", "boxheight", "boxlenght"].include?(key)
+      value
+    end
+
+  # def self.hash_categories(doc_categories)
     #   categories = {}
     #   doc_categories.each do |doc_category|
     #     categories[doc_category["id"]] = structure_category(doc_categories, doc_category)
