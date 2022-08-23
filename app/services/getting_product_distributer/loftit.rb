@@ -79,6 +79,7 @@ class Services::GettingProductDistributer::Loftit
         value = replace_semi_to_dot(key, value)
         "#{key.gsub("/","&#47;")}: #{value}" if value.present?
       end.compact
+      result << "Бренд: Loft It"
       result << "Поставщик: Loftit"
       result << "Статус у поставщика: true"
       result

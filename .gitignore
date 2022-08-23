@@ -30,6 +30,7 @@
 /public/swg.csv
 /public/aws/*.*
 /public/ledron/*.*
+/public/stluce/*.*
 /public/product_*
 /public/pre_*
 /public/product_

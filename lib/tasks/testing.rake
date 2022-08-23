@@ -236,7 +236,7 @@ namespace :p do
     # end
     # a = names.map {|row| row[1]}
     # a = Product.where(distributor: "Elevel").map(&:sku)
-    a = Product.where(distributor: "Kinklight").map(&:sku)
+    a = Product.where(distributor: "Favourite").map(&:fid)
     p a.uniq.
       map { | e | [a.count(e), e] }.
       select { | c, _ | c > 1 }.
@@ -462,6 +462,24 @@ namespace :p do
         csv << row_insales unless fids_app.include?(fid_row)
       end
     end
+  end
+
+  task fav: :environment do
+    # uri = "https://loftit.ru/catalog.xml"
+    uri = "https://wbs.e-teleport.ru/Catalog_GetSharedCatalog?contact=antsiferovds%40s-svet.ru&catalog_type=yandex&only_stocks=true"
+
+    response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
+    doc_data = Nokogiri::XML(response)
+    doc_offers = doc_data.xpath("//offer")
+    result = []
+    doc_offers.each do |doc_offer|
+      doc_params = doc_offer.xpath("param")
+      result += doc_params.map do |doc_param|
+        doc_param['name']
+      end
+    end
+    result = result.uniq
+    File.open("#{Rails.public_path}/favourite_params.txt", "a+") {|f| f.write "#{result}\n"}
   end
 end
 

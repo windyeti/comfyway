@@ -22,14 +22,14 @@ namespace :xls do
     p "====>>> Isonex все продукты импортировались"
   end
 
-  def open_spreadsheet(file)
-    case File.extname(file)
-    when ".csv" then Roo::CSV.new(file.path) #csv_options: {col_sep: ";",encoding: "windows-1251:utf-8"})
-    when ".xls" then Roo::Excel.new(file.path)
-    when ".xlsx" then Roo::Spreadsheet.open(file.path, extension: :xlsx)
-      # when ".xlsx" then Roo::Excelx.new(file.path, extension: :xlsx)
-    when ".XLS" then Roo::Excel.new(file.path)
-    else raise "Unknown file type: #{File.extname(file)}"
-    end
-  end
+  # def open_spreadsheet(file)
+  #   case File.extname(file)
+  #   when ".csv" then Roo::CSV.new(file.path) #csv_options: {col_sep: ";",encoding: "windows-1251:utf-8"})
+  #   when ".xls" then Roo::Excel.new(file.path)
+  #   when ".xlsx" then Roo::Spreadsheet.open(file.path, extension: :xlsx)
+  #     # when ".xlsx" then Roo::Excelx.new(file.path, extension: :xlsx)
+  #   when ".XLS" then Roo::Excel.new(file.path)
+  #   else raise "Unknown file type: #{File.extname(file)}"
+  #   end
+  # end
 end

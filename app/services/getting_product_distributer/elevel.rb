@@ -53,6 +53,10 @@ class Services::GettingProductDistributer::Elevel
     "Накладка/вставка/механизм для коммуникационных устройств"
   ].freeze
 
+  BRAND_GAUSS_PARTIAL = ['Gauss'].freeze
+
+  CATEGORIES_GAUSS_PARTIAL = ['Лампа светодиодная'].freeze
+
   EXCLUDE_KELVIN = [
     '(более 5000)', '5000', '5300', '5400', '5500', '5600', '5700', '5750', '5800', '6000', '6250',
     '6500', '7000', '7300', '7500', '7700', '8000', '9000', '10000', '11000', '15000'
@@ -83,6 +87,10 @@ class Services::GettingProductDistributer::Elevel
         {
           brands: BRANDS_PARTIAL,
           categories: get_ids_categories(CATEGORIES_PARTIAL)
+        },
+        {
+          brands: BRAND_GAUSS_PARTIAL,
+          categories: get_ids_categories(CATEGORIES_GAUSS_PARTIAL)
         },
       ]
 

@@ -34,6 +34,10 @@ end
 
 # ---------------------------
 # создание файлов импорта с новыми товарами поставщиков для инсайлс
+every 1.day, :at => '19:00' do
+  runner "CreateXlsJob.perform_later(distributor: 'Stluce')"
+end
+
 every 1.day, :at => '20:00' do
   runner "CreateXlsJob.perform_later(distributor: 'Maytoni')"
 end
@@ -73,6 +77,7 @@ end
 every 1.day, :at => '05:00' do
   runner "CreateXlsJob.perform_later(distributor: 'Kinklight')"
 end
+
 # ---------------------------
 
 # ==============================

@@ -19,12 +19,15 @@ class Services::GettingProductDistributer::Favourite
       param_name = Services::CompareParams.new("Favourite")
 
       doc_offers.each do |doc_offer|
+
         doc_params = doc_offer.xpath("param")
         hash_arr_params = hash_params(doc_params, param_name)
 
         # next if guard_exclude(hash_arr_params, ["Ambiente", "Brizzi"])
 
+        vendor = doc_offer.xpath("vendor").text
         params = product_params(hash_arr_params)
+        params = params << "Бренд: #{vendor}"
 
         catId = doc_offer.xpath("categoryId").text
         cats = get_cats(categories[catId])
