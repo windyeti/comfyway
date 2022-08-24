@@ -87,7 +87,7 @@ class Services::Xls::SelectedParams
     # !!!!!------------- УДАЛИТЬ + удалить @fid_id_var
     CSV.open(@file_path_prep, 'w') do |writer|
       headers = product_hash_structure.values.push("ID варианта")
-      headers = headers.push("Статус у поставщика")
+      headers = headers.push("Параметр: Статус у поставщика")
       writer << headers
 
       @tovs.each do |tov|
