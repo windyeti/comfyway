@@ -59,7 +59,7 @@ class Services::GettingProductDistributer::Kinklight
     end
 
     def self.product_params(hash_arr_params)
-      arr_exclude = ["Артикул", "Остаток", "Штрихкод"]
+      arr_exclude = ["Краткое описание", "Наименование", "Артикул", "Остаток", "Штрихкод"]
       result = hash_arr_params.map do |key, value|
         next if arr_exclude.include?(key)
         value = value.join(", ").gsub(/true/, "Да").gsub(/false/, "Нет")
