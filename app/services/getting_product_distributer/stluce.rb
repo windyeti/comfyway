@@ -61,7 +61,7 @@ class Services::GettingProductDistributer::Stluce
       data = {
         fid: "#{sku}___stluce",
         title: hash_arr_params["Наименование"] ? hash_arr_params["Наименование"].join(", ") : nil,
-        price: hash_arr_params["Цена"] ? hash_arr_params["Цена"].join(", ") : nil,
+        price: hash_arr_params["Цена"] ? hash_arr_params["Цена"].join(", ") : 0,
         quantity: hash_arr_params["Остаток"] ? hash_arr_params["Остаток"].join(", ") : nil,
         url: nil,
         sku: sku,
