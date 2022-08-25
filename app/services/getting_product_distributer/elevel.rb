@@ -1,7 +1,7 @@
 class Services::GettingProductDistributer::Elevel
   extend Utils
 
-  BRANDS_FULL = ["Arlight", "Arte Lamp", "Evoluce", "Divinare", "St Luce"].freeze
+  BRANDS_FULL = ["Arlight", "Arte Lamp", "Divinare"].freeze
   BRANDS_PARTIAL = ["Schneider Electric", "Legrand"].freeze
 
   CATEGORIES_PARTIAL = [

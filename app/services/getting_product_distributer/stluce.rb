@@ -88,7 +88,7 @@ class Services::GettingProductDistributer::Stluce
   end
 
   def self.product_params(hash_arr_params)
-    arr_exclude_key = ["Артикул", "Наименование", "Цена", "Остаток", "Ссылка на картинку", "Штрихкод"]
+    arr_exclude_key = ["Артикул", "Наименование", "Цена", "Остаток", "Ссылка на картинку", "Штрихкод", "Изображения товаров"]
     result = hash_arr_params.map do |key, value|
       value = value.reject(&:nil?).join(", ")
       next if arr_exclude_key.include?(key) || value == ""
