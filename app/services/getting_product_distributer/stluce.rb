@@ -53,16 +53,17 @@ class Services::GettingProductDistributer::Stluce
     param_name = Services::CompareParams.new("Stluce")
 
     rows.each do |row|
-      pp hash_arr_params = hash_params(row, param_name)
+      p hash_arr_params = hash_params(row, param_name)
 
       params = product_params(hash_arr_params)
       sku = hash_arr_params["Артикул"] ? hash_arr_params["Артикул"].join(", ") : nil
+      quantity = hash_arr_params["Остаток"].join(", ").remove(/более /).present? ? hash_arr_params["Остаток"].join(", ").remove(/более /) : 0
 
       data = {
         fid: "#{sku}___stluce",
         title: hash_arr_params["Наименование"] ? hash_arr_params["Наименование"].join(", ") : nil,
         price: hash_arr_params["Цена"] ? hash_arr_params["Цена"].join(", ") : 0,
-        quantity: hash_arr_params["Остаток"] ? hash_arr_params["Остаток"].join(", ") : nil,
+        quantity: quantity,
         url: nil,
         sku: sku,
         desc: nil,
