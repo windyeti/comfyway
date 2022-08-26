@@ -230,6 +230,8 @@ namespace :p do
 
 
 
+
+
   task uniq: :environment do
     # names = CSV.read("#{Rails.public_path}/map_params.csv") do |row|
     #   row

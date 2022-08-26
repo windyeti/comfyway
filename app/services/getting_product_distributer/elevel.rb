@@ -55,7 +55,7 @@ class Services::GettingProductDistributer::Elevel
 
   BRAND_GAUSS_PARTIAL = ['Gauss'].freeze
 
-  CATEGORIES_GAUSS_PARTIAL = ['Лампа светодиодная'].freeze
+  CATEGORIES_GAUSS_PARTIAL = ['Лампа светодиодная (LED)'].freeze
 
   EXCLUDE_KELVIN = [
     '(более 5000)', '5000', '5300', '5400', '5500', '5600', '5700', '5750', '5800', '6000', '6250',
