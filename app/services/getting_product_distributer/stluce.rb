@@ -39,7 +39,7 @@ class Services::GettingProductDistributer::Stluce
       last_row = sheet.last_row
 
       (3..last_row).each do |i|
-        next if sheet.cell(i,"D").nil?
+        next if sheet.cell(i,"D").nil? || !(["ST LUCE", "EVOLUCE"].include?(sheet.cell(i,"A")))
         arr_row = headers.zip(sheet.row(i))
         arr_row.each do |arr_prop|
           if ["Длина", "Ширина", "Высота"].include?(arr_prop[0]) && arr_prop[1].present?
