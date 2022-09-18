@@ -200,13 +200,7 @@ class ProductsController < ApplicationController
 
 
   def update_distributor
-    MaytoniImportJob.perform_later
-    LightstarImportJob.perform_later
-    ElevelImportJob.perform_later
-    IsonexUpdateJob.perform_later
-    LoftitImportJob.perform_later
-    FavouriteImportJob.perform_later
-    KinklightImportJob.perform_later
+    CreateUpdateProductJob.perform_later
 
     respond_to do |format|
       format.js
