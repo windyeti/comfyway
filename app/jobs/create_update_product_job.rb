@@ -18,15 +18,5 @@ class CreateUpdateProductJob < ApplicationJob
     LoftitImportJob.perform_later
     FavouriteImportJob.perform_later
     KinklightImportJob.perform_later
-
-    # Services::GettingProductDistributer::Maytoni.call
-    # Services::GettingProductDistributer::Mantra.call
-    # Services::GettingProductDistributer::Lightstar.call
-    # Services::GettingProductDistributer::Swg.call
-    # begin
-    #   Services::GettingProductDistributer::Elevel.new.call
-    # rescue
-    #   retry
-    # end
   end
 end
