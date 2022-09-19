@@ -22,9 +22,9 @@ every 1.day, :at => '07:00' do
 end
 
 # создание файла апдейта остатков и цен в инсайлс
-every 1.day, :at => '07:30' do
-  runner "CreateCsvUpdateJob.perform_later"
-end
+# every 1.day, :at => '07:30' do
+#   runner "CreateCsvUpdateJob.perform_later"
+# end
 
 # созданеи параметров в инсайсл для новых товаров
 # every 1.day, :at => '08:00' do
