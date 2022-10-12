@@ -18,10 +18,13 @@ class Services::GettingProductDistributer::Maytoni
       RestClient::Request.new(method: :get, url: uri, block_response: block).execute
     }
 
-    rows = CSV.read("#{Rails.root.join('public', 'maytoni.csv')}", headers: true, col_sep: ';').map do |row|
-      row.to_a
+    CSV.foreach("#{Rails.root.join('public', 'maytoni.csv')}", headers: :first_row, col_sep: ';', quote_char: "\x00") do |line|
+      p line
     end
 
+    rows = CSV.parse("#{Rails.root.join('public', 'maytoni.csv')}", headers: true, col_sep: ';').map do |row|
+      row.to_a rescue next
+    end
     param_name = Services::CompareParams.new("Maytoni")
 
     rows.each do |row|
