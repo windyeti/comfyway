@@ -1,4 +1,38 @@
 namespace :p do
+
+  task maytoni: :environment do
+    uri = "https://mais-upload.maytoni.de/YML/all.csv"
+
+    FileUtils.rm_rf(Dir.glob('public/maytoni.csv'))
+    FileUtils.rm_rf(Dir.glob('public/aws/*.*'))
+
+    File.open("#{Rails.root.join('public', 'maytoni.csv')}", 'w') { |f|
+      block = proc { |response|
+        f.write response.body
+      }
+      RestClient::Request.new(method: :get, url: uri, block_response: block).execute
+    }
+
+    # download_link = "https://mais-upload.maytoni.de/YML/all.csv"
+    # download_path = "#{Rails.public_path}"+'maytoni.csv'
+    # download_response = open(download_link).read()
+    # IO.copy_stream(download_response, download_path)
+
+    # CSV.foreach("#{Rails.root.join('public', 'maytoni.csv')}", headers: :first_row, col_sep: ';', quote_char: "\x00") do |line|
+    #   p line
+    #   sleep 2
+    # end
+
+    # rows = CSV.read("#{Rails.root.join('public', 'maytoni.csv')}", headers: true, col_sep: ';', quote_char: "\x00").map do |row|
+    #   p row.to_a
+    #   sleep 2
+    # end
+
+    # rows.each do |row|
+    #   p row
+    # end
+  end
+
   task get: :environment do
     @agent = Mechanize.new
     @agent.post('https://assets.transistor.ru/', {:loginUser => 'svet.online.store@yandex.ru', :loginPass => 'QAZwsx123&', :multipart => true}) #вошли
@@ -67,23 +101,6 @@ namespace :p do
     # m = JSON.parse(@response.body).map {|c| c["name"]}
     f = JSON.parse(@response.body).find {|c| c["name"] == "Шнуровой выключатель / светорегулятор (диммер)"}
     p f
-  end
-
-  task swg: :environment do
-    uri = "https://swgshop.ru/upload/swgshop_export_full_price_qty.csv"
-
-    File.open("#{Rails.root.join('public', 'swg.csv')}", 'w') {|f|
-      block = proc { |response|
-
-        body = response.body.gsub!("\r", '').force_encoding('UTF-8')
-#         body = response.body.gsub!("\r", '').force_encoding('UTF-8').gsub(/\b;/, "##").gsub(/\);/, ")##").gsub(/$
-# /,"\n")
-        f.write body
-      }
-      RestClient::Request.new(method: :get, url: uri, block_response: block).execute
-    }
-
-
   end
 
   task qqq: :environment do

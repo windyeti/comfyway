@@ -11,6 +11,7 @@ class CreateUpdateProductJob < ApplicationJob
     LoftitImportJob.perform_later
     FavouriteImportJob.perform_later
     KinklightImportJob.perform_later
+    StluceImportJob.perform_later
 
     begin
       ElevelImportJob.perform_later
