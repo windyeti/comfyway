@@ -80,6 +80,7 @@ class Services::GettingProductDistributer::Stluce
         mdesc: nil,
         p1: params.compact.join(" --- "),
         weight: hash_arr_params["Вес нетто, кг"] ? hash_arr_params["Вес нетто, кг"].join(", ") : nil,
+        check: true
       }
 
       product = Product.find_by(fid: data[:fid])
