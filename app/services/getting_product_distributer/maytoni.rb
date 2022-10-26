@@ -11,23 +11,17 @@ class Services::GettingProductDistributer::Maytoni
     FileUtils.rm_rf(Dir.glob('public/maytoni.csv'))
     FileUtils.rm_rf(Dir.glob('public/aws/*.*'))
 
-    # File.open("#{Rails.root.join('public', 'maytoni.csv')}", 'w') { |f|
-    #   block = proc { |response|
-    #     f.write response.body.force_encoding('UTF-8')
-    #   }
-    #   RestClient::Request.new(method: :get, url: uri, block_response: block).execute
-    # }
-
-
-
-    # CSV.foreach("#{Rails.root.join('public', 'maytoni.csv')}", headers: :first_row, col_sep: ';', quote_char: "\x00") do |line|
-    #   p line
-    # end
+    File.open("#{Rails.root.join('public', 'maytoni.csv')}", 'w') { |f|
+      block = proc { |response|
+        f.write response.body.force_encoding('UTF-8')
+      }
+      RestClient::Request.new(method: :get, url: uri, block_response: block).execute
+    }
 
     rows = CSV.read("#{Rails.root.join('public', 'maytoni.csv')}", headers: true, col_sep: ';', quote_char: "\x00").map do |row|
       row.to_a
     end
-    p "------------------------------------------- 3"
+
     param_name = Services::CompareParams.new("Maytoni")
 
     rows.each do |row|
