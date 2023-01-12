@@ -13,7 +13,7 @@ class Services::GettingProductDistributer::Maytoni
 
     File.open("#{Rails.root.join('public', 'maytoni.csv')}", 'w') { |f|
       block = proc { |response|
-        f.write response.body.force_encoding('UTF-8')
+        f.write response.body.gsub!("\r", '').force_encoding('UTF-8')
       }
       RestClient::Request.new(method: :get, url: uri, block_response: block).execute
     }
