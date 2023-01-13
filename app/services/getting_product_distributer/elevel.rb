@@ -370,7 +370,7 @@ class Services::GettingProductDistributer::Elevel
 
   def get_categories(products_for_create)
     url = 'http://swop.krokus.ru/ExchangeBase/hs/catalog/categoryPathToRoot'
-    payload = {
+    pp payload = {
       "ids": products_for_create.pluck("categoryId")
     }
     result = api_elevel(url, payload)["pathToRoot"]
@@ -390,7 +390,7 @@ class Services::GettingProductDistributer::Elevel
       case response.code
       when 200
         # puts 'Okey'
-        pp response.body
+        # pp response.body
         response.body.present? ? JSON.parse(response.body) : {}
       when 422
         puts "error 422 - не добавили категорию"
