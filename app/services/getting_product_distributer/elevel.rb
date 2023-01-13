@@ -390,7 +390,7 @@ class Services::GettingProductDistributer::Elevel
       case response.code
       when 200
         # puts 'Okey'
-        # pp response.body
+        pp response.body
         response.body.present? ? JSON.parse(response.body) : {}
       when 422
         puts "error 422 - не добавили категорию"
