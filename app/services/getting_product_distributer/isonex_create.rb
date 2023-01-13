@@ -42,9 +42,9 @@ p rows.count
       images << find_cell(row, "Ссылка на фрагмент_1")
       images << find_cell(row, "Ссылка на фрагмент_2")
       # images << find_cell(row, "Ссылка на 3D модель")
-
-      p sku = remove_zero_end(hash_arr_params["Артикул"].join(", "))
       images = images.compact.join(" ") rescue nil
+
+      p sku = zero_start_end(hash_arr_params["Артикул"].join(", "))
       p data = {
           fid: "#{sku}___isonex",
           title: hash_arr_params["Наименование"].join(", "),
@@ -72,8 +72,12 @@ p rows.count
     puts '=====>>>> FINISH Isonex XLS '+Time.now.to_s
   end
 
-  def self.remove_zero_end(str)
-    str.remove(/\.0$/)
+  def self.zero_start_end(str)
+    # Roo криво работает с ячейкой с числом: удаляет нули и добавляет .0 в конце
+    str = str.remove(/\.0$/)
+    str = "0" + str if str.size < 3
+    str = "0" + str if str.size < 3
+    str
   end
 
   def self.find_cell(row, name)
