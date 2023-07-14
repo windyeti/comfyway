@@ -100,6 +100,10 @@ class Services::GettingProductDistributer::Elevel
       brands_categories[:brands].each do |brand|
         products = get_products_by_brand(brand)
 
+        products.each do |product|
+          p "2642151" if product["id"] == "2642151"
+        end
+
         if brands_categories[:categories].present?
           products = get_product_by_category(products, brands_categories[:categories])
         else
@@ -331,7 +335,14 @@ class Services::GettingProductDistributer::Elevel
       params = product_params(hash_arr_params_product) # ==> + проверка на исключение параметров "Параметр1: значени1, значени2 ---  Параметр2: значени3, значени4 --- ..."
 
       id = product["id"]
-
+if id == "2642151"
+  p '========================================================================================================================'
+  p "2642151"
+  p hash_id_quantity[id][:stockamount].to_i
+  p hash_id_quantity[id][:stockamount_add].to_i
+  p hash_id_quantity[id][:stockamount].to_i + hash_id_quantity[id][:stockamount_add].to_i
+  p '========================================================================================================================'
+end
       prices = get_prices_product(hash_id_price, product)
 
       fid = "#{product["id"]}___elevel"
@@ -370,7 +381,7 @@ class Services::GettingProductDistributer::Elevel
 
   def get_categories(products_for_create)
     url = 'http://swop.krokus.ru/ExchangeBase/hs/catalog/categoryPathToRoot'
-    pp payload = {
+    payload = {
       "ids": products_for_create.pluck("categoryId")
     }
     result = api_elevel(url, payload)["pathToRoot"]
